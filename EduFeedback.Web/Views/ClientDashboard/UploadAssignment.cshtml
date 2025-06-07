@@ -1,0 +1,1081 @@
+﻿@model EduFeedback.Service.Models.ClientRegistrationModel
+@using System.Web.Optimization;
+@using Newtonsoft.Json
+@{
+    ViewBag.Title = "Upload Assignment";
+    //var studentNameMapping = Model.StudentNameMapping;
+}
+<style>
+    .mandatory-astrick {
+        color: red;
+    }
+
+    .column {
+        display: block;
+        float: left;
+        width: 100px;
+        height: 100px;
+    }
+
+    #dropzone-previews {
+        max-height: 500px;
+        overflow: scroll;
+    }
+
+    .uploaded-image {
+        border-bottom: 1px solid #eee;
+    }
+
+    .dz-progress {
+        display: block;
+        height: 5px;
+    }
+
+    .dz-upload {
+        display: block;
+        height: 100%;
+        background: #b7e2b7;
+        width: 0;
+    }
+
+
+    .dz-error-message {
+        color: red;
+    }
+
+    .dz-complete, .progress {
+        display: none;
+    }
+
+    .progress-bar {
+        width: 1%;
+        height: 15px;
+        background-color: green;
+    }
+
+    .dropzone {
+        border: dashed 4px #ddd !important;
+        background-color: #f2f6fc;
+        border-radius: 15px;
+    }
+
+        .dropzone .dropzone-container {
+            padding: 2rem 0;
+            width: 100%;
+            height: 100%;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: #8c96a8;
+            z-index: 20;
+        }
+
+        .dropzone .file-input {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            opacity: 0;
+            visibility: hidden;
+            cursor: pointer;
+        }
+
+    .file-icon {
+        font-size: 60px;
+    }
+
+    .hr-sect {
+        display: flex;
+        flex-basis: 100%;
+        align-items: center;
+        margin: 8px 0px;
+    }
+
+        .hr-sect:before,
+        .hr-sect:after {
+            content: "";
+            flex-grow: 1;
+            background: #ddd;
+            height: 1px;
+            font-size: 0px;
+            line-height: 0px;
+            margin: 0px 8px;
+        }
+
+    .upload-content .folder-icon {
+        font-size: 49px;
+        color: #3c38ff;
+    }
+
+    .anticon {
+        display: inline-flex;
+        align-items: center;
+        color: inherit;
+        font-style: normal;
+        line-height: 0;
+        text-align: center;
+        text-transform: none;
+        vertical-align: -0.125em;
+        text-rendering: optimizeLegibility;
+    }
+
+    .upload-content .upload-btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        width: 142px;
+        height: 36px;
+        margin-top: 4px;
+        font-size: 12px;
+        border: none;
+        background: #3C38FF;
+        color: #fff;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, .02);
+        transition: all .3s ease;
+        cursor: pointer;
+    }
+
+
+    /* #testPapersList_filter {
+        float: auto;
+    }*/
+
+    .file-name-input {
+        display: block;
+        margin-top: 10px;
+        width: 100%;
+        padding: 5px;
+        box-sizing: border-box;
+    }
+
+    /* Updated styles for proper alignment */
+    .dataTables_wrapper .top {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap; /* Allow wrapping if needed */
+        padding: 10px 0;
+    }
+
+    #testPapersList_filter {
+        margin: 0; /* Remove any default margins */
+        flex-grow: 1; /* Allow the search bar to take available space */
+        text-align: right; /* Center the search bar */
+    }
+
+        #testPapersList_filter label {
+            display: inline-flex;
+            align-items: center;
+            margin: 0;
+        }
+
+        #testPapersList_filter input {
+            margin-left: 5px;
+            width: 200px; /* Adjust the width of the search input */
+        }
+
+    #rowCount {
+        margin-right: 20px; /* Space between row count and search */
+    }
+
+    .custom-button-wrapper {
+        margin-left: 20px; /* Space between search and button */
+    }
+
+
+
+    /*verfication column script*/
+
+    .verification-status {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        padding: 4px 8px;
+        border-radius: 4px;
+        font-weight: bold;
+    }
+
+        .verification-status.verified-yes {
+            background-color: #d4edda; /* Light green background */
+            color: #155724; /* Dark green text */
+        }
+
+        .verification-status.verified-no {
+            background-color: #f8d7da; /* Light red background */
+            color: #721c24; /* Dark red text */
+        }
+
+    .fa-check {
+        color: #28a745; /* Green icon */
+    }
+
+    .fa-times {
+        color: #dc3545; /* Red icon */
+    }
+</style>
+
+
+@*<link href="~/ndesign/assets/vendor/simple-datatables/style.css" rel="stylesheet">
+    <link href="~/Content/DataTables/datatables.css" rel="stylesheet" />*@
+<section class="section profile">
+    <div class="row">
+        <div class="col-xl-12">
+            <div class="card">
+                <div class="card-body  profile-overview">
+                    <div class="row">
+                        <div>
+                            <h5>
+                                <span id="org-name" style="color: #dc3545"></span>
+                            </h5>
+                        </div>
+                        @*<div style="text-align:right">
+                                <a href="/MemberShipManagement/Index" class="btn btn-danger"> Back</a>
+                            </div>*@
+                    </div>
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-md-12" style="padding-left:5%">
+                                <div class="form-group">
+
+                                    <label for="fileUpload">
+                                        Google Drive Folder Link
+                                    </label>
+                                    <div>
+                                        <small class="form-text text-danger">(Please select files from one subject and one year group)</small>
+
+                                    </div>
+                                    <br /><input type="text" id="txtDriveLink" style="width:75%;" value="https://drive.google.com/drive/u/0/folders/14_36f1n7J3TN7cn24TL5Vn2F3rYGGMSu" />
+                                    @*"https://drive.google.com/drive/u/3/folders/1MFLwHANlQieYBfn3fz0AcbIiDqaqoPrz"*@
+
+                                    <br /><br />
+                                    <button type="button" id="btnSyncFromDrive" class="btn btn-primary">Get Files</button>
+                                    @*onclick="getFilesFromDrive()"*@
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group" style="text-align: center; font-size: x-large; font-weight: bold;">
+
+                                    OR
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    @*<label class="col-form-label">Select File </label>*@
+                                    @*<div class="dropzone" style="min-height: 40px;text-align:center;" id="DropZone">
+                                            <span class="dz-message" data-dz-message><i class="fa fa-download fa-3x" tabindex="1"></i>&nbsp;&nbsp;&nbsp;Drop assignments here for feedback.</span>
+                                        </div>*@
+                                    <!--<div class="bg-white p-5 rounded shadow-sm border">
+                                    <div class="dropzone d-block" style="min-height: 40px;text-align:center;" id="DropZone">
+                                        <div class="upload-content">
+                                            <span role="img" class="anticon folder-icon isRtlIcon_language_ar"><svg width="1em" height="1em" viewBox="0 0 56 56" fill="currentColor"><path d="M18.9265 8.5C19.8781 8.5 20.8 8.81661 21.5488 9.39592L21.7486 9.56039L24.7042 12.1465C24.9213 12.3364 25.1896 12.4553 25.4732 12.4896L25.645 12.5H45.4286C47.7192 12.5 49.59 14.297 49.7083 16.5581L49.7143 16.7857L49.7153 25.7073C48.8539 24.9362 47.8944 24.2723 46.8579 23.7368L46.8571 16.7857C46.8571 16.046 46.295 15.4377 45.5746 15.3645L45.4286 15.3571L25.5399 15.3559L23.1091 18.3454C22.3496 19.2802 21.2346 19.8492 20.04 19.9209L19.7829 19.9286L6.85714 19.9274V38.5C6.85714 39.2397 7.41929 39.848 8.13965 39.9212L8.28571 39.9286L27.4498 39.9291C27.7563 40.9357 28.1755 41.8932 28.6926 42.7869L8.28571 42.7857C5.99513 42.7857 4.12426 40.9887 4.00594 38.7276L4 38.5V12.7857C4 10.4951 5.79698 8.62426 8.0581 8.50594L8.28571 8.5H18.9265ZM18.9265 11.3571H8.28571C7.54605 11.3571 6.93768 11.9193 6.86452 12.6397L6.85714 12.7857V17.0703L19.7829 17.0714C20.1594 17.0714 20.5182 16.923 20.7838 16.6622L20.8917 16.5437L22.76 14.2429L19.8672 11.7106C19.6502 11.5207 19.3819 11.4019 19.0982 11.3675L18.9265 11.3571ZM40.5714 24.5C46.8833 24.5 52 29.6167 52 35.9286C52 42.2404 46.8833 47.3571 40.5714 47.3571C34.2596 47.3571 29.1429 42.2404 29.1429 35.9286C29.1429 29.6167 34.2596 24.5 40.5714 24.5ZM40.5714 29.0714C39.9853 29.0714 39.5023 29.5126 39.4363 30.081L39.4286 30.2143V34.7857H34.8571C34.271 34.7857 33.788 35.2269 33.722 35.7953L33.7143 35.9286C33.7143 36.5147 34.1555 36.9977 34.7239 37.0637L34.8571 37.0714H39.4286V41.6429C39.4286 42.229 39.8698 42.712 40.4381 42.778L40.5714 42.7857C41.1575 42.7857 41.6406 42.3445 41.7066 41.7761L41.7143 41.6429V37.0714H46.2857C46.8718 37.0714 47.3549 36.6302 47.4209 36.0619L47.4286 35.9286C47.4286 35.3425 46.9874 34.8594 46.419 34.7934L46.2857 34.7857H41.7143V30.2143C41.7143 29.6282 41.2731 29.1451 40.7047 29.0791L40.5714 29.0714Z" fill="currentColor"></path></svg></span>
+
+                                            <label for="files" class="dropzone-container">
+                                                <div class="file-icon"><i class="fa-solid fa-file-circle-plus text-primary"></i></div>
+                                                <div class="text-center pt-3 px-5">
+                                                    <p class="w-80 h5 text-dark fw-bold">Drag & Drop your assignments here for feedback</p>-->
+                                    @*<div class="hr-sect">or</div>
+                                        <button class="btn btn-primary mb-2">Browse Files</button>*@
+                                    <!--</div>
+                                    </label>-->
+                                    @* <button class="upload-btn chat-tooltip-open"><div class="custom-icon-container"><span role="img" class="anticon upload-icon isRtlIcon_language_ar"><svg width="1em" height="1em" viewBox="0 0 17 16" fill="none"><path fill-rule="evenodd" clip-rule="evenodd" d="M2.9 13V3C2.9 2.66863 3.16863 2.4 3.5 2.4H9.58013C9.75529 2.4 9.92169 2.47654 10.0357 2.60953L11.9556 4.84937C12.0488 4.95812 12.1 5.09662 12.1 5.23985V7.3C12.1 7.6866 12.4134 8 12.8 8C13.1866 8 13.5 7.6866 13.5 7.3V5.23985C13.5 4.76243 13.3292 4.30075 13.0185 3.93827L11.0986 1.69842C10.7187 1.25513 10.164 1 9.58013 1H3.5C2.39543 1 1.5 1.89543 1.5 3V13C1.5 14.1046 2.39543 15 3.5 15H8.8C9.1866 15 9.5 14.6866 9.5 14.3C9.5 13.9134 9.1866 13.6 8.8 13.6H3.5C3.16863 13.6 2.9 13.3314 2.9 13ZM5.00005 4.80005C4.61345 4.80005 4.30005 5.11345 4.30005 5.50005C4.30005 5.88665 4.61345 6.20005 5.00005 6.20005H9.00005C9.38665 6.20005 9.70005 5.88665 9.70005 5.50005C9.70005 5.11345 9.38665 4.80005 9.00005 4.80005H5.00005ZM5.00005 7.80005C4.61345 7.80005 4.30005 8.11345 4.30005 8.50005C4.30005 8.88665 4.61345 9.20005 5.00005 9.20005H7.00005C7.38665 9.20005 7.70005 8.88665 7.70005 8.50005C7.70005 8.11345 7.38665 7.80005 7.00005 7.80005H5.00005ZM12.8 9.29999C13.1866 9.29999 13.5 9.61339 13.5 9.99999V11.3H14.8001C15.1867 11.3 15.5001 11.6134 15.5001 12C15.5001 12.3866 15.1867 12.7 14.8001 12.7H13.5V14C13.5 14.3866 13.1866 14.7 12.8 14.7C12.4134 14.7 12.1 14.3866 12.1 14L12.1 12.7H10.8001C10.4135 12.7 10.1001 12.3866 10.1001 12C10.1001 11.6134 10.4135 11.3 10.8001 11.3H12.1V9.99999C12.1 9.61339 12.4134 9.29999 12.8 9.29999Z" fill="currentColor"></path></svg></span></div><span class="upload-btn-text">Upload Files</span></button>*@
+                                    <!--</div>-->
+                                    @* <input id="files" name="files[]" type="file" multiple="multiple" class="file-input  dz-clickable" accept="application/pdf" />*@
+                                    <!--<span class="dz-message" data-dz-message></span>
+                                        </div>
+
+
+                                    </div>-->
+                                    <div class="bg-white p-5 rounded shadow-sm border">
+
+                                        <div class="dropzone" style="min-height: 40px; text-align: center;" id="DropZone">
+                                            <span class="dz-message" data-dz-message>
+                                                <span class="upload-content" style="width:fit-content">
+                                                    <span role="img" class="anticon folder-icon isRtlIcon_language_ar"><svg width="1em" height="1em" viewBox="0 0 56 56" fill="currentColor"><path d="M18.9265 8.5C19.8781 8.5 20.8 8.81661 21.5488 9.39592L21.7486 9.56039L24.7042 12.1465C24.9213 12.3364 25.1896 12.4553 25.4732 12.4896L25.645 12.5H45.4286C47.7192 12.5 49.59 14.297 49.7083 16.5581L49.7143 16.7857L49.7153 25.7073C48.8539 24.9362 47.8944 24.2723 46.8579 23.7368L46.8571 16.7857C46.8571 16.046 46.295 15.4377 45.5746 15.3645L45.4286 15.3571L25.5399 15.3559L23.1091 18.3454C22.3496 19.2802 21.2346 19.8492 20.04 19.9209L19.7829 19.9286L6.85714 19.9274V38.5C6.85714 39.2397 7.41929 39.848 8.13965 39.9212L8.28571 39.9286L27.4498 39.9291C27.7563 40.9357 28.1755 41.8932 28.6926 42.7869L8.28571 42.7857C5.99513 42.7857 4.12426 40.9887 4.00594 38.7276L4 38.5V12.7857C4 10.4951 5.79698 8.62426 8.0581 8.50594L8.28571 8.5H18.9265ZM18.9265 11.3571H8.28571C7.54605 11.3571 6.93768 11.9193 6.86452 12.6397L6.85714 12.7857V17.0703L19.7829 17.0714C20.1594 17.0714 20.5182 16.923 20.7838 16.6622L20.8917 16.5437L22.76 14.2429L19.8672 11.7106C19.6502 11.5207 19.3819 11.4019 19.0982 11.3675L18.9265 11.3571ZM40.5714 24.5C46.8833 24.5 52 29.6167 52 35.9286C52 42.2404 46.8833 47.3571 40.5714 47.3571C34.2596 47.3571 29.1429 42.2404 29.1429 35.9286C29.1429 29.6167 34.2596 24.5 40.5714 24.5ZM40.5714 29.0714C39.9853 29.0714 39.5023 29.5126 39.4363 30.081L39.4286 30.2143V34.7857H34.8571C34.271 34.7857 33.788 35.2269 33.722 35.7953L33.7143 35.9286C33.7143 36.5147 34.1555 36.9977 34.7239 37.0637L34.8571 37.0714H39.4286V41.6429C39.4286 42.229 39.8698 42.712 40.4381 42.778L40.5714 42.7857C41.1575 42.7857 41.6406 42.3445 41.7066 41.7761L41.7143 41.6429V37.0714H46.2857C46.8718 37.0714 47.3549 36.6302 47.4209 36.0619L47.4286 35.9286C47.4286 35.3425 46.9874 34.8594 46.419 34.7934L46.2857 34.7857H41.7143V30.2143C41.7143 29.6282 41.2731 29.1451 40.7047 29.0791L40.5714 29.0714Z" fill="currentColor"></path></svg></span>
+                                                </span>&nbsp;&nbsp;&nbsp;Drag & Drop your assignments here, or click to select file
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div style="text-align:center;">
+                                        <small class="form-text text-danger">(Please select files from one subject and one year group)</small>
+                                        <br />
+                                        <small class="form-text text-danger"><strong>Note</strong> : 1) Select upto 20 files <br /> 2) File size not exceed 45 MB.</small>
+
+                                    </div>
+                                    <div class="dropzone-previews" id="dz-preview" name="files"></div>
+                                    <input type="hidden" name="tempId" value="" />
+                                    <div class="progress progress-bar-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+                                        <div class="progress-bar progress-bar-striped bg-success progress-bar-animated" style="width:0%;" data-dz-uploadprogress></div>
+                                    </div>
+
+
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+
+                                <div class="form-group">
+                                    <div class="table-responsive">
+                                        <table id="testPapersList" class="display table table-bordered table-striped" width="100%">
+                                        </table>
+
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div id="div-assignment-config" style="display:none">
+
+
+                            <div class="row mb-3">
+
+
+
+
+
+
+                                <div>
+                                    <p class="w-80 h5 text-dark">Please fill mandatory settings for your feedback</p>
+                                </div>
+
+
+                                <div class="row">
+
+                                    <div class="col-md-8">
+                                        <div class="col-sm-12" style="float: left;">
+                                            <label class="col-form-label">Choose Service Name<span class="mandatory-astrick">*</span></label>
+                                        </div>
+                                        <div class="col-sm-12" style="float: left;">
+                                            <select id="service-dropdown" class="form-control" onchange="onServiceChange()">
+                                                <option value="">Select Service</option>
+                                            </select>
+                                            <label class="col-form-label" style="color:red; ">Note : For Insert/Update service seletion is mandatory.</label>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+                                <div class="row">
+
+
+                                    <div class="col-md-4">
+                                        <div class="col-sm-12" style="float: left;">
+                                            <label class="col-form-label" style="float: left;">Choose Year<span class="mandatory-astrick">*</span></label>
+                                        </div>
+                                        <div class="col-sm-12" style="float: left;">
+                                            @Html.DropDownListFor(m => m.Year_ID, Model.SchoolYearList, "Choose Year", new { @class = "form-select", @onchange = "GetmaskedTestName()" })
+                                            <span id="Year_IDSpan" style="color:red; display:none;">Please choose year.</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="col-sm-12" style="float: left;">
+                                            <label class="col-form-label" style="float: left;">Choose Subject<span class="mandatory-astrick">*</span></label>
+                                        </div>
+                                        <div class="col-sm-12" style="float: left;">
+                                            @Html.DropDownListFor(m => m.Subject_ID, Model.SubjectList, "Choose Subject", new { @class = "form-select", @onchange = "GetmaskedTestName()" })
+                                            <span id="Subject_IDSpan" style="color:red; display:none;">Please choose subject.</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="col-sm-12" style="float: left;">
+                                            <label class="col-form-label" style="float: left;">Choose Exam/Test Date<span class="mandatory-astrick">*</span></label>
+                                        </div>
+                                        <div class="col-sm-12" style="float: left;">
+                                            @Html.TextBoxFor(m => m.ExamDate, "{0:dd-MM-yyyy}", new { @class = "form-control", @placeholder = "select exam date", @onchange = "GetmaskedTestName()" })
+                                            <span id="ExamDateSpan" style="color:red; display:none;">Please select date.</span>
+                                        </div>
+                                    </div>
+
+
+
+
+                                </div>
+                                <div class="row">
+
+
+                                    <div class="col-md-4">
+                                        <div class="col-sm-12" style="float: left;">
+                                            <label class="col-form-label" style="float: left;">Week No.<span class="mandatory-astrick">*</span></label>
+                                        </div>
+                                        <div class="col-sm-12" style="float: left;">
+                                            @Html.TextBoxFor(m => m.Week, new { @class = "form-control column-input", @placeholder = "enter week no.", @onkeyup = "GetmaskedTestName()", @onkeypress = "return isNumberKey(event)" })
+                                            <span id="WeekNoSpan" style="color:red; display:none;">Please enter week no.</br></span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+
+                                        <div class="form-group">
+                                            <div class="col-sm-12" style="float: left;"><label for="fileUpload">Select Test Paper</label></div>
+                                            <div class="col-sm-12" style="float: left;">
+                                                <input type="file" id="testPaperFileUpload" name="testPaperFileUpload" class="form-control" />
+                                                @*<span id="testPaperFileUpload_IDSpan" style="color:red; display:none;">Please select test paper.</span>*@
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <div class="col-sm-12" style="float: left;"><label for="fileUpload">Select Test Paper Solution File</label></div>
+                                            <div class="col-sm-12" style="float: left;">
+                                                <input type="file" id="testPaperSolutionFileUpload" name="testPaperSolutionFileUpload" class="form-control" />
+                                                @*<span id="testPaperSolutionFileUpload_IDSpan" style="color:red; display:none;">Please select test solution paper.</span>*@
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="col-sm-12" style="float: left;">
+                                            <label class="col-form-label" style="float: left;">Test Name<span class="mandatory-astrick">*</span></label>
+                                        </div>
+                                        <div class="col-sm-12" style="float: left;">
+                                            @Html.DropDownListFor(m => m.Course_Test_ID, Model.CourseNameList, "Choose Test Paper For Update", new { @id = "DDLTestName", @class = "form-select", @onchange = "SelectTestPaper()" })
+                                            <br />
+                                            @*<input readonly="readonly" id="TestNamePrefix" class="form-control column-input" />*@
+                                            @Html.TextBoxFor(m => m.TestName, new { @class = "form-control column-input", @placeholder = "enter test name", @readonly = "readonly" })
+
+                                            <span id="TestNameSpan" style="color:red; display:none;">Please enter TestName.</br></span>
+                                            @*<span>Test name should not contain any special character.</span>*@
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-8">
+                                        <div class="form-group">
+                                            <div class="col-sm-12" style="float: left;">
+                                                <label for="comment">Comment</label>
+                                            </div>
+                                            <div class="col-sm-12" style="float: left;">
+                                                @Html.TextAreaFor(m => m.Comment, new { @class = "form-control column-input", @placeholder = "comment", @rows = 5, @cols = 50 })
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-5">
+                                    </div>
+                                    <div class="col-md-4">
+
+                                        <div style="text-align:center">
+                                            <button type="button" id="btnBulkUpload" class="btn btn-primary" style="display: none;">Upload</button>
+                                            <button type="button" id="btnGDriveBulkUpload" class="btn btn-primary">Upload</button>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row" id="upload-status-ui" style="display:none">
+                                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                    <span class="spinner-border"></span>
+                                    <h4 class="alert-heading">Uploading in progress...</h4>
+                                    <p>but still you can view the files  <span id="lnk-view-upload"></span></p>
+                                    <hr />
+                                    <button type="button" id="btnReset" class="btn btn-secondary">Reset</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        @*<div class="container p-5">
+                <div class="row">
+                    <div class="col-md-3"></div>
+                    <div class="col-md-6 mt-5">
+                        <div class="bg-white p-5 rounded shadow-sm border">
+                            <div class="dropzone d-block">
+                                <label for="files" class="dropzone-container">
+                                    <div class="file-icon"><i class="fa-solid fa-file-circle-plus text-primary"></i></div>
+                                    <div class="text-center pt-3 px-5">
+                                        <p class="w-80 h5 text-dark fw-bold">Drag your documents, photos or videos here to start uploading.</p>
+                                        <div class="hr-sect">or</div>
+                                        <button class="btn btn-primary mb-2">Browse Files</button>
+                                    </div>
+                                </label>
+                                <input id="files" name="files[]" type="file" class="file-input" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>*@
+</section>
+
+<link href="~/Content/Datepicker/css/bootstrap-datepicker.css" rel="stylesheet" />
+<link rel="stylesheet" href="~/Bundle/lib/dropzonejs/dropzone.min.css">
+<link href="~/Bundle/js/dropzone/css/dropzone.css" rel="stylesheet" />
+
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.css">
+@section Scripts {
+
+
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/jquery")
+    <script src="~/Bundle/lib/bootstrap/js/bootstrap.min.js"></script>
+    <script src="~/Scripts/moment.min.js"></script>
+
+    <script src="~/Scripts/jquery-1.12.4.js"></script>
+
+    <script src="~/Content/Datepicker/bootstrap-datepicker.min.js"></script>
+    <script src="~/Bundle/lib/bootstrap/js/bootstrap.min.js"></script>
+    <script src="~/Bundle/lib/dropzonejs/dropzone.min.js"></script>
+
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.js"></script>
+    <script src="~/Bundle/js/Module/ClientDashboard-UploadAssignment.js"></script>
+
+    <script>
+        // Initialize studentNameMapping from the model
+        var studentNameMapping = @Model.StudentNameMapping.ToString().ToLower();
+        @*@Html.Raw(Json.SerializeObject(Model.StudentNameMapping));*@
+
+        $('#btnSyncFromDrive').on("click", function (e) {
+            getFilesFromDrive();
+        });
+
+
+        // get file list from
+        function getFilesFromDrive() {
+            debugger;
+            //var getFilesFromDriveUrl = '@Url.Action("GetFilesFromDrive", "ClientDashboard")';
+            var driveLink = document.getElementById('txtDriveLink').value;
+            if (driveLink == null || driveLink == "") {
+                alert("Please enter the drive link");
+            }
+            else {
+
+                if (!$.fn.DataTable.isDataTable('#testPapersList')) {
+                    LoadDataTable();
+                }
+                else {
+                    $("#testPapersList").DataTable().ajax.reload();
+                    // Ensure column visibility is updated after reload
+                    toggleParentIdColumn();
+                }
+                if ($("#testPapersList").DataTable().data().count() > 0) {
+
+                    // Update the row count
+                    //$('#rowCount').text('Total Rows: ' + $("#testPapersList").DataTable().data().count());
+                    updateRowCount();
+                }
+            }
+        }
+
+        function PopulateServiceDropdown() {
+            var dropdown = $('#service-dropdown');
+            dropdown.empty();
+            /*dropdown.append($('<option></option>').attr('value', 0).text("Select Service"));*/
+            dropdown.append($('<option></option>').attr('value', 2).text("L2W"));
+            dropdown.append($('<option></option>').attr('value', 1).text("GCSE"));          
+
+            UpdateTestNameList(2);
+        }
+
+        //Load datatable
+        function LoadDataTable() {
+            var columns = [
+                { "data": "FileID", "title": "File ID", "autoWidth": true, "visible": false },
+                { "data": "UserName", "title": "UserName", "autoWidth": true, "visible": false },
+                {
+                    "data": "Name",
+                    "title": "Student/File Name",
+                    "autoWidth": true,
+                    "render": function (data, type, row) {
+                        return '<input name="inputFileName" type="text" class="form-control" value="' + data + '"  />';
+                    }
+                },
+
+                {
+                    "data": "ParentId",
+                    "title": "Parent Id",
+                    "autoWidth": true,
+                    "render": function (data, type, row) {
+                        return '<input name="inputParentId" type="text" class="form-control" value="' + data + '"  />';
+                    }
+                },
+                { "data": "Size", "title": "File Size", "autoWidth": true },
+                {
+                    "data": null,
+                    "title": "Verified",
+                    "autoWidth": true,
+                    "render": function (data, type, row) {
+                        var parentId = row.ParentId;
+                        var isVerified = parentId && parseInt(parentId) > 0;
+                        return '<span class="verification-status ' +
+                            (isVerified ? 'verified-yes' : 'verified-no') + '">' +
+                            (isVerified ? '<i class="fa fa-check"></i> Yes' : '<i class="fa fa-times"></i> No') +
+                            '</span>';
+                    }
+                },
+                {
+                    targets: -1, // Target the last column
+                    data: null,
+                    defaultContent: '<button class="btn btn-danger btn-sm remove-btn">Remove</button>'
+                }
+            ];
+
+            ////alert(studentNameMapping);
+            //if (studentNameMapping) {
+            ////if (true) {
+            //    columns.splice(3, 0, {
+            //        "data": "ParentId",
+            //        "title": "Parent Id",
+            //        "autoWidth": true,
+            //        "render": function (data, type, row) {
+            //            return '<input name="inputParentId" type="text" class="form-control" value="' + data + '"  />';
+            //        }
+            //    });
+            //}
+
+            $("#testPapersList").DataTable({
+                "processing": true,
+                "filter": true,
+                paging: false,
+                /*dom: '<"top"f>rt<"bottom"lp><"clear">',*/
+                dom: '<"top"f<"custom-button-wrapper">> rt <"bottom"lp><"clear">',
+                initComplete: function () {
+                    $('#testPapersList_filter').append('<span id="rowCount" style="margin-left: 10px;float:left;">Total Rows: 0</span>');
+
+                    updateRowCount();
+                    $('#testPapersList').DataTable().column(0).visible(false);
+                    toggleParentIdColumn();
+
+                },
+                drawCallback: function (settings) {
+                    updateRowCount();
+                    // Update verification status when Parent ID changes
+
+                    $('#testPapersList tbody').off('input', 'input[name="inputParentId"],input[name="inputFileName"]');
+                    $('#testPapersList tbody').on('input', 'input[name="inputParentId"],input[name="inputFileName"]', function () {
+                        var row = $('#testPapersList').DataTable().row($(this).closest('tr'));
+                        var $row = $(row.node()); // Get the row node as a jQuery object
+                        //var inputName = $(this).attr('name'); // Determine which input triggered the event
+
+                        // Get values from the respective inputs in the same row
+                        var parentId = $row.find('input[name="inputParentId"]').val() || '';
+                        var studentName = $row.find('input[name="inputFileName"]').val() || '';
+
+                        // Remove extension from studentName if present
+                        studentName = studentName.replace(/\.[^/.]+$/, '').split('_')[1];
+                        var statusCell = $(row.node()).find('.verification-status');
+
+                        $.ajax({
+                            url: "/ClientDashboard/CheckParentExist",
+                            type: "GET",
+                            dataType: "json",
+                            data: {
+                                parentId: parseInt(parentId),
+                                studentName: studentName
+                            },
+                            success: function (Result) {
+                                if (Result.data != null) {
+                                    if (Result.data) {
+                                        statusCell.html('<i class="fa fa-check"></i> Yes')
+                                            .removeClass('verified-no')
+                                            .addClass('verified-yes');
+                                    } else {
+                                        statusCell.html('<i class="fa fa-times"></i> No')
+                                            .removeClass('verified-yes')
+                                            .addClass('verified-no');
+                                    }
+                                }
+                            }
+                        });
+
+                    });
+
+
+
+                    toggleParentIdColumn();
+                },
+                "ajax": {
+                    "url": "/ClientDashboard/GetFilesFromDrive",
+                    "type": "GET",
+                    "datatype": "json",
+                    "data": function (d) {
+                        d.driveLink = $("#txtDriveLink").val();
+                    }
+                },
+                "columns": columns
+            });
+
+            $('#testPapersList tbody').on('click', '.remove-btn', function () {
+                $("#testPapersList").DataTable().row($(this).parents('tr')).remove().draw();
+                var rowCount = $("#testPapersList").DataTable().data().count();
+                if (rowCount == 0) {
+                    $('#div-assignment-config').hide();
+                    $('#btnBulkUpload').css('display', 'none');
+                    $('#btnGDriveBulkUpload').css('display', 'none');
+                }
+
+            });
+        }
+
+        // Function to toggle "Parent Id" column visibility
+        function toggleParentIdColumn() {
+            var table = $("#testPapersList").DataTable();
+            // "Parent Id" is at index 3 when present (adjust if needed)
+            var parentIdColumnIndex = 3;
+            var verificationColumnIndex = 5;
+            if (studentNameMapping) {
+                table.column(parentIdColumnIndex).visible(true);
+                table.column(verificationColumnIndex).visible(true);
+            } else {
+                // Check if the column exists before trying to hide it
+                if (table.columns().indexes().length > parentIdColumnIndex) {
+                    table.column(parentIdColumnIndex).visible(false);
+                    table.column(verificationColumnIndex).visible(false);
+                }
+            }
+        }
+
+        // Function to update the row count
+        function updateRowCount() {
+            var rowCount = $("#testPapersList").DataTable().data().count();// table.rows().count();
+            $('#rowCount').text('Total Rows: ' + rowCount);
+
+
+
+            if (rowCount > 0) {
+                $('#div-assignment-config').show();
+                $('#btnBulkUpload').css('display', 'none');
+                $('#btnGDriveBulkUpload').css('display', 'block');
+                disableDropzone();
+            }
+            else
+            {
+                $('#div-assignment-config').hide();
+                $('#btnBulkUpload').css('display', 'none');
+                $('#btnGDriveBulkUpload').css('display', 'none');
+                enableDropzone();
+            }
+
+        }
+
+
+        // Function to disable the Dropzone
+        function disableDropzone() {
+                //alert("disable");
+            dropzone.disable();
+        }
+
+        // Function to enable the Dropzone
+        function enableDropzone() {
+            //alert("enabled");
+            dropzone.enable();
+        }
+
+        $('#btnGDriveBulkUpload').on("click", function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            // Initialize validation flag
+            let isValid = true;
+
+            // Hide all validation messages initially
+            hideValidationMessages();
+
+            // Validate required dropdowns and text fields
+            isValid &= validateRequiredField('#Year_ID', '#Year_IDSpan', 'Please choose year.');
+            isValid &= validateRequiredField('#Subject_ID', '#Subject_IDSpan', 'Please choose subject.');
+            isValid &= validateRequiredField('#ExamDate', '#ExamDateSpan', 'Please select date.');
+            isValid &= validateRequiredField('#TestName', '#TestNameSpan', 'Please enter test name.');
+
+            const ddlTestName = document.getElementById("DDLTestName");
+            const isNewTest = ddlTestName.selectedIndex === 0; // Check if "Choose Test Paper For Update" is selected
+
+            if (isNewTest) {
+                isValid &= validateRequiredField('#Week', '#WeekNoSpan', 'Please enter week no.');
+                //isValid &= validateRequiredField('#testPaperFileUpload', '#testPaperFileUpload_IDSpan', 'Please select test paper.');
+                //isValid &= validateRequiredField('#testPaperSolutionFileUpload', '#testPaperSolutionFileUpload_IDSpan', 'Please select test solution paper.');
+
+                // Validate file types and sizes for new test papers
+                const allowedExtensions = ['pdf'];
+                const maxFileSize = 20 * 1024 * 1024; // 20 MB
+                const testPaperFileUpload = document.getElementById('testPaperFileUpload');
+                const testPaperSolutionFileUpload = document.getElementById('testPaperSolutionFileUpload');
+                //let isValid = true;
+
+                //// Check file types together for a single alert
+                //let invalidFileType = false;
+
+
+                const testPaperFile = testPaperFileUpload?.files[0];
+                const testPaperSolutionFile = testPaperSolutionFileUpload?.files[0];
+
+                isValid &= validateFile(testPaperFile, allowedExtensions, maxFileSize, 'Test paper file size exceeds the maximum limit of 20 MB.');
+                isValid &= validateFile(testPaperSolutionFile, allowedExtensions, maxFileSize, 'Test paper solution file size exceeds the maximum limit of 20 MB.');
+
+                //if (testPaperFileUpload) {
+                //    const testPaperFile = testPaperFileUpload.files[0];
+                //    if (testPaperFile && !allowedExtensions.includes(testPaperFile.name.split('.').pop().toLowerCase())) {
+                //        invalidFileType = true;
+                //    }
+                //}
+
+                //if (testPaperSolutionFileUpload) {
+                //    const testPaperSolutionFile = testPaperSolutionFileUpload.files[0];
+                //    if (testPaperSolutionFile && !allowedExtensions.includes(testPaperSolutionFile.name.split('.').pop().toLowerCase())) {
+                //        invalidFileType = true;
+                //    }
+                //}
+
+                //if (invalidFileType) {
+                //    alert('Invalid file type. Only PDF files are allowed.');
+                //    isValid = false;
+                //}
+
+                //// Check file sizes individually
+                //if (testPaperFile && testPaperFile.size > maxFileSize) {
+                //    alert('Test paper file size exceeds the maximum limit of 20 MB.');
+                //    isValid = false;
+                //}
+                //if (testPaperSolutionFile && testPaperSolutionFile.size > maxFileSize) {
+                //    alert('Test paper solution file size exceeds the maximum limit of 20 MB.');
+                //    isValid = false;
+                //}
+            }
+
+            // Validate student name mapping and parent IDs if applicable
+            const selectedYear = parseInt($('#Year_ID').val(), 10);
+            const table = $("#testPapersList").DataTable();
+            const rowCount = table.data().count();
+
+            if (rowCount === 0) {
+                alert("Selected drive didn't have any file.");
+                return;
+            }
+
+            if (studentNameMapping && selectedYear <= 5) {
+                let allVerified = true;
+                let yearMismatch = false;
+                let invalidParentId = false;
+
+                table.rows().every(function () {
+                    const row = this.node();
+                    const parentId = parseInt($(row).find('input[name="inputParentId"]').val(), 10) || 0;
+                    const fileYear = parseInt(($(row).find('input[name="inputFileName"]').val().split("_")[0]).slice(1), 10) || 0;
+                    const verificationStatus = $(row).find('.verification-status').text().trim();
+
+                    if (verificationStatus !== 'Yes') allVerified = false;
+                    if (selectedYear !== fileYear) yearMismatch = true;
+                    if (!parentId || parentId <= 0) invalidParentId = true;
+                });
+
+                if (!allVerified) {
+                    alert("All rows must be verified (status: Yes) before uploading.");
+                    isValid = false;
+                } else if (yearMismatch) {
+                    alert("Student year and selected year do not match.");
+                    isValid = false;
+                } else if (invalidParentId) {
+                    alert("All Parent IDs must be greater than 0.");
+                    isValid = false;
+                }
+            }
+
+            // Proceed with upload if all validations pass
+            if (isValid) {
+                $('#btnGDriveBulkUpload').text('Processing...').prop('disabled', true);
+                $('.modalWait').show();
+                GDriveFileUpload();
+            }
+        });
+
+        // Hide validation messages
+        function hideValidationMessages() {
+            $("#Year_IDSpan, #Subject_IDSpan, #ExamDateSpan, #TestNameSpan, #WeekNoSpan")//, #testPaperFileUpload_IDSpan, #testPaperSolutionFileUpload_IDSpan")
+                .hide();
+        }
+
+        // Enhanced validation function with custom message
+        function validateRequiredField(fieldSelector, errorSelector, message) {
+            const $field = $(fieldSelector);
+            const $error = $(errorSelector);
+            if (!$field.val() || $field.val().trim() === "") {
+                $error.text(message).show();
+                return false;
+            }
+            return true;
+        }
+
+        function validateFile(file, allowedExtensions, maxFileSize, errorMessage) {
+            if (!file) return true; // No file selected, skip validation
+            const extension = file.name.split('.').pop().toLowerCase();
+            if (!allowedExtensions.includes(extension)) {
+                alert('Invalid file type. Only PDF files are allowed.');
+                return false;
+            }
+            if (file.size > maxFileSize) {
+                alert(errorMessage);
+                return false;
+            }
+            return true;
+        }
+
+        function GDriveFileUpload() {
+
+            var testPapersList = [];
+
+            // Assuming you are using DataTables to manage the table
+            var table = $('#testPapersList').DataTable();
+
+            // Iterate over each row in the table
+            table.rows().every(function (rowIdx, tableLoop, rowLoop) {
+                var data = this.data();
+                var row = this.node();
+                var name = $(row).find('input[name="inputFileName"]').val(); // Adjust the selector based on your input element's name attribute
+                var parentId = $(row).find('input[name="inputParentId"]').val();
+
+                testPapersList.push({
+                    FileID: data.FileID, // Adjust the property names based on your table's data structure
+                    Name: data.Name,
+                    ModifiedFileName: name,
+                    ParentId: parentId,
+                    UserName: data.UserName,
+                    Size: extractDecimalValue(data.Size),
+                });
+            });
+
+
+            //submitForm();
+            $.ajax({
+                url: "/ClientDashboard/GDriveBulkUploadFiles",
+                type: "POST",
+                processData: false, // Important
+                contentType: false, // Important
+                //contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                data: (function () {
+                    var formData = new FormData();
+                    formData.append('testPapers', JSON.stringify(testPapersList));
+                    formData.append('yearId', $('#Year_ID').val());
+                    formData.append('subjectId', $('#Subject_ID').val());
+                    formData.append('examDate', $('#ExamDate').val());
+                    formData.append('testName', $('#TestName').val());
+                    formData.append('comment', $('#Comment').val());
+                    formData.append('gDriveLink', $('#txtDriveLink').val());
+                    formData.append('applicatonService', $('#service-dropdown').val());
+
+
+                    //var testPaperFile = document.getElementById('testPaperFileUpload').files[0];
+
+                    var testPaperFileUpload = document.getElementById('testPaperFileUpload');
+                    if (testPaperFileUpload) {
+                        var testPaperFile = testPaperFileUpload.files[0];
+                        if (testPaperFile) {
+                            // Validate file type (e.g., only allow PDF files)
+                            var allowedExtensions = ['pdf'];
+                            var fileExtension = testPaperFile.name.split('.').pop().toLowerCase();
+                            if ($.inArray(fileExtension, allowedExtensions) === -1) {
+                                alert('Invalid file type. Only PDF files are allowed.');
+                            } else {
+                                // Validate file size (e.g., max 200 MB)
+                                var maxFileSize = 20 * 1024 * 1024; // 20 MB in bytes
+                                if (testPaperFile.size > maxFileSize) {
+                                    alert('File size exceeds the maximum limit of 20 MB.');
+                                } else {
+                                    // Append the file to formData if all validations pass
+                                    formData.append('testPaperFile', testPaperFile);
+                                }
+                            }
+
+                        }
+                    }
+
+                    var testPaperSolutionFileUpload = document.getElementById('testPaperSolutionFileUpload');
+                    if (testPaperSolutionFileUpload) {
+                        testPaperSolutionFile = testPaperSolutionFileUpload.files[0];
+                        if (testPaperSolutionFile) {
+                            // Validate file type (e.g., only allow PDF files)
+                            var allowedExtensions = ['pdf'];
+                            var fileExtension = testPaperSolutionFile.name.split('.').pop().toLowerCase();
+                            if ($.inArray(fileExtension, allowedExtensions) === -1) {
+                                alert('Invalid file type. Only PDF files are allowed.');
+                            } else {
+                                // Validate file size (e.g., max 20 MB)
+                                var maxFileSize = 20 * 1024 * 1024; // 20 MB in bytes
+                                if (testPaperSolutionFile.size > maxFileSize) {
+                                    alert('File size exceeds the maximum limit of 20 MB.');
+                                } else {
+                                    // Append the file to formData if all validations pass
+                                    formData.append('testPaperSolutionFile', testPaperSolutionFile);
+                                }
+                            }
+                        }
+                    }
+                    return formData;
+                })(),
+                success: function (Result) {
+                    //alert(Result.redirectUrl);
+                    if (Result.success) {
+                        // Add a 2-second delay before redirecting
+                        setTimeout(function () {
+                            window.location.href = Result.redirectUrl;
+                        }, 2000);
+                    } else {
+                        // Handle error
+                        alert("An error occurred: " + Result.message);
+                    }
+                },
+            });
+        }
+
+
+        function extractDecimalValue(sizeString) {
+            if (!sizeString || sizeString.trim() === '') {
+                return 0;
+            }
+            const pattern = /\d+\.\d+/;
+            const match = sizeString.match(pattern);
+            if (match) {
+                const result = parseFloat(match[0]);
+                if (!isNaN(result)) {
+                    return result;
+                }
+            }
+            return 0;
+        }
+
+       function UpdateTestNameList(serviceName) {
+            //alert("Bind test Name");
+            // bind exam date list
+            $.ajax({
+                url: '/ClientDashboard/GetTestNameList',
+                type: 'GET',
+                data: { service: serviceName },
+                success: function (data) {
+                    var testNameDropdown = $('#DDLTestName');
+                    testNameDropdown.empty();
+                    if (data.data.length == 0) {
+                        testNameDropdown.append($('<option></option>').attr('value', "No date available").text("No date available"));
+                    }
+                    else {
+                        testNameDropdown.append($('<option></option>').attr('value', "Choose Test Paper For Update").text("Choose Test Paper For Update"));
+
+                        $.each(data.data, function (index, item) {
+                            testNameDropdown.append($('<option></option>').attr('value', item.Value).text(item.Text));
+                        });
+                    }
+                },
+                error: function (xhr, status, error) {
+                    console.error('Error fetching exam dates:', error);
+                }
+            });
+
+        }
+
+    </script>
+
+
+}

@@ -1,0 +1,208 @@
+﻿@model EduFeedback.Service.Models.AssignmentUploadFilterModel
+@using System.Web.Optimization;
+@{
+    ViewBag.Title = "Assignment Upload Status";
+    Layout = "~/Views/Shared/_Layout_new.cshtml";
+}
+<style>
+    #AssignmentUploadingStatusList_filter {
+        float: none;
+    }
+
+    div.dataTables_filter {
+        float: right;
+    }
+</style>
+<div class="pagetitle">
+    <h4>Assignment Upload Status</h4>
+</div>
+
+<section class="section profile">
+    <div class="row">
+        <div class="col-xl-12">
+            <div class="card">
+                <div class="card-body  profile-overview">
+                    <div class="form-group">
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label class="col-form-label">Choose Test Name<span class="mandatory-astrick">*</span></label>
+                                <div class="col-sm-10">
+                                    @Html.DropDownListFor(model => model.SearchTestName, new SelectList(Model.TestNameList, "Value", "Text"), null, new { @class = "form-control", id = "TestName" })
+                                    <span id="TestNameSpan" style="color:red; display:none;">Please select Test Name.</span>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="col-sm-10">
+                                    <label class="col-form-label">.</label>
+                                    <button type="button" id="btnSearchTestName" class="btn  btn-success form-control">Search By Test Name</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="table-responsive">
+                            <table id="AssignmentUploadingStatusList" class="display table table-bordered table-striped" width="100%"></table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<link href="~/Content/Datepicker/css/bootstrap-datepicker.css" rel="stylesheet" />
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script src="~/Content/Datepicker/bootstrap-datepicker.min.js"></script>
+    <script src="~/Bundle/lib/bootstrap/js/bootstrap.min.js"></script>
+    <script src="~/Scripts/moment.min.js"></script>
+
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+
+            var table = $("#AssignmentUploadingStatusList").DataTable({
+                "processing": true,
+                "filter": true,
+                "pageLength": 50,
+                dom: '<"top"f>rt<"bottom"lp><"clear">',
+                initComplete: function () {
+                    // Add a custom element for the row count
+                    $('#AssignmentUploadingStatusList_filter').append('<span id="rowCount" style="margin-left: 10px;float:left;">Total Rows: 0</span>');
+                    var rowCount = $("#AssignmentUploadingStatusList").DataTable().data().count();// table.rows().count();
+                    $('#rowCount').text('Total Rows: ' + rowCount);
+                },
+                drawCallback: function (settings) {
+                    // Code to run after the table has been redrawn
+                    var rowCount = $("#AssignmentUploadingStatusList").DataTable().data().count();// table.rows().count();
+                    $('#rowCount').text('Total Rows: ' + rowCount);
+                },
+                "ajax": {
+                    "url": "../ClientDashboard/GetAssignmentsListAPI",
+                    "type": "Get",
+                    "datatype": "json",
+                    "data": function (d) {
+                        d.testName = $('#TestName').val()
+                    }
+                },
+                "columns": [
+                    { "data": "Id", "title": "Id", "autoWidth": true },
+                    { "data": "FileName", "title": "File Name", "autoWidth": true },
+                    { "data": "Status", "title": "Status", "autoWidth": true },
+                ],
+                "order": [[0, 'asc']],
+                "rowCallback": function (row, data, dataIndex) {
+
+                    // Extract the starting word from data.Status
+                    const statusWord = data.Status.split(' ')[0];
+
+                    // Apply conditional color based on the status value
+                    if (statusWord === "Processing") {
+                        $('td', row).eq(2).css('color', 'blue');
+                        $('td', row).eq(2).html('<i class="fa fa-spinner fa-spin"></i> Processing');
+                    } else if (statusWord === "Pending") {
+                        $('td', row).eq(2).css('color', 'orange');
+                        $('td', row).eq(2).html('<i class="fa fa-spinner fa-spin"></i> Pending');
+                    }
+                    else if (statusWord === "Error") {
+                        $('td', row).eq(2).css('color', 'red');
+                        //$('td', row).eq(2).html('<i class="fa fa-times"></i> Error');
+                    }
+                    else if (statusWord === "Failed") {
+                        $('td', row).eq(2).css('color', 'red');
+                        //$('td', row).eq(2).html('<i class="fa fa-times"></i> Failed');
+                    }
+                    else if (statusWord === "Already Uploaded") {
+                        $('td', row).eq(2).css('color', 'red');
+                        //$('td', row).eq(2).html('<i class="fa fa-check"></i> Already Uploaded');
+                    }
+                    else if (statusWord === "Uploaded") {
+                        $('td', row).eq(2).css('color', 'green');
+                        //$('td', row).eq(2).html('<i class="fa fa-check"></i> Uploaded');
+                    }
+                    else {
+                        $('td', row).eq(2).css('color', 'red');
+                    }
+                }
+            });
+
+
+
+
+
+
+
+            // Function to update the status column
+            function updateStatus() {
+                //alert($('#TestName').val());
+                $.ajax({
+                    url: "../ClientDashboard/GetAssignmentsListAPI", // API endpoint to get the status
+                    type: "Get",
+                    datatype: "json",
+                    data: {
+                        testName: $('#TestName').val()
+                    },
+                    success: function (data) {
+                        if (Array.isArray(data.data)) {
+                            // Loop through the data and update the status column
+                            table.rows().every(function (rowIdx, tableLoop, rowLoop) {
+                                var rowData = this.data();
+                                var statusData = data.data.find(d => d.Id === rowData.Id);
+                                if (statusData) {
+                                    rowData.Status = statusData.Status;
+                                    this.invalidate(); // Invalidate the row data to trigger a redraw
+                                }
+                            });
+                            table.draw(); // Redraw the table to reflect the changes
+                        } else {
+                            console.error("Expected an array but got:", data);
+                        }
+                    }
+                });
+            }
+
+            // Set interval to update the status every 30 seconds
+            setInterval(updateStatus, 5000);
+
+
+            $('#btnSearchTestName').click(function () {
+                // alert($('#ExamDate').val());
+                $("#AssignmentUploadingStatusList").DataTable().ajax.reload();
+            });
+        });
+
+
+        function bindTestNameList() {
+            //alert("Bind test Name");
+            // bind exam date list
+            $.ajax({
+                url: '/ClientDashboard/GetTestNameList',
+                type: 'GET',
+                //data: { pSearchDate: selectedService },
+                success: function (data) {
+                    var testNameDropdown = $('#TestName');
+                    testNameDropdown.empty();
+                    //examDateDropdown.append($('<option></option>').attr('value', '').text('Select Date'));
+                    if (data.data.length == 0) {
+                        testNameDropdown.append($('<option></option>').attr('value', "No date available").text("No date available"));
+                    }
+                    else {
+                        $.each(data.data, function (index, item) {
+                            testNameDropdown.append($('<option></option>').attr('value', item).text(item));
+                        });
+                    }
+                    $("#ExamAssignmentList").DataTable().ajax.reload();
+                },
+                error: function (xhr, status, error) {
+                    console.error('Error fetching exam dates:', error);
+                }
+            });
+
+        }
+
+
+    </script>
+}

@@ -1,0 +1,146 @@
+﻿
+@{
+    ViewBag.Title = "ViewUploadsByTestName";
+}
+
+<div class="pagetitle">
+    <h4>View Uploads detail list</h4>
+    @*<nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item active">Student Assignment List</li>
+            </ol>
+        </nav>*@
+</div>
+<section class="section profile">
+    <div class="row">
+        <div class="col-xl-12">
+            <div class="card">
+                <div class="card-body  profile-overview">
+                    <div class="form-group">
+                        <div class="col-md-12">
+                            <div class="heading2">
+                                <h5> @ViewBag.TestName</h5>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="row">
+                        <div style="text-align:right">
+                            <a href="/ClientDashboard/ViewUploadLists" class="btn btn-danger"> Back</a>
+                        </div>
+                        <div>
+                            <h5>
+                                Total feedback done : <span id="totalFDone" style="color: #dc3545">1</span>
+                                | Total feedback Pending: <span id="totalFPending" style="color: #dc3545">10</span>
+                            </h5>
+                            <h4><a href="#" class="form-control"> <i class="bi bi-cloud-download-fill"></i> Download all feedback</a></h4>
+                        </div>
+                        <div class="col-md-4">
+
+                            @*<h4><a href="#" class="form-control"> <i class="bi bi-cloud-download"></i>Download all feedback</a></h4>
+                                <h4> <a href="#" class="form-control"> <i class="bi bi-download"></i>Download all feedback</a></h4>*@
+
+
+                        </div>
+
+                    </div>
+                    <div class="form-group">
+                        <input type="hidden" id="hdnTestName" />
+                        <input type="hidden" id="hdnSubjectId" />
+                        <div class="table-responsive">
+                            <table id="tablefeedbackList" class="display table table-bordered table-striped" width="100%"></table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script src="~/Bundle/lib/bootstrap/js/bootstrap.min.js"></script>
+    <script src="~/Scripts/moment.min.js"></script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#hdnTestName").val('@ViewBag.TestName');
+
+            var table = $("#tablefeedbackList").DataTable({
+                "serverSide": false,
+                "filter": true,
+                "pageLength": 10,
+                "bLengthChange": false,
+                'dom': 'Bfrtip',
+                "bSort": true,
+                select: true,
+                style: 'multi',
+                buttons: [
+                ],
+                "ajax": {
+                    "url": "../ClientDashboard/GetAssignmentListByCourseTestId",
+                    "type": "Get",
+                    "datatype": "json",
+                    "data": function (d) {
+                        d.testName = $("#hdnTestName").val();
+                    }
+                },
+                "columns": [
+                    { "data": "studentName", "title": "Student", "autoWidth": true, },
+                    { "data": "fileName", "title": "FileName", "autoWidth": true, },
+
+                    {
+                        "className": 'details-control',
+                        "orderable": false,
+                        "data": '',
+                        "title": "Assignment PDF",
+                        "defaultContent": '',
+                        "render": function (data, type, row) {
+                            if (row.fileName != '')
+                                return '<a href = "..' + row.filePath + '" target = "_blank" > <img width="40px" height="50px" class="" src="../Bundle/img/pdfImage.jpg" / style = "cursor:pointer" title = ' + row.fileName + ' ></a >';
+                            else
+                                return '';
+                        }
+                    },
+
+                    {
+                        "data": "assignmentSubmitedDate", "title": "Submited Date", "autoWidth": true,
+                        "render": function (value) {
+                            if (value === null) return "";
+
+                            var pattern = /Date\(([^)]+)\)/;
+                            var results = pattern.exec(value);
+                            var dt = new Date(parseFloat(results[1]));
+                            return moment(dt).format('DD-MM-YYYY');
+                        }
+                    },
+                    {
+                        "data": "feedbackUploadedPath", "title": "Feedback File", "autoWidth": true, "orderable": false,
+                        "render": function (data, type, row) {
+                            if (row.FeedbackStatus === 'Closed')
+                                return '<a href = "..' + row.FeedbackUploadedPath + '" target = "_blank" > <img width="40px" height="50px" class="" src="../Bundle/img/pdfImage.jpg" / style = "cursor:pointer" title = ' + row.feedbackFileName + ' ></a >';
+                            else
+                                return '';
+                        }
+                    },
+                    {
+                        "data": "evaluatorFeedbackDate", "title": "Feedback Date", "autoWidth": true,
+                        "render": function (value) {
+                            if (value === null) return "";
+
+                            var pattern = /Date\(([^)]+)\)/;
+                            var results = pattern.exec(value);
+                            var dt = new Date(parseFloat(results[1]));
+                            return moment(dt).format('DD-MM-YYYY');
+                        }
+                    },
+                    { "data": "feedbackStatus", "title": "FeedbackStatus", "autoWidth": true, },
+
+                ],
+                "order": [[5, 'asc']],
+            });
+        });
+    </script>
+
+}
+

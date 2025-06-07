@@ -1,0 +1,346 @@
+﻿
+@{
+    ViewBag.Title = "View Uploaded File List";
+}
+<style>
+    .reupload-status {
+        cursor: pointer;
+    }
+</style>
+
+<link href="~/Content/Datepicker/css/bootstrap-datepicker.css" rel="stylesheet" />
+<link href="~/ndesign/assets/vendor/simple-datatables/style.css" rel="stylesheet">
+<link href="~/Content/DataTables/datatables.css" rel="stylesheet" />
+
+
+<div class="pagetitle">
+    <h4>View Uploaded File List</h4>
+    @*<nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item active">Student Assignment List</li>
+            </ol>
+        </nav>*@
+</div>
+<section class="section profile">
+    <div class="row">
+        <div class="col-xl-12">
+            <div class="card">
+                <div class="card-body  profile-overview">
+                    <div class="form-group">
+                        <div class="col-md-12">
+                            <div class="heading2">
+                                <h5> @ViewBag.TestName - [ @ViewBag.SubjectName ]</h5>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="row">
+                        <div style="text-align:right">
+                            <a href="/ClientDashboard/ViewUploadTestList" class="btn btn-danger"> Back</a>
+                        </div>
+                        <div class="form-control">
+                            <h5>
+                                Feedback Done : <span id="totalFDone" style="color: #198754"></span>
+                                | Feedback Pending: <span id="totalFPending" style="color: #dc3545"></span>
+                                | Feedback Reupload: <span id="totalFReupload" style="color: #dc3545"></span>
+                                <a href="#" style="float:right;" class="download-feedbacks" data-file="@ViewBag.CourseTestId"> <i class="bi bi-cloud-download-fill"></i> Download all feedback</a>
+                            </h5>
+                        </div>
+                        <div class="col-md-4">
+
+                            @*<h4><a href="#" class="form-control"> <i class="bi bi-cloud-download"></i>Download all feedback</a></h4>
+                                <h4> <a href="#" class="form-control"> <i class="bi bi-download"></i>Download all feedback</a></h4>*@
+
+
+                        </div>
+
+                    </div>
+                    <div class="form-group">
+                        <input type="hidden" id="hdnCourseTestId" />
+                        <input type="hidden" id="hdnSubjectId" />
+                        <div class="table-responsive">
+                            <table id="StudentAssignmentList" class="display table table-bordered table-striped" width="100%"></table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script src="~/Bundle/lib/bootstrap/js/bootstrap.min.js"></script>
+    <script src="~/Scripts/moment.min.js"></script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            $("#hdnCourseTestId").val('@ViewBag.CourseTestId');
+            $("#hdnSubjectId").val('@ViewBag.SubjectId');
+
+            var table = $("#StudentAssignmentList").DataTable({
+                "serverSide": false,
+                "filter": true,
+                "pageLength": 20,
+                "bLengthChange": true,
+                'dom': 'Bfrtip',
+                "bSort": true,
+                select: true,
+                style: 'multi',
+                buttons: [
+
+                ],
+                "ajax": {
+                    "url": "../ClientDashboard/GetAssignmentListByCourseTestId",
+                    "type": "Get",
+                    "datatype": "json",
+                    "data": function (d) {
+                        d.CourseTestId = $("#hdnCourseTestId").val();
+                        d.SubjectId = $("#hdnSubjectId").val();
+                    }
+                },
+                "columns": [
+                    { "data": "parent_ID", "title": "Parent Id", "autoWidth": true, },
+                    { "data": "studentName", "title": "Student", "autoWidth": true, },
+                    { "data": "EvaluatorName", "title": "Evaluator", "autoWidth": true, },
+                    {
+                        "className": 'details-control',
+                        "orderable": false,
+                        "data": '',
+                        "title": "Upload file",
+                        "defaultContent": '',
+                        "render": function (data, type, row) {
+                            if (row.fileName != '')
+                                return '<a href="#" class="download-link-upload" target = "_blank" data-file="' + row.assignmentAllocation_ID+'">Download</a>';
+                              //  return '<a href = "..' + row.filePath + '" target = "_blank" > <img width="40px" height="50px" class="" src="../Bundle/img/pdfImage.jpg" / style = "cursor:pointer" title = ' + row.fileName + ' ></a >';
+                            else
+                                return '';
+                        }
+                    },
+
+                    {
+                        "data": "assignmentSubmitedDate", "title": "Submited Date", "autoWidth": true,
+                        "render": function (value) {
+                            if (value === null) return "";
+
+                            var pattern = /Date\(([^)]+)\)/;
+                            var results = pattern.exec(value);
+                            var dt = new Date(parseFloat(results[1]));
+                            return moment(dt).format('DD-MM-YYYY');
+                        }
+                    },
+                    {
+                        "data": "feedbackUploadedPath", "title": "Feedback file", "autoWidth": true, "orderable": false,
+                        "render": function (data, type, row) {
+                            if (row.feedbackStatus === 'Closed')
+                                return '<a href="#" class="download-link-feedback" target = "_blank" data-file="' + row.assignmentAllocation_ID +'">Download</a>';
+                                //return '<a href = "..' + row.FeedbackUploadedPath + '" target = "_blank" > <img width="40px" height="50px" class="" src="../Bundle/img/pdfImage.jpg" / style = "cursor:pointer" title = ' + row.feedbackFileName + ' ></a >';
+                            else
+                                return '';
+                        }
+                    },
+                    {
+                        "data": "evaluatorFeedbackDate", "title": "Feedback Date", "autoWidth": true,
+                        "render": function (value) {
+                            if (value === null) return "";
+
+                            var pattern = /Date\(([^)]+)\)/;
+                            var results = pattern.exec(value);
+                            var dt = new Date(parseFloat(results[1]));
+                            return moment(dt).format('DD-MM-YYYY');
+                        }
+                    },
+                    {
+                        //"data": "feedbackStatus", "title": "FeedbackStatus", "autoWidth": true,
+                        "data": "feedbackStatus", "title": "FeedbackStatus", "autoWidth": true,
+                        "render": function (data, type, row) {
+                            if (row.feedbackStatus === "ReUpload") {
+                                /*return '<span id="ReUpload" style="color: #dc3545;">' + data + '</span>';*/
+                                return '<span id="ReUpload" class="reupload-status" style="color: #dc3545;">' + data + '</span>';
+                            } else {
+                                return data;
+                            }
+                        }
+                    },
+
+                ],
+                "order": [[5, 'asc']],
+            });
+            // Add event listener for opening and closing details
+            $('#StudentAssignmentList tbody').on('click', 'td #ReUpload', function () {
+                var tr = $(this).closest('tr');
+                var row = table.row(tr);
+
+                if (row.child.isShown()) {
+                    // This row is already open - close it
+                    row.child.hide();
+                    tr.removeClass('shown');
+                } else {
+                    // Open this row
+                    row.child(format(row.data())).show();
+                    tr.addClass('shown');
+                }
+            });
+            // Format function for row details
+            function format(d) {
+                if (d.feedbackStatus === "ReUpload") {
+                    return '<div class="row">' +
+                        '<div class="col-md-6">' +
+                        '<input type="file" id="uploadFile_' + d.assignmentAllocation_ID + '" class="form-control" />' +
+                        '</div>' +
+                        '<div class="col-md-6">' +
+                        '<button class="btn btn-primary upload-btn" data-id="' + d.assignmentAllocation_ID + '">Upload</button>' +
+                        '</div>' +
+                        '</div>';
+                } else {
+                    return '';
+                }
+            }
+
+            // Handle file upload
+            $('#StudentAssignmentList tbody').on('click', 'button.upload-btn', function () {
+                var assignmentAllocationId = $(this).data('id');
+                //var courseTestName = @ViewBag.TestName;
+                // Get the closest table row
+                var tr = $(this).closest('tr').prev('tr');
+                var table = $('#StudentAssignmentList').DataTable();
+                // Retrieve the DataTable row data
+                var rowData = table.row(tr).data();
+
+
+                console.log(tr); // Check if the correct <tr> is found
+                console.log(rowData); // Check if rowData is undefined
+
+                var parentId = rowData ? rowData.parent_ID : null;
+                var studentName = rowData ? rowData.studentName : null;
+                var fileInput = $('#uploadFile_' + assignmentAllocationId)[0];
+                var file = fileInput.files[0];
+
+                if (file) {
+                    var formData = new FormData();
+                    formData.append('file', file);
+                    formData.append('assignmentAllocationId', assignmentAllocationId);
+                    formData.append('CourseTestId', $("#hdnCourseTestId").val());
+                    //formData.append('TestName', courseTestName);
+                    formData.append('StudentId', parentId);
+                    formData.append('StudentName', studentName);
+
+                    $.ajax({
+                        url: '/ClientDashboard/UploadReuploadFile',
+                        type: 'POST',
+                        data: formData,
+                        processData: false,
+                        contentType: false,
+                        success: function (response) {
+                            alert('File uploaded successfully.');
+                            table.ajax.reload();
+                        },
+                        error: function (xhr, status, error) {
+                            alert('Failed to upload file: ' + error);
+                        }
+                    });
+                } else {
+                    alert('Please select a file to upload.');
+                }
+            });
+
+
+
+
+
+            table.on('xhr', function () {
+                setTimeout(function () {
+                   countPendingStatus();
+                }, 1000);
+            });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            // Attach click event listener for download links
+            $('#StudentAssignmentList tbody').on('click', 'a.download-link-upload', function (e) {
+                e.preventDefault();
+                var fileId = $(this).data('file');
+                window.location = "/ClientDashboard/DownloadSingleFile?AssignmentAllocationId=" + fileId +"&fileType=UploadFile";
+            });
+            $('#StudentAssignmentList tbody').on('click', 'a.download-link-feedback', function (e) {
+                e.preventDefault();
+                var fileId = $(this).data('file');
+                window.location = "/ClientDashboard/DownloadSingleFile?AssignmentAllocationId=" + fileId + "&fileType=FeedbackFile";
+            });
+
+
+            $('.download-feedbacks').on('click', function (e) {
+                e.preventDefault();
+                var fileId = $(this).data('file');
+                window.location = "/ClientDashboard/DownloadFeedbackMultiFiles?TestId=" + fileId +"&name=@ViewBag.TestName";
+
+
+            });
+
+
+            function downloadFile(fileId) {
+                $.ajax({
+                    url: '/ClientDashboard/DownloadSingleFile?AssignmentAllocationId=' + fileId,
+                    method: 'GET',
+                    xhrFields: {
+                        responseType: 'blob'
+                    },
+                    success: function (data, status, xhr) {
+                        var blob = new Blob([data], { type: xhr.getResponseHeader('Content-Type') });
+                        var link = document.createElement('a');
+                        link.href = window.URL.createObjectURL(blob);
+                        link.download = fileName;
+                        document.body.appendChild(link);
+                        link.click();
+                        document.body.removeChild(link);
+                    },
+                    error: function (xhr, status, error) {
+                        alert('Failed to download file: ' + error);
+                    }
+                });
+            }
+
+            function countPendingStatus() {
+                var table = $('#StudentAssignmentList').DataTable();
+                var data = table.rows().data();
+                var countPending = 0;
+                var countReupload = 0;
+                var countDone = 0;
+
+                data.each(function (value, index) {
+                    console.log(value)
+                    // Assuming "Status" is the second column (index 1)
+                    if (value.feedbackStatus === "Pending") {
+                        countPending++;
+                    }
+                    if (value.feedbackStatus === "ReUpload") {
+                        countReupload++;
+                    }
+                    if (value.feedbackStatus === "Closed") {
+                        countDone++;
+                    }
+                });
+
+                $('#totalFPending').html(countPending);
+                $('#totalFDone').html(countDone);
+                $('#totalFReupload').html(countReupload);
+
+               // return count;
+            }
+        });
+
+
+    </script>
+
+}

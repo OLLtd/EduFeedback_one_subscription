@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="aa9f69fe46bd4db99b51e897f1653e12" Name="Diagram1">
+        <EntityTypeShape EntityType="EduFeedModel.Registration" Width="1.5" PointX="3" PointY="4" IsExpanded="true" />
+        <EntityTypeShape EntityType="EduFeedModel.SchoolYear" Width="1.5" PointX="0.75" PointY="5.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="EduFeedModel.UserProfile" Width="1.5" PointX="3" PointY="0.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="EduFeedModel.webpages_Membership" Width="1.5" PointX="5.75" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="EduFeedModel.webpages_OAuthMembership" Width="1.5" PointX="7.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="EduFeedModel.webpages_Roles" Width="1.5" PointX="0.75" PointY="0.875" IsExpanded="true" />
+        <AssociationConnector Association="EduFeedModel.fk_Year_ID2" ManuallyRouted="false" />
+        <AssociationConnector Association="EduFeedModel.webpages_UsersInRoles" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="EduFeedModel.Feature" Width="1.5" PointX="8.375" PointY="8.75" />
+        <EntityTypeShape EntityType="EduFeedModel.ROLE_USER_MAP" Width="1.5" PointX="8.25" PointY="5.125" />
+        <EntityTypeShape EntityType="EduFeedModel.Role" Width="1.5" PointX="6" PointY="8.625" />
+        <AssociationConnector Association="EduFeedModel.fk_User_ID" />
+        <AssociationConnector Association="EduFeedModel.fk_RoleID1" />
+        <AssociationConnector Association="EduFeedModel.fk_Deafult" />
+        <EntityTypeShape EntityType="EduFeedModel.Feature_ROLE_MAP" Width="1.5" PointX="10.625" PointY="9.375" />
+        <AssociationConnector Association="EduFeedModel.fk_FeatureID" />
+        <AssociationConnector Association="EduFeedModel.fk_RoleID2" />
+        <EntityTypeShape EntityType="EduFeedModel.C__MigrationHistory" Width="1.5" PointX="0.75" PointY="9.75" />
+        <EntityTypeShape EntityType="EduFeedModel.AspNetRole" Width="1.5" PointX="10.75" PointY="2.5" />
+        <EntityTypeShape EntityType="EduFeedModel.AspNetUserClaim" Width="1.5" PointX="15.25" PointY="1" />
+        <EntityTypeShape EntityType="EduFeedModel.AspNetUserLogin" Width="1.5" PointX="15.25" PointY="3.75" />
+        <EntityTypeShape EntityType="EduFeedModel.AspNetUser" Width="1.5" PointX="13" PointY="1.375" />
+        <EntityTypeShape EntityType="EduFeedModel.Subject" Width="1.5" PointX="2.75" PointY="9.75" />
+        <AssociationConnector Association="EduFeedModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" />
+        <AssociationConnector Association="EduFeedModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" />
+        <AssociationConnector Association="EduFeedModel.AspNetUserRoles" />
+        <EntityTypeShape EntityType="EduFeedModel.AssignmentUploadSatu" Width="2.875" PointX="0.75" PointY="12.75" />
+        <EntityTypeShape EntityType="EduFeedModel.Organisation" Width="1.5" PointX="4.375" PointY="12.75" />
+        <EntityTypeShape EntityType="EduFeedModel.RefreshToken" Width="1.5" PointX="10.375" PointY="12.75" />
+        <EntityTypeShape EntityType="EduFeedModel.StudentInfo" Width="1.5" PointX="12.375" PointY="12.75" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

@@ -1,0 +1,126 @@
+/**
+ * jquery-bootstrap-scrolling-tabs
+ * @version v2.6.1
+ * @link https://github.com/mikejacobson/jquery-bootstrap-scrolling-tabs
+ * @author Mike Jacobson <michaeljjacobson1@gmail.com>
+ * @license MIT License, http://www.opensource.org/licenses/MIT
+ */
+.scrtabs-tab-container * {
+    box-sizing: border-box;
+}
+
+.scrtabs-tab-container {
+    height: 60px;
+}
+
+    .scrtabs-tab-container .tab-content {
+        clear: left;
+    }
+
+    .scrtabs-tab-container.scrtabs-bootstrap4 .scrtabs-tabs-movable-container > .navbar-nav {
+        -ms-flex-direction: row;
+        flex-direction: row;
+    }
+
+.scrtabs-tabs-fixed-container {
+    float: left;
+    height: 60px;
+    overflow: hidden;
+    width: 100%;
+}
+
+.scrtabs-tabs-movable-container {
+    position: relative;
+}
+
+    .scrtabs-tabs-movable-container .tab-content {
+        display: none;
+    }
+
+.scrtabs-tab-container.scrtabs-rtl .scrtabs-tabs-movable-container > ul.nav-tabs {
+    padding-right: 0;
+}
+
+.scrtabs-tab-scroll-arrow {
+    border-top: none;
+    color: #fff;
+    display: none;
+    float: left;
+    font-size: 12px;
+    height: 49px;
+    padding-left: 5px;
+    padding-top: 13px;
+    width: 20px;
+    background-color:#78bc43;
+}
+
+    .scrtabs-tab-scroll-arrow:hover {
+        background-color: #629b36;
+    }
+
+    .scrtabs-tab-scroll-arrow,
+    .scrtabs-tab-scroll-arrow .scrtabs-click-target {
+        cursor: pointer;
+    }
+
+        .scrtabs-tab-scroll-arrow.scrtabs-with-click-target {
+            cursor: default;
+        }
+
+        .scrtabs-tab-scroll-arrow.scrtabs-disable,
+        .scrtabs-tab-scroll-arrow.scrtabs-disable .scrtabs-click-target {
+            color: #ddd;
+            cursor: default;
+        }
+
+            .scrtabs-tab-scroll-arrow.scrtabs-disable:hover {
+                background-color: initial;
+            }
+
+.scrtabs-tabs-fixed-container ul.nav-tabs > li {
+    white-space: nowrap;
+    position: relative;
+}
+
+    .scrtabs-tabs-fixed-container ul.nav-tabs > li a {
+        position: relative;
+        display: block;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        padding: 12px 24px;
+        -webkit-transition: color 0.2s;
+        transition: color 0.2s;
+        overflow: visible;
+        color:#808080;
+    }
+        .scrtabs-tabs-fixed-container ul.nav-tabs > li a.active {
+            color:#78bc43;
+        }
+
+    .scrtabs-tabs-fixed-container ul.nav-tabs > li a.active:after, .scrtabs-tabs-fixed-container ul.nav-tabs > li a.active:before {
+        position: absolute;
+        top: 100%;
+        left: 50%;
+        width: 0;
+        height: 0;
+        border: solid transparent;
+        border-top-color: transparent;
+        border-top-width: medium;
+        border-right-width: medium;
+        border-bottom-width: medium;
+        border-left-width: medium;
+        content: '';
+    }
+
+    .scrtabs-tabs-fixed-container ul.nav-tabs > li a.active:after {
+        margin-left: -10px;
+        border-width: 10px;
+        border-top-color: #fff;
+    }
+
+    .scrtabs-tabs-fixed-container ul.nav-tabs > li a.active:before {
+        margin-left: -11px;
+        border-width: 11px;
+        border-top-color: #dee2e6;
+    }

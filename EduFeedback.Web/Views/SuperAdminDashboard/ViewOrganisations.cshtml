@@ -1,0 +1,117 @@
+﻿@*@model EduFeedback.Service.Models.OrganisationFilterModel*@
+@using System.Web.Optimization;
+@{
+    ViewBag.Title = "View Organisations List";
+    Layout = "~/Views/Shared/_Layout_SuperAdmin.cshtml";
+}
+
+<link href="~/Content/Datepicker/css/bootstrap-datepicker.css" rel="stylesheet" />
+<link href="~/ndesign/assets/vendor/simple-datatables/style.css" rel="stylesheet">
+<link href="~/Content/DataTables/datatables.css" rel="stylesheet" />
+
+
+<div class="pagetitle">
+    <h4>View Organisations</h4>
+    @*<nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item active">AssignmentList</li>
+            </ol>
+        </nav>*@
+</div>
+<section class="section profile">
+    <div class="row">
+        <div class="col-xl-12">
+            <div class="card">
+                <div class="card-body  profile-overview">
+                    @*<div class="form-group">
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label class="col-form-label">Choose Organisation<span class="mandatory-astrick">*</span></label>
+                                <div class="col-sm-10">
+                                    @Html.DropDownListFor(model => model.SearchOrganisation, new SelectList(Model.OrganisationList, "Value", "Text"), null, new { @class = "form-control", id = "OrganisationDDL" })
+                                    <span id="OrganisationDDLSpan" style="color:red; display:none;">Please select organisation.</span>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="col-sm-10">
+                                    <label class="col-form-label">.</label>
+                                    <button type="button" id="btnSearchOrganisation" class="btn  btn-success form-control">Search By Organisation Name</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>*@
+                    <div class="form-group">
+                        <div class="table-responsive">
+                            <table id="OrganisationList" class="display table table-bordered table-striped" width="100%"></table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<link href="~/Content/Datepicker/css/bootstrap-datepicker.css" rel="stylesheet" />
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script src="~/Content/Datepicker/bootstrap-datepicker.min.js"></script>
+    <script src="~/Bundle/lib/bootstrap/js/bootstrap.min.js"></script>
+    <script src="~/Scripts/moment.min.js"></script>
+
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+        
+            var table = $("#OrganisationList").DataTable({
+                "processing": true,
+                "filter": true,
+                "pageLength": 10,
+
+                "ajax": {
+                    "url": "/SuperAdminDashboard/GetOrganisationListAPI",
+                    "type": "Get",
+                    "datatype": "json",
+                    //"data": function (d) {
+                    //    d.examDate = $('#ExamDate').val()
+                    //}
+                },
+                "columns": [                   
+                    {
+                        "data": "Organisation_ID", "title": "Organisation Id", "autoWidth": true
+                        //render: function (data, type, row) {
+                        //    return '<span><a href="/ClientDashboard/ViewUploadsByTestName?testName=' + row.examName + '">' + row.examName + '</a></span>';
+                        //}
+                    },                   
+                    { "data": "OrganisationName", "title": "Organisation Name", "autoWidth": true },
+                    { "data": "EmailContact", "title": "Email Id", "autoWidth": true },
+                    { "data": "Address", "title": "Address", "autoWidth": true },
+                    { "data": "Phone", "title": "Phone", "autoWidth": true },
+                    //{
+                    //    "data": "totalAssignment", "title": "Total Uploads", "autoWidth": true,
+                    //    render: function (data, type, row) {
+
+                    //        if (row.totalAssignment > 0) {
+                    //            return '<span><a href="/ClientDashboard/ViewUploadedFileList?Test_ID=' + row.exam_ID + '&SubjectId=' + row.subject_ID + '">' + row.totalAssignment + '   View</a></span>';
+                    //        }
+                    //        else
+                    //            return '';
+                    //    }
+                    //},
+                    //{
+                    //    "data": "totalFeedbackStatus", "title": "Completed Feedback", "autoWidth": true,
+                    //    render: function (data) {
+
+                    //        return data;
+                    //    }
+                    //}
+                ],
+                "order": [[0, 'asc']]
+
+            });
+
+            $('#btnSearchOrganisation').click(function () {              
+
+                $("#OrganisationList").DataTable().ajax.reload();
+            });
+        });
+    </script>
+}

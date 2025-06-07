@@ -1,0 +1,232 @@
+﻿@model EduFeedback.Service.Models.OrganisationModel
+@using System.Web.Optimization;
+@{
+    ViewBag.Title = "Create School/Tution";
+    Layout = "~/Views/Shared/_Layout_SuperAdmin.cshtml";
+}
+
+<style>
+    .mandatory-astrick {
+        color: red;
+    }
+    /*
+    .column {
+        display: block;
+        float: left;
+        width: 100px;
+        height: 100px;
+    }
+
+    #dropzone-previews {
+        max-height: 500px;
+        overflow: scroll;
+    }
+
+    .uploaded-image {
+        border-bottom: 1px solid #eee;
+    }
+
+    .dz-progress {
+        display: block;
+        height: 5px;
+    }
+
+    .dz-upload {
+        display: block;
+        height: 100%;
+        background: #b7e2b7;
+        width: 0;
+    }
+
+
+    .dz-error-message {
+        color: red;
+    }
+
+    .dz-complete, .progress {
+        display: none;
+    }
+
+    .progress-bar {
+        width: 1%;
+        height: 15px;
+        background-color: green;
+    }
+
+
+    .hr-sect {
+        display: flex;
+        flex-basis: 100%;
+        align-items: center;
+        margin: 8px 0px;
+    }
+
+        .hr-sect:before,
+        .hr-sect:after {
+            content: "";
+            flex-grow: 1;
+            background: #ddd;
+            height: 1px;
+            font-size: 0px;
+            line-height: 0px;
+            margin: 0px 8px;
+        }
+
+    .upload-content .folder-icon {
+        font-size: 49px;
+        color: #3c38ff;
+    }
+
+    .anticon {
+        display: inline-flex;
+        align-items: center;
+        color: inherit;
+        font-style: normal;
+        line-height: 0;
+        text-align: center;
+        text-transform: none;
+        vertical-align: -0.125em;
+        text-rendering: optimizeLegibility;
+    }*/
+</style>
+
+<section class="section profile">
+    <div class="row">
+        <div class="col-xl-12">
+            <div class="card">
+                <div class="card-body  profile-overview">
+                    <div class="row">
+                        <div>
+                            <h2>
+                                <span id="org-name" style="color: #dc3545">Create School/Tution</span>
+                            </h2>
+                        </div>
+
+                    </div>
+                    <div class="form-group">
+
+                        <div id="div-organisation-config">
+                            @using (Html.BeginForm("CreateOrganisation", "SuperAdminDashboard", FormMethod.Post, new { @class = "form-horizontal" }))
+                            {
+                                <div class="row mb-3">
+                                    <div class="col-md-3">
+                                        <div class="col-sm-10">
+                                            <label class="col-form-label"><span class="mandatory-astrick"></span></label>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <div class="col-sm-10">
+                                            @Html.RadioButtonFor(m => m.OrganisationType, EduFeedback.Service.Models.OrganisationModel.OrganisationTypeEnum.School, new { @id = "School" })
+                                            <label for="School">School</label>
+                                            &nbsp;&nbsp;&nbsp;&nbsp;
+                                            @Html.RadioButtonFor(m => m.OrganisationType, EduFeedback.Service.Models.OrganisationModel.OrganisationTypeEnum.Tution, new { @id = "Tution" })
+                                            <label for="Tution">Tution</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <div class="col-md-3">
+                                        <div class="col-sm-10">
+                                            <label class="col-form-label">Organisation Name<span class="mandatory-astrick">*</span></label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+
+                                        <div class="col-sm-10">
+                                            @Html.TextBoxFor(m => m.OrganisationName, new { @class = "form-control", @placeholder = "enter organisation name" })
+                                            <span id="ExamDateSpan" style="color:red; display:none;">Please organisation name.</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row mb-3">
+                                    <div class="col-md-3">
+                                        <div class="col-sm-10">
+                                            <label class="col-form-label">Organisation Address<span class="mandatory-astrick">*</span></label>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <div class="col-sm-10">
+                                            @Html.TextAreaFor(m => m.Address, new { @class = "form-control column-input", @placeholder = "enter organisation address", @rows = 5 })
+
+                                            <span id="TestNameSpan" style="color:red; display:none;">Please enter organisation address.</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <div class="row mb-3">
+                                    <div class="col-md-3">
+                                        <div class="col-sm-10">
+                                            <label class="col-form-label">Phone<span class="mandatory-astrick">*</span></label>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <div class="col-sm-10">
+                                            @Html.TextBoxFor(m => m.Phone, new { @class = "form-control column-input", @placeholder = "enter phone no." })
+                                            <span id="TestNameSpan" style="color:red; display:none;">Please enter phone no.</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <div class="row mb-3">
+                                    <div class="col-md-3">
+                                        <div class="col-sm-10">
+                                            <label class="col-form-label">Email<span class="mandatory-astrick">*</span></label>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <div class="col-sm-10">
+                                            @Html.TextBoxFor(m => m.EmailContact, new { @class = "form-control column-input", @placeholder = "enter email id" })
+                                            <span id="TestNameSpan" style="color:red; display:none;">Please enter email.</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <div class="col-md-12">
+                                    <div style="text-align:center">
+                                        <button type="submit" id="btnSaveOrganisation" class="btn btn-primary">Save Organisation</button>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+
+                        <!--<div class="row" id="upload-status-ui" style="display:none">
+                            <div class="alert alert-success alert-dismissible fade show" role="alert">-->
+                        @*<span class="spinner-border"></span>*@
+                        <!--<h4 class="alert-heading">Uploading in progress...</h4>
+
+                            </div>
+                        </div>-->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</section>
+
+@*<link href="~/Content/Datepicker/css/bootstrap-datepicker.css" rel="stylesheet" />
+    <link rel="stylesheet" href="~/Bundle/lib/dropzonejs/dropzone.min.css">
+    <link href="~/Bundle/js/dropzone/css/dropzone.css" rel="stylesheet" />*@
+
+@section Scripts {
+
+    @*@Scripts.Render("~/bundles/jqueryval")*@
+
+    <script src="~/Scripts/jquery-1.12.4.js"></script>
+    @*<script src="~/Content/Datepicker/bootstrap-datepicker.min.js"></script>*@
+    <script src="~/Bundle/lib/bootstrap/js/bootstrap.min.js"></script>
+    @*<script src="~/Bundle/lib/dropzonejs/dropzone.min.js"></script>*@
+    @*<script src="~/Bundle/js/Module/ClientDashboard-UploadAssignment.js"></script>*@
+
+}
+
+

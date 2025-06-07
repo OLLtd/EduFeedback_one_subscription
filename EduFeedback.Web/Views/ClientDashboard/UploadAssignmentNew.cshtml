@@ -1,0 +1,310 @@
+﻿@model EduFeedback.Service.Models.ClientRegistrationModel
+@using System.Web.Optimization;
+
+@{
+    ViewBag.Title = "UploadAssignment New";
+}
+<style>
+    .mandatory-astrick {
+        color: red;
+    }
+
+    .column {
+        display: block;
+        float: left;
+        width: 100px;
+        height: 100px;
+    }
+
+    #dropzone-previews {
+        max-height: 500px;
+        overflow: scroll;
+    }
+
+    .uploaded-image {
+        border-bottom: 1px solid #eee;
+    }
+
+    .dz-progress {
+        display: block;
+        height: 5px;
+    }
+
+    .dz-upload {
+        display: block;
+        height: 100%;
+        background: #b7e2b7;
+        width: 0;
+    }
+
+
+    .dz-error-message {
+        color: red;
+    }
+
+    .dz-complete, .progress {
+        display: none;
+    }
+
+    .progress-bar {
+        width: 1%;
+        height: 15px;
+        background-color: green;
+    }
+
+    .dropzone {
+        border: dashed 4px #ddd !important;
+        background-color: #f2f6fc;
+        border-radius: 15px;
+    }
+
+        .dropzone .dropzone-container {
+            padding: 2rem 0;
+            width: 100%;
+            height: 100%;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: #8c96a8;
+            z-index: 20;
+        }
+
+        .dropzone .file-input {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            opacity: 0;
+            visibility: hidden;
+            cursor: pointer;
+        }
+
+    .file-icon {
+        font-size: 60px;
+    }
+
+    .hr-sect {
+        display: flex;
+        flex-basis: 100%;
+        align-items: center;
+        margin: 8px 0px;
+    }
+
+        .hr-sect:before,
+        .hr-sect:after {
+            content: "";
+            flex-grow: 1;
+            background: #ddd;
+            height: 1px;
+            font-size: 0px;
+            line-height: 0px;
+            margin: 0px 8px;
+        }
+
+    .upload-content .folder-icon {
+        font-size: 49px;
+        color: #3c38ff;
+    }
+
+    .anticon {
+        display: inline-flex;
+        align-items: center;
+        color: inherit;
+        font-style: normal;
+        line-height: 0;
+        text-align: center;
+        text-transform: none;
+        vertical-align: -0.125em;
+        text-rendering: optimizeLegibility;
+    }
+
+    .upload-content .upload-btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        width: 142px;
+        height: 36px;
+        margin-top: 4px;
+        font-size: 12px;
+        border: none;
+        background: #3C38FF;
+        color: #fff;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, .02);
+        transition: all .3s ease;
+        cursor: pointer;
+    }
+
+    .file-input-container {
+        position: relative;
+        /* display: inline-block;*/
+    }
+
+    .file-input {
+        position: absolute;
+        left: 0;
+        top: 0;
+        opacity: 0;
+        width: 100%;
+        height: 100%;
+        cursor: pointer;
+    }
+
+    .file-label {
+        display: inline-block;
+        padding: 10px 20px;
+        background-color: #007bff;
+        color: white;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+    #progress {
+        margin-top: 20px;
+        width: 100%;
+        background-color: #f3f3f3;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        overflow: hidden;
+    }
+
+    #progress-bar {
+        width: 0;
+        height: 20px;
+        background-color: #4caf50;
+        text-align: center;
+        line-height: 20px;
+        color: white;
+    }
+</style>
+<section class="section profile">
+    <div class="row">
+        <div class="col-xl-12">
+            <div class="card">
+                <div class="card-body  profile-overview">
+                    <div class="row">
+                        <div>
+                            <h5>
+                                <span id="org-name" style="color: #dc3545"></span>
+                            </h5>
+                        </div>
+                        @*<div style="text-align:right">
+                                <a href="/MemberShipManagement/Index" class="btn btn-danger"> Back</a>
+                            </div>*@
+                    </div>
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+
+
+                                    <div class="bg-white p-5 rounded shadow-sm border">
+
+                                        <div class="dropzone" style="min-height: 40px; text-align: center; ">
+                                            <div class="upload-content">
+                                                <span role="img" class="anticon folder-icon isRtlIcon_language_ar"><svg width="1em" height="1em" viewBox="0 0 56 56" fill="currentColor"><path d="M18.9265 8.5C19.8781 8.5 20.8 8.81661 21.5488 9.39592L21.7486 9.56039L24.7042 12.1465C24.9213 12.3364 25.1896 12.4553 25.4732 12.4896L25.645 12.5H45.4286C47.7192 12.5 49.59 14.297 49.7083 16.5581L49.7143 16.7857L49.7153 25.7073C48.8539 24.9362 47.8944 24.2723 46.8579 23.7368L46.8571 16.7857C46.8571 16.046 46.295 15.4377 45.5746 15.3645L45.4286 15.3571L25.5399 15.3559L23.1091 18.3454C22.3496 19.2802 21.2346 19.8492 20.04 19.9209L19.7829 19.9286L6.85714 19.9274V38.5C6.85714 39.2397 7.41929 39.848 8.13965 39.9212L8.28571 39.9286L27.4498 39.9291C27.7563 40.9357 28.1755 41.8932 28.6926 42.7869L8.28571 42.7857C5.99513 42.7857 4.12426 40.9887 4.00594 38.7276L4 38.5V12.7857C4 10.4951 5.79698 8.62426 8.0581 8.50594L8.28571 8.5H18.9265ZM18.9265 11.3571H8.28571C7.54605 11.3571 6.93768 11.9193 6.86452 12.6397L6.85714 12.7857V17.0703L19.7829 17.0714C20.1594 17.0714 20.5182 16.923 20.7838 16.6622L20.8917 16.5437L22.76 14.2429L19.8672 11.7106C19.6502 11.5207 19.3819 11.4019 19.0982 11.3675L18.9265 11.3571ZM40.5714 24.5C46.8833 24.5 52 29.6167 52 35.9286C52 42.2404 46.8833 47.3571 40.5714 47.3571C34.2596 47.3571 29.1429 42.2404 29.1429 35.9286C29.1429 29.6167 34.2596 24.5 40.5714 24.5ZM40.5714 29.0714C39.9853 29.0714 39.5023 29.5126 39.4363 30.081L39.4286 30.2143V34.7857H34.8571C34.271 34.7857 33.788 35.2269 33.722 35.7953L33.7143 35.9286C33.7143 36.5147 34.1555 36.9977 34.7239 37.0637L34.8571 37.0714H39.4286V41.6429C39.4286 42.229 39.8698 42.712 40.4381 42.778L40.5714 42.7857C41.1575 42.7857 41.6406 42.3445 41.7066 41.7761L41.7143 41.6429V37.0714H46.2857C46.8718 37.0714 47.3549 36.6302 47.4209 36.0619L47.4286 35.9286C47.4286 35.3425 46.9874 34.8594 46.419 34.7934L46.2857 34.7857H41.7143V30.2143C41.7143 29.6282 41.2731 29.1451 40.7047 29.0791L40.5714 29.0714Z" fill="currentColor"></path></svg></span>
+                                            </div>&nbsp;&nbsp;&nbsp;Choose folder and start uploading all your files for feedback.
+
+                                            <div class="file-input-container">
+                                                <label class="file-label" for="fileInput">Choose Files</label>
+                                                <input type="file" id="fileInput" class="file-input" webkitdirectory mozdirectory msdirectory odirectory directory multiple />
+                                            </div>
+                                            @*<button id="uploadButton">Upload</button>*@
+                                            <div id="progress">
+                                                <div id="progress-bar">0%</div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    <div style="text-align:center;">
+                                        <small class="form-text text-danger"><strong>Note</strong> : You can drop up to 20 files at a time</small>
+                                    </div>
+                                    <div class="dropzone-previews" id="dz-preview" name="files"></div>
+                                    <input type="hidden" name="tempId" value="" />
+                                    <div class="progress progress-bar-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+                                        <div class="progress-bar progress-bar-striped bg-success progress-bar-animated" style="width:0%;" data-dz-uploadprogress></div>
+                                    </div>
+
+
+
+                                </div>
+                            </div>
+                        </div>
+                        <div id="div-assignment-config" style="display:none">
+
+                            <div class="row mb-3">
+                                <div>
+                                    <p class="w-80 h5 text-dark">Please fill mandatory settings for your feedback</p>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="col-form-label">Choose Year<span class="mandatory-astrick">*</span></label>
+                                    <div class="col-sm-10">
+                                        @Html.DropDownListFor(m => m.Year_ID, Model.SchoolYearList, "Choose Year", new { @class = "form-select" })
+                                        <span id="Year_IDSpan" style="color:red; display:none;">Please choose year.</span>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="col-form-label">Choose Subject<span class="mandatory-astrick">*</span></label>
+                                    <div class="col-sm-10">
+                                        @Html.DropDownListFor(m => m.Subject_ID, Model.SubjectList, "Choose Subject", new { @class = "form-select" })
+                                        <span id="Subject_IDSpan" style="color:red; display:none;">Please choose subject.</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col-md-6">
+                                    <label class="col-form-label">Choose Exam/Test Date<span class="mandatory-astrick">*</span></label>
+                                    <div class="col-sm-10">
+                                        @Html.TextBoxFor(m => m.ExamDate, "{0:dd-MM-yyyy}", new { @class = "form-control", @placeholder = "select exam date" })
+                                        <span id="ExamDateSpan" style="color:red; display:none;">Please select date.</span>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="col-form-label">Test Name<span class="mandatory-astrick">*</span></label>
+                                    <div class="col-sm-10">
+                                        <input readonly="readonly" id="TestNamePrefix" class="form-control column-input" />
+                                        @Html.TextBoxFor(m => m.TestName, new { @class = "form-control column-input", @placeholder = "enter test name", @onkeyup = "GetmaskedTestName()" })
+                                        <span id="TestNameSpan" style="color:red; display:none;">Please select TestName.</span>
+
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-12">
+                                <div style="text-align:center">
+                                    <button type="button" id="btnBulkUpload" class="btn btn-primary">Start Upload</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row" id="upload-status-ui" style="display:none">
+                            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                <span class="spinner-border"></span>
+                                <h4 class="alert-heading">Uploading in progress...</h4>
+                                <p>but still you can view the files  <span id="lnk-view-upload"></span></p>
+                                <hr />
+                                <button type="button" id="btnReset" class="btn btn-secondary">Reset</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</section>
+<link href="~/Content/Datepicker/css/bootstrap-datepicker.css" rel="stylesheet" />
+<link rel="stylesheet" href="~/Bundle/lib/dropzonejs/dropzone.min.css">
+<link href="~/Bundle/js/dropzone/css/dropzone.css" rel="stylesheet" />
+@section Scripts {
+
+    <script src="~/Scripts/jquery-1.12.4.js"></script>
+    <script src="~/Content/Datepicker/bootstrap-datepicker.min.js"></script>
+    <script src="~/Bundle/lib/bootstrap/js/bootstrap.min.js"></script>
+    <script src="~/Bundle/js/Module/ClientDashboard-UploadAssignment_new.js"></script>
+
+}
