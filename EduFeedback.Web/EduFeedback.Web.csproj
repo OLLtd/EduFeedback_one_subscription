@@ -806,6 +806,7 @@
     <Content Include="Views\Shared\_Layout_SuperAdmin.cshtml" />
     <Content Include="Views\ClientDashboard\UploadingAssignmentStatusList.cshtml" />
     <Content Include="Views\ClientDashboard\UploadAssignment - Copy.cshtml" />
+    <Content Include="Views\Home\Courses.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -830,6 +831,10 @@
     <ProjectReference Include="..\EduFeedback.Common\EduFeedback.Common.csproj">
       <Project>{698C7167-87B7-4790-8CA2-9DB57E44556E}</Project>
       <Name>EduFeedback.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\EduFeedback.Core\EduFeedback.Core.csproj">
+      <Project>{4C6A8E68-49C5-4C80-A70D-58A8E3145A67}</Project>
+      <Name>EduFeedback.Core</Name>
     </ProjectReference>
     <ProjectReference Include="..\EduFeedback.Service\EduFeedback.Service.csproj">
       <Project>{4816910B-D769-4F0F-AC6B-89CABF3B6100}</Project>

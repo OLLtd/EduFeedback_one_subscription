@@ -1,4 +1,4 @@
-﻿// T4 code generation is enabled for model 'D:\Pradeep\EduFeedback Projects\EduFeedbackWebProject\EduFeedbackProject_OrgIntegration_19032025\EduFeedback.Core\DatabaseContext\EduFeedModel.edmx'. 
+﻿// T4 code generation is enabled for model 'D:\Pradeep\GitHub\EduFeedback\EduFeedback_Original\EduFeedback_OneSubscription_V2\EduFeedback.Core\DatabaseContext\EduFeedModel.edmx'. 
 // To enable legacy code generation, change the value of the 'Code Generation Strategy' designer
 // property to 'Legacy ObjectContext'. This property is available in the Properties Window when the model
 // is open in the designer.

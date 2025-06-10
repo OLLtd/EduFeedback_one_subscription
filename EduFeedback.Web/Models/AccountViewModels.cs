@@ -106,9 +106,9 @@ namespace EduFeedback.Web.Models
 
     public class ForgotPasswordViewModel
     {
-        [Required]
-        [EmailAddress]
-        [Display(Name = "Email")]
-        public string Email { get; set; }
+        [Required(ErrorMessage = "We need your UserId to send you a reset link!")]
+        //[Display(Name = "Your User ID / Login ID")]
+        [Display(Name = "Your User ID / Login ID")]
+        public string UserID { get; set; }
     }
 }

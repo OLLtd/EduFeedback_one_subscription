@@ -38,7 +38,15 @@ namespace EduFeedback.Service.Services
                 return response;
             }
         }
-
+        public static Registration GetUserByUserID(int? User_ID)
+        {
+            using (var context = new EduFeedEntities())
+            {
+                return (from s in context.Registrations
+                        where s.User_ID == User_ID
+                        select s).SingleOrDefault();
+            }
+        }
         public async Task<int> RegisterAdminUser(RegistrationModel model)
         {
             var getRandomPassword = RandomPassword.Generate(8, 10);

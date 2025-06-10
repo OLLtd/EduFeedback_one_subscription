@@ -1,21 +1,24 @@
-﻿using System;
+﻿using EduFeedback.Common;
+using EduFeedback.Core.DatabaseContext;
+using EduFeedback.Service.Models;
+using EduFeedback.Service.Services;
+using EduFeedback.Web.Filters;
+using EduFeedback.Web.Models;
+using Google.Apis.Drive.v3.Data;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.Owin;
+using Microsoft.Owin.Security;
+using Newtonsoft.Json.Linq;
+using System;
 using System.Globalization;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
-using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Identity.Owin;
-using Microsoft.Owin.Security;
-using EduFeedback.Web.Models;
-using EduFeedback.Web.Filters;
-using WebMatrix.WebData;
-using EduFeedback.Service.Services;
-using EduFeedback.Common;
 using System.Web.Security;
-using EduFeedback.Service.Models;
-using Newtonsoft.Json.Linq;
+using WebMatrix.WebData;
+using EmailContent = EduFeedback.Service.Services.EmailContent;
 
 namespace EduFeedback.Web.Controllers
 {
@@ -324,27 +327,116 @@ namespace EduFeedback.Web.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> ForgotPassword(ForgotPasswordViewModel model)
         {
-            if (ModelState.IsValid)
-            {
-                var user = await UserManager.FindByNameAsync(model.Email);
-                if (user == null || !(await UserManager.IsEmailConfirmedAsync(user.Id)))
-                {
-                    // Don't reveal that the user does not exist or is not confirmed
-                    return View("ForgotPasswordConfirmation");
-                }
 
-                // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
-                // Send an email with this link
-                // string code = await UserManager.GeneratePasswordResetTokenAsync(user.Id);
-                // var callbackUrl = Url.Action("ResetPassword", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);		
-                // await UserManager.SendEmailAsync(user.Id, "Reset Password", "Please reset your password by clicking <a href=\"" + callbackUrl + "\">here</a>");
-                // return RedirectToAction("ForgotPasswordConfirmation", "Account");
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    MembershipUser userMemberShipData = null;
+                    var Email_ID = "";
+                    int User_ID = 0;
+                    bool isEmailActivated = false;
+                    using (var context = new EduFeedEntities())
+                    {
+                        var EmailData = (from reg in context.Registrations
+                                         where reg.UserName == model.UserID
+                                         select reg).SingleOrDefault();
+
+                        if (EmailData != null)
+                        {
+                            isEmailActivated = IsRegisteredEmailActivated(isEmailActivated, context, EmailData);
+
+                            if (EmailData != null && isEmailActivated)
+                            {
+                                Email_ID = EmailData.Email_ID;
+                                User_ID = EmailData.User_ID;
+                                userMemberShipData = Membership.GetUser(model.UserID);
+                            }
+                            else
+                            {
+                                // email not activated msg
+                                ViewBag.ErrorMessage = "Registered email not Activated";
+                                ViewBag.SuccessMessage = "";
+
+                                return View(model);
+                            }
+                        }
+
+                        if (userMemberShipData != null)
+                        {
+                            var token = WebSecurity.GeneratePasswordResetToken(userMemberShipData.UserName);
+
+                            var emailModel = new EmailModel();
+                            emailModel.OrganisationID = (EmailData.OrgnKey == null) ? 0 : EmailData.OrgnKey;
+                            emailModel.User_ID = User_ID;
+                            emailModel.ContentCode = "RESET";// "PROCOACHRESET";
+                            emailModel.AddBody = "<a href='"
+                               + Url.Action("ResetPassword", "Account", new { Code = token }, "https")
+                               + "'>Reset your Password</a>";
+                            var Result = EmailContent.SendMail(emailModel);
+
+                            if (Result == "Sent")
+                            {
+                                ViewBag.SuccessMessage = "Password reset link has been sent to your registered Email Id.";
+                            }
+                            else
+                            {
+                                ViewBag.ErrorMessage = "Email sending failed, please try again !";
+                                ModelState.AddModelError("", "Issue sending email");
+                            }
+                        }
+                        else
+                        {
+                            // Don't reveal that the user does not exist or is not confirmed
+                            return View("ForgotPasswordConfirmation");
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                String strLogMessage = "Account Controller > ForgotPassword View. ";
+                strLogMessage += " In Method (Post: ForgotPassword) , with message : " + ex.Message;
+                //   myLogger.Error(strLogMessage);
+                //ExceptionLogging.Error(strLogMessage + " " + ex.StackTrace);
             }
 
-            // If we got this far, something failed, redisplay form
             return View(model);
-        }
 
+            //if (ModelState.IsValid)
+            //{
+            //    var user = await UserManager.FindByNameAsync(model.UserID);
+            //    if (user == null || !(await UserManager.IsEmailConfirmedAsync(user.Id)))
+            //    {
+            //        // Don't reveal that the user does not exist or is not confirmed
+            //        return View("ForgotPasswordConfirmation");
+            //    }
+
+            //    // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
+            //    // Send an email with this link
+            //    // string code = await UserManager.GeneratePasswordResetTokenAsync(user.Id);
+            //    // var callbackUrl = Url.Action("ResetPassword", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);		
+            //    // await UserManager.SendEmailAsync(user.Id, "Reset Password", "Please reset your password by clicking <a href=\"" + callbackUrl + "\">here</a>");
+            //    // return RedirectToAction("ForgotPasswordConfirmation", "Account");
+            //}
+
+            //// If we got this far, something failed, redisplay form
+            //return View(model);
+        
+        
+        }
+        private static bool IsRegisteredEmailActivated(bool isEmailActivated, EduFeedEntities context, Registration EmailData)
+        {
+            var IsEmailActivated = (from p in context.UserProfiles
+                                    join web in context.webpages_Membership on p.UserId equals web.UserId
+
+                                    where web.IsConfirmed == true && p.UserName == EmailData.UserName
+                                    select p).SingleOrDefault();
+
+            if (IsEmailActivated != null)
+                isEmailActivated = true;
+            return isEmailActivated;
+        }
         //
         // GET: /Account/ForgotPasswordConfirmation
         [AllowAnonymous]
@@ -356,9 +448,9 @@ namespace EduFeedback.Web.Controllers
         //
         // GET: /Account/ResetPassword
         [AllowAnonymous]
-        public ActionResult ResetPassword(string code)
+        public ActionResult ResetPassword(string Code)
         {
-            return code == null ? View("Error") : View();
+            return Code == null ? View("Error") : View();
         }
 
         //
@@ -368,22 +460,47 @@ namespace EduFeedback.Web.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> ResetPassword(ResetPasswordViewModel model)
         {
-            if (!ModelState.IsValid)
+
+            // Clear ModelState errors for Email to exclude it from validation
+            ModelState.Remove("Email");
+
+            if (ModelState.IsValid)
             {
-                return View(model);
+                bool resetResponse = WebSecurity.ResetPassword(model.Code, model.Password);
+                if (resetResponse)
+                {
+                    // Not in used 
+                    // UserDevice.UpdateAllDeviceOnUserReset(User.Identity.Name);
+
+                    return RedirectToAction("Login");
+                    //ViewBag.SuccessMessage = "Successfully Changed";
+                    //ViewBag.ErrorMessage = "";
+                }
+                else
+                {
+                    ViewBag.ErrorMessage = "Unable to change password!";
+                    ViewBag.SuccessMessage = "";
+                }
             }
-            var user = await UserManager.FindByNameAsync(model.Email);
-            if (user == null)
-            {
-                // Don't reveal that the user does not exist
-                return RedirectToAction("ResetPasswordConfirmation", "Account");
-            }
-            var result = await UserManager.ResetPasswordAsync(user.Id, model.Code, model.Password);
-            if (result.Succeeded)
-            {
-                return RedirectToAction("ResetPasswordConfirmation", "Account");
-            }
-            AddErrors(result);
+
+
+
+            //if (!ModelState.IsValid)
+            //{
+            //    return View(model);
+            //}
+            //var user = await UserManager.FindByNameAsync(model.Email);
+            //if (user == null)
+            //{
+            //    // Don't reveal that the user does not exist
+            //    return RedirectToAction("ResetPasswordConfirmation", "Account");
+            //}
+            //var result = await UserManager.ResetPasswordAsync(user.Id, model.Code, model.Password);
+            //if (result.Succeeded)
+            //{
+            //    return RedirectToAction("ResetPasswordConfirmation", "Account");
+            //}
+            //AddErrors(result);
             return View();
         }
 

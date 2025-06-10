@@ -35,6 +35,20 @@
         <EntityTypeShape EntityType="EduFeedModel.Organisation" Width="1.5" PointX="4.375" PointY="12.75" />
         <EntityTypeShape EntityType="EduFeedModel.RefreshToken" Width="1.5" PointX="10.375" PointY="12.75" />
         <EntityTypeShape EntityType="EduFeedModel.StudentInfo" Width="1.5" PointX="12.375" PointY="12.75" />
+        <EntityTypeShape EntityType="EduFeedModel.EmailContent" Width="1.5" PointX="6.75" PointY="13.75" />
+        <EntityTypeShape EntityType="EduFeedModel.AggregatedCounter" Width="1.5" PointX="10.75" PointY="6.75" />
+        <EntityTypeShape EntityType="EduFeedModel.Counter" Width="1.5" PointX="14.75" PointY="12.75" />
+        <EntityTypeShape EntityType="EduFeedModel.Hash" Width="1.5" PointX="8.75" PointY="15.75" />
+        <EntityTypeShape EntityType="EduFeedModel.Job" Width="1.5" PointX="14.75" PointY="8.125" />
+        <EntityTypeShape EntityType="EduFeedModel.JobParameter" Width="1.5" PointX="17" PointY="7.125" />
+        <EntityTypeShape EntityType="EduFeedModel.JobQueue" Width="1.5" PointX="14.75" PointY="15.75" />
+        <EntityTypeShape EntityType="EduFeedModel.List" Width="1.5" PointX="0.75" PointY="16.75" />
+        <EntityTypeShape EntityType="EduFeedModel.Schema" Width="1.5" PointX="10.75" PointY="16.75" />
+        <EntityTypeShape EntityType="EduFeedModel.Server" Width="1.5" PointX="16.75" PointY="12.75" />
+        <EntityTypeShape EntityType="EduFeedModel.Set" Width="1.5" PointX="16.75" PointY="15.75" />
+        <EntityTypeShape EntityType="EduFeedModel.State" Width="1.5" PointX="17" PointY="9.625" />
+        <AssociationConnector Association="EduFeedModel.FK_HangFire_JobParameter_Job" />
+        <AssociationConnector Association="EduFeedModel.FK_HangFire_State_Job" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

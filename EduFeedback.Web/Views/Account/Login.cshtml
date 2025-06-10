@@ -4,8 +4,8 @@
     ViewBag.Title = "Log in";
     Layout = null;
 }
-
-<link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+<link href="~/Bundle/lib/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+@*<link href="~/Content/bootstrap.min.css" rel="stylesheet" />*@
 <link href="~/Content/signin.css" rel="stylesheet" />
 
 
@@ -24,7 +24,11 @@
     @Html.PasswordFor(m => m.Password, new { @class = "form-control", placeholder = "Password" })
     @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
 
-    <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+    <div class="inputView input-effect forgottenText" style="text-align:right;"><a href="/Account/ForgotPassword">Forgotten your password?</a></div>
+    
+    <div  class="inputView input-effect forgottenText" style="text-align:right;"><a href="#">Register & Subscribe</a></div>
+    <br />
+    <button class="btn btn-lg btn-primary btn-block" type="submit">Login</button>
 
     <hr />
     <p class="tri-id">nft@gmail.com</p>
@@ -86,12 +90,12 @@
 
     <script type="text/javascript">
         // window.history.go(-1);
-        alert('load')
-                //$(document).ready(function () {
-                //   // alert('load')
-                //    $('.tri-pwd').click(function () {
-                //        alert($(this).find('.tri-id').val())
-                //    });
-                //});
+        //alert('load')
+        //$(document).ready(function () {
+        //   // alert('load')
+        //    $('.tri-pwd').click(function () {
+        //        alert($(this).find('.tri-id').val())
+        //    });
+        //});
     </script>
 }

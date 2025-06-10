@@ -51,6 +51,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Class1.cs" />
+    <Compile Include="DatabaseContext\AggregatedCounter.cs">
+      <DependentUpon>EduFeedModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="DatabaseContext\AspNetRole.cs">
       <DependentUpon>EduFeedModel.tt</DependentUpon>
     </Compile>
@@ -64,6 +67,9 @@
       <DependentUpon>EduFeedModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DatabaseContext\AssignmentUploadSatu.cs">
+      <DependentUpon>EduFeedModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DatabaseContext\Counter.cs">
       <DependentUpon>EduFeedModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DatabaseContext\C__MigrationHistory.cs">
@@ -84,10 +90,28 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>EduFeedModel.edmx</DependentUpon>
     </Compile>
+    <Compile Include="DatabaseContext\EmailContent.cs">
+      <DependentUpon>EduFeedModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="DatabaseContext\Feature.cs">
       <DependentUpon>EduFeedModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DatabaseContext\Feature_ROLE_MAP.cs">
+      <DependentUpon>EduFeedModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DatabaseContext\Hash.cs">
+      <DependentUpon>EduFeedModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DatabaseContext\Job.cs">
+      <DependentUpon>EduFeedModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DatabaseContext\JobParameter.cs">
+      <DependentUpon>EduFeedModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DatabaseContext\JobQueue.cs">
+      <DependentUpon>EduFeedModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DatabaseContext\List.cs">
       <DependentUpon>EduFeedModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DatabaseContext\Organisation.cs">
@@ -105,7 +129,19 @@
     <Compile Include="DatabaseContext\ROLE_USER_MAP.cs">
       <DependentUpon>EduFeedModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="DatabaseContext\Schema.cs">
+      <DependentUpon>EduFeedModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="DatabaseContext\SchoolYear.cs">
+      <DependentUpon>EduFeedModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DatabaseContext\Server.cs">
+      <DependentUpon>EduFeedModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DatabaseContext\Set.cs">
+      <DependentUpon>EduFeedModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DatabaseContext\State.cs">
       <DependentUpon>EduFeedModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DatabaseContext\StudentInfo.cs">
