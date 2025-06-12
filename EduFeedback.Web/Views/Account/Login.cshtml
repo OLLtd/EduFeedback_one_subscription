@@ -4,8 +4,8 @@
     ViewBag.Title = "Log in";
     Layout = null;
 }
-<link href="~/Bundle/lib/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
-@*<link href="~/Content/bootstrap.min.css" rel="stylesheet" />*@
+
+<link href="~/Content/bootstrap.min.css" rel="stylesheet" />
 <link href="~/Content/signin.css" rel="stylesheet" />
 
 
@@ -24,15 +24,14 @@
     @Html.PasswordFor(m => m.Password, new { @class = "form-control", placeholder = "Password" })
     @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
 
-    <div class="inputView input-effect forgottenText" style="text-align:right;"><a href="/Account/ForgotPassword">Forgotten your password?</a></div>
-    
-    <div  class="inputView input-effect forgottenText" style="text-align:right;"><a href="#">Register & Subscribe</a></div>
-    <br />
-    <button class="btn btn-lg btn-primary btn-block" type="submit">Login</button>
+    <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
 
     <hr />
     <p class="tri-id">nft@gmail.com</p>
     <p class="tri-pwd">nft@1234</p>
+
+
+    <a href="/Home/Courses" class="btn btn-lg btn-primary btn-block">Go Services</a>
     @*<span class="tri-pwd"><p class="tri-id">admin@gmail.com</p>  / <label class="tri-pwd">admin@1234</label> </span>
         <span class="tri-pwd"><p class="tri-id">nft@gmail.com</p>  / <label class="tri-pwd">nft@1234</label> </span>*@
 }
@@ -90,7 +89,7 @@
 
     <script type="text/javascript">
         // window.history.go(-1);
-        //alert('load')
+        alert('load')
         //$(document).ready(function () {
         //   // alert('load')
         //    $('.tri-pwd').click(function () {

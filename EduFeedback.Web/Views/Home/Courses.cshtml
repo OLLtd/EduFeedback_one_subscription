@@ -1,17 +1,134 @@
-﻿@{
-    Layout = null;
+﻿@model EduFeedback.Models.CourseModel
+@{
+    ViewBag.Title = "Courses";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<!DOCTYPE html>
+<link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+@*<link href="~/Bundle/lib/bootstrap/css/bootstrap.min.css" rel="stylesheet" />*@
+<link href="~/Content/signin.css" rel="stylesheet" />
+@using (Html.BeginForm("Courses_Detail", "Home", FormMethod.Post, new { id = "form", @class = "form-signin", enctype = "multipart/form-data" }))
+{
+    <div class="col-md-12 offset-md-1">
+        <div class="course-info-right rounded">
+            <div class="card">
+                <div class="card-body p-4">
+                    <div class="row">
+                        <label for="inputprice" class="form-control">
+                            £7.99  per month
+                        </label>
+                    </div>
 
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title></title>
-</head>
-<body>
-    <div>
-    
+                    <div class="form-group row">
+                        <label for="inputAssignmentPerWeek" class="form-label">
+                            Assignment per week
+                        </label>
+                        <div class="col-sm-12">
+
+                            <select class="form-control valid" id="assignmentPerWeek" name="NumberOfAssignments" onchange="AssignmentPerWeekOnChange()">
+                                <option value="1">1</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="text-center1" style="color:red;" id="div_applyCouponMessage"></div>
+                    <table class="tablePrice" width="100%">
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <label>Name</label>
+                                    <input id="Name" name="Name" type="text" value="" class="form-control">
+                                    <span id="name-error" style="color:red;display:none">Name is required</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label>Email</label>
+                                    <input id="Email" name="Email" type="text" value="" class="form-control">
+                                    <span id="email-error" style="color: red; display: none">Email is required</span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <br />
+                    <button id="btn_buyNow" class="btn btn-lg btn-primary btn-block" type="button">Subscribe</button>
+                    @*<div class="buyNow" id="btn_buyNow">
+                            <a class="btn btn-primary btn-lg">Subscribe</a>
+                        </div>*@
+
+                </div>
+
+            </div>
+        </div>
     </div>
-</body>
-</html>
+
+}
+
+
+
+@section Scripts{
+    @Scripts.Render("~/bundles/jqueryval")
+
+    <script src="~/Bundle/lib/bootstrap/js/bootstrap.min.js"></script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+
+            $(".btn.btn-primary.btn-lg").click(function (e) {
+                e.preventDefault();
+                var flag = true;
+                $('#name-error').hide()
+                $('#email-error').hide()
+                var name = $('#Name').val();
+                var email = $('#Email').val();
+                // alert(name + ' ' + email);
+                if (name == '' || name == undefined) {
+                    $('#name-error').show();
+                    flag = false;
+                }
+
+                if (email == '' || email == undefined) {
+                    $('#email-error').show();
+                    flag = false;
+                }
+                else {
+                    const pattern = /^[a-zA-Z0-9._%+-]+@@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+                    const isValid = pattern.test(email);
+                    if (isValid) {
+                        flag = true;
+                    }
+                    else {
+                        $('#email-error').html('Please enter valid email Id');
+                        $('#email-error').show();
+                        flag = false;
+                    }
+                }
+
+                if (flag) {
+                    $("#form").submit();
+                }
+
+            });
+        });
+
+
+        function AssignmentPerWeekOnChange() {
+            var AssignmentPerWeek = $('#assignmentPerWeek').val();
+            var Course_ID = '1'; //$('#SchoolYear').val();
+
+            $.ajax({
+                url: '/Home/GetCoursePriceAsPerAssignment',
+                type: "GET",
+                dataType: "JSON",
+                data: { CourseId: Course_ID, Packs: AssignmentPerWeek },
+                success: function (Result) {
+                    $('#AssignmentPerWeek').val(AssignmentPerWeek);
+                    $('#PackQuantity').val(AssignmentPerWeek);
+
+                }
+            });
+        }
+
+    </script>
+}
