@@ -226,6 +226,7 @@
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\ClientDashboardController.cs" />
     <Compile Include="Controllers\GoogleDriveServiceAuthenticationController.cs" />
+    <Compile Include="Controllers\ServicesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\StudentDashboardController.cs" />
@@ -257,6 +258,7 @@
     <Content Include="Bundle\js\dropzone\dropzone.min.js" />
     <Content Include="Bundle\js\dropzone\images\spritemap%402x.png" />
     <Content Include="Bundle\js\dropzone\images\spritemap.png" />
+    <Content Include="Bundle\js\Module\Services-OneSubscription.js" />
     <Content Include="Bundle\js\Module\ClientDashboard-UploadTestList.js" />
     <Content Include="Bundle\js\Module\ClientDashboard-UploadAssignment_new.js" />
     <Content Include="Bundle\js\Module\ClientDashboard-UploadAssignment.js" />
@@ -378,6 +380,8 @@
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
+    <Content Include="ndesign\assets\css\servicesstyles.css" />
+    <Content Include="ndesign\assets\js\services.js" />
     <Content Include="ndesign\assets\css\style.css" />
     <Content Include="ndesign\assets\img\apple-touch-icon.png" />
     <Content Include="ndesign\assets\img\card.jpg" />
@@ -806,7 +810,12 @@
     <Content Include="Views\Shared\_Layout_SuperAdmin.cshtml" />
     <Content Include="Views\ClientDashboard\UploadingAssignmentStatusList.cshtml" />
     <Content Include="Views\ClientDashboard\UploadAssignment - Copy.cshtml" />
+
     <Content Include="Views\Home\Courses.cshtml" />
+
+    <Content Include="Views\Services\OneSubscription.cshtml" />
+    <Content Include="Views\Shared\_Layout_Services.cshtml" />
+
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

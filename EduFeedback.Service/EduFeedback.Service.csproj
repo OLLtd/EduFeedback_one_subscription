@@ -101,7 +101,11 @@
     <Compile Include="Interfaces\IRegistrationService.cs" />
     <Compile Include="Models\AssignmentUploadStatusModel.cs" />
     <Compile Include="Models\Client_CourseTest_MapppingModel.cs" />
+
     <Compile Include="Models\EmailModel.cs" />
+
+    <Compile Include="Models\CourseSubscriptionViewModel.cs" />
+
     <Compile Include="Models\GDriveFilesModel.cs" />
     <Compile Include="Models\AllocationModel.cs" />
     <Compile Include="Models\BulkUploadRequest.cs" />
