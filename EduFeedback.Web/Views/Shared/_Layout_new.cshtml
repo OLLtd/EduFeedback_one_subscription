@@ -55,713 +55,713 @@
         </div>
 
         <div>
-            @if (Session["UserRole"].ToString().ToLower() == "cleintadmin")
-            {
-                <div class="logo-main">
-                    <select id="organisation-dropdown" class="form-select" onchange="onOrganisationChange()" style="color: red">
-                        <option value="">Select Organisation</option>
-                    </select>
-                </div>
-            }
-            else if (Session["UserRole"].ToString().ToLower() == "client")
-            {
-                <span class="d-none d-lg-block" id="org-name-display" style="color:coral"></span>
-            }
 
-            @*Need dropdown here for organisation list*@
-
-            @*<div class="logo-main" style="float:left;">
-
-                    <select id="service-dropdown" class="form-select" onchange="onServiceChange()" style="color: red">
-                        <option value="">Select Service</option>
-                    </select>
-
-                </div>*@
-        </div>
-        <!-- End Search Bar -->
-
-        <nav class="header-nav ms-auto">
-            <ul class="d-flex align-items-center">
-
-                @*<li class="nav-item d-block d-lg-none">
-                        <a class="nav-link nav-icon search-bar-toggle " href="#">
-                            <i class="bi bi-search"></i>
-                        </a>
-                    </li>*@<!-- End Search Icon-->
-                <!--<li class="nav-item dropdown">
-
-                <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
-                    <i class="bi bi-bell"></i>
-                    <span class="badge bg-primary badge-number">4</span>
-                </a>-->
-                <!-- End Notification Icon -->
-                <!--<ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow notifications">
-                    <li class="dropdown-header">
-                        You have 4 new notifications
-                        <a href="#"><span class="badge rounded-pill bg-primary p-2 ms-2">View all</span></a>
-                    </li>
-                    <li>
-                        <hr class="dropdown-divider">
-                    </li>
-
-                    <li class="notification-item">
-                        <i class="bi bi-exclamation-circle text-warning"></i>
-                        <div>
-                            <h4>Lorem Ipsum</h4>
-                            <p>Quae dolorem earum veritatis oditseno</p>
-                            <p>30 min. ago</p>
+                    @if (Session["UserRole"].ToString().ToLower() == "cleintadmin")
+                    {
+                        <div class="logo-main">
+                            <select id="organisation-dropdown" class="form-select" onchange="onOrganisationChange()" style="color: red">
+                                <option value="">Select Organisation</option>
+                            </select>
                         </div>
-                    </li>
+                    }
+                    else if (Session["UserRole"] != null && Session["UserRole"].ToString().ToLower() == "client")
+                    {
+                        <span class="d-none d-lg-block" id="org-name-display" style="color:coral"></span>
+                    }
+                
+                @*Need dropdown here for organisation list*@
 
-                    <li>
-                        <hr class="dropdown-divider">
-                    </li>
+                @*<div class="logo-main" style="float:left;">
 
-                    <li class="notification-item">
-                        <i class="bi bi-x-circle text-danger"></i>
-                        <div>
-                            <h4>Atque rerum nesciunt</h4>
-                            <p>Quae dolorem earum veritatis oditseno</p>
-                            <p>1 hr. ago</p>
-                        </div>
-                    </li>
+                        <select id="service-dropdown" class="form-select" onchange="onServiceChange()" style="color: red">
+                            <option value="">Select Service</option>
+                        </select>
 
-                    <li>
-                        <hr class="dropdown-divider">
-                    </li>
+                    </div>*@
+            </div>
+            <!-- End Search Bar -->
 
-                    <li class="notification-item">
-                        <i class="bi bi-check-circle text-success"></i>
-                        <div>
-                            <h4>Sit rerum fuga</h4>
-                            <p>Quae dolorem earum veritatis oditseno</p>
-                            <p>2 hrs. ago</p>
-                        </div>
-                    </li>
+            <nav class="header-nav ms-auto">
+                <ul class="d-flex align-items-center">
 
-                    <li>
-                        <hr class="dropdown-divider">
-                    </li>
+                    @*<li class="nav-item d-block d-lg-none">
+                            <a class="nav-link nav-icon search-bar-toggle " href="#">
+                                <i class="bi bi-search"></i>
+                            </a>
+                        </li>*@<!-- End Search Icon-->
+                    <!--<li class="nav-item dropdown">
 
-                    <li class="notification-item">
-                        <i class="bi bi-info-circle text-primary"></i>
-                        <div>
-                            <h4>Dicta reprehenderit</h4>
-                            <p>Quae dolorem earum veritatis oditseno</p>
-                            <p>4 hrs. ago</p>
-                        </div>
-                    </li>
+                    <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
+                        <i class="bi bi-bell"></i>
+                        <span class="badge bg-primary badge-number">4</span>
+                    </a>-->
+                    <!-- End Notification Icon -->
+                    <!--<ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow notifications">
+                        <li class="dropdown-header">
+                            You have 4 new notifications
+                            <a href="#"><span class="badge rounded-pill bg-primary p-2 ms-2">View all</span></a>
+                        </li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
 
-                    <li>
-                        <hr class="dropdown-divider">
-                    </li>
-                    <li class="dropdown-footer">
-                        <a href="#">Show all notifications</a>
-                    </li>
-
-                </ul>-->
-                <!-- End Notification Dropdown Items -->
-                <!--</li>--><!-- End Notification Nav -->
-                <!--<li class="nav-item dropdown">
-
-                <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
-                    <i class="bi bi-chat-left-text"></i>
-                    <span class="badge bg-success badge-number">3</span>
-                </a>-->
-                <!-- End Messages Icon -->
-                <!--<ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow messages">
-                    <li class="dropdown-header">
-                        You have 3 new messages
-                        <a href="#"><span class="badge rounded-pill bg-primary p-2 ms-2">View all</span></a>
-                    </li>
-                    <li>
-                        <hr class="dropdown-divider">
-                    </li>
-
-                    <li class="message-item">
-                        <a href="#">
-                            <img src="~/ndesign/assets/img/messages-1.jpg" alt="" class="rounded-circle">
+                        <li class="notification-item">
+                            <i class="bi bi-exclamation-circle text-warning"></i>
                             <div>
-                                <h4>Maria Hudson</h4>
-                                <p>Velit asperiores et ducimus soluta repudiandae labore officia est ut...</p>
+                                <h4>Lorem Ipsum</h4>
+                                <p>Quae dolorem earum veritatis oditseno</p>
+                                <p>30 min. ago</p>
+                            </div>
+                        </li>
+
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+
+                        <li class="notification-item">
+                            <i class="bi bi-x-circle text-danger"></i>
+                            <div>
+                                <h4>Atque rerum nesciunt</h4>
+                                <p>Quae dolorem earum veritatis oditseno</p>
+                                <p>1 hr. ago</p>
+                            </div>
+                        </li>
+
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+
+                        <li class="notification-item">
+                            <i class="bi bi-check-circle text-success"></i>
+                            <div>
+                                <h4>Sit rerum fuga</h4>
+                                <p>Quae dolorem earum veritatis oditseno</p>
+                                <p>2 hrs. ago</p>
+                            </div>
+                        </li>
+
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+
+                        <li class="notification-item">
+                            <i class="bi bi-info-circle text-primary"></i>
+                            <div>
+                                <h4>Dicta reprehenderit</h4>
+                                <p>Quae dolorem earum veritatis oditseno</p>
                                 <p>4 hrs. ago</p>
                             </div>
+                        </li>
+
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        <li class="dropdown-footer">
+                            <a href="#">Show all notifications</a>
+                        </li>
+
+                    </ul>-->
+                    <!-- End Notification Dropdown Items -->
+                    <!--</li>--><!-- End Notification Nav -->
+                    <!--<li class="nav-item dropdown">
+
+                    <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
+                        <i class="bi bi-chat-left-text"></i>
+                        <span class="badge bg-success badge-number">3</span>
+                    </a>-->
+                    <!-- End Messages Icon -->
+                    <!--<ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow messages">
+                        <li class="dropdown-header">
+                            You have 3 new messages
+                            <a href="#"><span class="badge rounded-pill bg-primary p-2 ms-2">View all</span></a>
+                        </li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+
+                        <li class="message-item">
+                            <a href="#">
+                                <img src="~/ndesign/assets/img/messages-1.jpg" alt="" class="rounded-circle">
+                                <div>
+                                    <h4>Maria Hudson</h4>
+                                    <p>Velit asperiores et ducimus soluta repudiandae labore officia est ut...</p>
+                                    <p>4 hrs. ago</p>
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+
+                        <li class="message-item">
+                            <a href="#">
+                                <img src="~/ndesign/assets/img/messages-2.jpg" alt="" class="rounded-circle">
+                                <div>
+                                    <h4>Anna Nelson</h4>
+                                    <p>Velit asperiores et ducimus soluta repudiandae labore officia est ut...</p>
+                                    <p>6 hrs. ago</p>
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+
+                        <li class="message-item">
+                            <a href="#">
+                                <img src="~/ndesign/assets/img/messages-3.jpg" alt="" class="rounded-circle">
+                                <div>
+                                    <h4>David Muldon</h4>
+                                    <p>Velit asperiores et ducimus soluta repudiandae labore officia est ut...</p>
+                                    <p>8 hrs. ago</p>
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+
+                        <li class="dropdown-footer">
+                            <a href="#">Show all messages</a>
+                        </li>
+
+                    </ul>-->
+                    <!-- End Messages Dropdown Items -->
+                    <!--</li>--><!-- End Messages Nav -->
+                    @Html.Partial("_LoginPartial")
+
+                    <!-- End Profile Nav -->
+
+                </ul>
+            </nav><!-- End Icons Navigation -->
+
+        </header><!-- End Header -->
+        <!-- ======= Sidebar ======= -->
+        <aside id="sidebar" class="sidebar">
+
+            <ul class="sidebar-nav" id="sidebar-nav">
+
+                @if (Session["UserRole"] != null && Session["UserRole"].ToString().ToLower() == "client" || Session["UserRole"].ToString().ToLower() == "cleintadmin")
+                {
+                    @*<li class="nav-item">
+                            <a class="nav-link @Html.IsSelected(controller: "ClientDashboard", action: "Index")" href="../ClientDashboard/Index">
+                                <i class="bi bi-grid"></i>
+                                <span>Dashboard</span>
+                            </a>
+                        </li>*@
+                    <li class="nav-item">
+                        <a class="nav-link @Html.IsSelected(controller: "ClientDashboard", action: "UploadAssignment")" href="../ClientDashboard/UploadAssignment">
+                            <i class="bi bi-upload"></i>
+                            <span>Upload</span>
                         </a>
                     </li>
-                    <li>
-                        <hr class="dropdown-divider">
-                    </li>
-
-                    <li class="message-item">
-                        <a href="#">
-                            <img src="~/ndesign/assets/img/messages-2.jpg" alt="" class="rounded-circle">
-                            <div>
-                                <h4>Anna Nelson</h4>
-                                <p>Velit asperiores et ducimus soluta repudiandae labore officia est ut...</p>
-                                <p>6 hrs. ago</p>
-                            </div>
+                    <li class="nav-item">
+                        <a class="nav-link @Html.IsSelected(controller: "ClientDashboard", action: "UploadingAssignmentStatusList")" href="../ClientDashboard/UploadingAssignmentStatusList">
+                            <i class="bi bi-files"></i>
+                            <span>Uploading Status</span>
                         </a>
                     </li>
-                    <li>
-                        <hr class="dropdown-divider">
-                    </li>
-
-                    <li class="message-item">
-                        <a href="#">
-                            <img src="~/ndesign/assets/img/messages-3.jpg" alt="" class="rounded-circle">
-                            <div>
-                                <h4>David Muldon</h4>
-                                <p>Velit asperiores et ducimus soluta repudiandae labore officia est ut...</p>
-                                <p>8 hrs. ago</p>
-                            </div>
+                    <li class="nav-item">
+                        <a class="nav-link @Html.IsSelected(controller: "ClientDashboard", action: "ViewUploadTestList")" href="../ClientDashboard/ViewUploadTestList">
+                            <i class="bi bi-files"></i>
+                            <span>View Test List</span>
                         </a>
                     </li>
-                    <li>
-                        <hr class="dropdown-divider">
-                    </li>
-
-                    <li class="dropdown-footer">
-                        <a href="#">Show all messages</a>
-                    </li>
-
-                </ul>-->
-                <!-- End Messages Dropdown Items -->
-                <!--</li>--><!-- End Messages Nav -->
-                @Html.Partial("_LoginPartial")
-
-                <!-- End Profile Nav -->
-
-            </ul>
-        </nav><!-- End Icons Navigation -->
-
-    </header><!-- End Header -->
-    <!-- ======= Sidebar ======= -->
-    <aside id="sidebar" class="sidebar">
-
-        <ul class="sidebar-nav" id="sidebar-nav">
 
 
-            @if (Session["UserRole"].ToString().ToLower() == "client" || Session["UserRole"].ToString().ToLower() == "cleintadmin")
-            {
-                @*<li class="nav-item">
-                        <a class="nav-link @Html.IsSelected(controller: "ClientDashboard", action: "Index")" href="../ClientDashboard/Index">
+                }
+                @if (Session["UserRole"] != null && Session["UserRole"].ToString().ToLower() == "superadmin")
+                {
+                    <li class="nav-item">
+                        <a class="nav-link @Html.IsSelected(controller: "SuperAdminDashboard", action: "Index")" href="../SuperAdminDashboard/Index">
                             <i class="bi bi-grid"></i>
                             <span>Dashboard</span>
                         </a>
-                    </li>*@
-                <li class="nav-item">
-                    <a class="nav-link @Html.IsSelected(controller: "ClientDashboard", action: "UploadAssignment")" href="../ClientDashboard/UploadAssignment">
-                        <i class="bi bi-upload"></i>
-                        <span>Upload</span>
+                    </li><!-- End Dashboard Nav -->
+                    <li class="nav-item">
+                        <a class="nav-link" data-bs-target="#groups-nav" data-bs-toggle="collapse" href="#">
+                            <i class="bi bi-layout-text-window-reverse"></i><span>Organisation</span><i class="bi bi-chevron-down ms-auto"></i>
+                        </a>
+                        <ul id="groups-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+                            <li>
+                                <a href="../SuperAdminDashboard/CreateOrganisation" class="@Html.IsChildSelected(controller: "SuperAdminDashboard", action: "CreateOrganisation")">
+                                    <i class="bi bi-circle"></i><span>Create Organisation</span>
+                                </a>
+                            </li>
+                        </ul>
+                        <ul id="groups-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+                            <li>
+                                <a href="../SuperAdminDashboard/ViewOrganisations" class="@Html.IsChildSelected(controller: "SuperAdminDashboard", action: "ViewOrganisations")">
+                                    <i class="bi bi-circle"></i><span>View Organisations</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+
+                }
+                @if (Session["UserRole"] != null && Session["UserRole"].ToString().ToLower() == "admin")
+                {
+                    <li class="nav-item">
+                        <a class="nav-link @Html.IsSelected(controller: "Dashboard", action: "Index")" href="../Dashboard/Index">
+                            <i class="bi bi-grid"></i>
+                            <span>Dashboard</span>
+                        </a>
+                    </li><!-- End Dashboard Nav -->
+                    <li class="nav-item">
+                        <a class="nav-link" data-bs-target="#groups-nav" data-bs-toggle="collapse" href="#">
+                            <i class="bi bi-layout-text-window-reverse"></i><span>Groups</span><i class="bi bi-chevron-down ms-auto"></i>
+                        </a>
+                        <ul id="groups-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+                            <li>
+                                <a href="../GroupManagement/CreateGroup" class="@Html.IsChildSelected(controller: "GroupManagement", action: "CreateGroup")">
+                                    <i class="bi bi-circle"></i><span>Create Group</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+
+                }
+                
+
+                <!--<li class="nav-item">
+                    <a class="nav-link" data-bs-target="#components-nav" data-bs-toggle="collapse" href="#">
+                        <i class="bi bi-menu-button-wide"></i><span>Components</span><i class="bi bi-chevron-down ms-auto"></i>
                     </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link @Html.IsSelected(controller: "ClientDashboard", action: "UploadingAssignmentStatusList")" href="../ClientDashboard/UploadingAssignmentStatusList">
-                        <i class="bi bi-files"></i>
-                        <span>Uploading Status</span>
+                    <ul id="components-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+                        <li>
+                            <a href="components-alerts.html">
+                                <i class="bi bi-circle"></i><span>Alerts</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="components-accordion.html">
+                                <i class="bi bi-circle"></i><span>Accordion</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="components-badges.html">
+                                <i class="bi bi-circle"></i><span>Badges</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="components-breadcrumbs.html">
+                                <i class="bi bi-circle"></i><span>Breadcrumbs</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="components-buttons.html">
+                                <i class="bi bi-circle"></i><span>Buttons</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="components-cards.html">
+                                <i class="bi bi-circle"></i><span>Cards</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="components-carousel.html">
+                                <i class="bi bi-circle"></i><span>Carousel</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="components-list-group.html">
+                                <i class="bi bi-circle"></i><span>List group</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="components-modal.html">
+                                <i class="bi bi-circle"></i><span>Modal</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="components-tabs.html">
+                                <i class="bi bi-circle"></i><span>Tabs</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="components-pagination.html">
+                                <i class="bi bi-circle"></i><span>Pagination</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="components-progress.html">
+                                <i class="bi bi-circle"></i><span>Progress</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="components-spinners.html">
+                                <i class="bi bi-circle"></i><span>Spinners</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="components-tooltips.html">
+                                <i class="bi bi-circle"></i><span>Tooltips</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>-->
+                <!-- End Components Nav -->
+                <!--<li class="nav-item">
+                    <a class="nav-link collapsed" data-bs-target="#forms-nav" data-bs-toggle="collapse" href="#">
+                        <i class="bi bi-journal-text"></i><span>Forms</span><i class="bi bi-chevron-down ms-auto"></i>
                     </a>
-                </li>
+                    <ul id="forms-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+                        <li>
+                            <a href="forms-elements.html">
+                                <i class="bi bi-circle"></i><span>Form Elements</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="forms-layouts.html">
+                                <i class="bi bi-circle"></i><span>Form Layouts</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="forms-editors.html">
+                                <i class="bi bi-circle"></i><span>Form Editors</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="forms-validation.html">
+                                <i class="bi bi-circle"></i><span>Form Validation</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>-->
+                <!-- End Forms Nav -->
+                <!--<li class="nav-item">
+                    <a class="nav-link collapsed" data-bs-target="#tables-nav" data-bs-toggle="collapse" href="#">
+                        <i class="bi bi-layout-text-window-reverse"></i><span>Tables</span><i class="bi bi-chevron-down ms-auto"></i>
+                    </a>
+                    <ul id="tables-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+                        <li>
+                            <a href="tables-general.html">
+                                <i class="bi bi-circle"></i><span>General Tables</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="tables-data.html">
+                                <i class="bi bi-circle"></i><span>Data Tables</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>-->
+                <!-- End Tables Nav -->
+                <!--<li class="nav-item">
+                    <a class="nav-link collapsed" data-bs-target="#charts-nav" data-bs-toggle="collapse" href="#">
+                        <i class="bi bi-bar-chart"></i><span>Charts</span><i class="bi bi-chevron-down ms-auto"></i>
+                    </a>
+                    <ul id="charts-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+                        <li>
+                            <a href="charts-chartjs.html">
+                                <i class="bi bi-circle"></i><span>Chart.js</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="charts-apexcharts.html">
+                                <i class="bi bi-circle"></i><span>ApexCharts</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="charts-echarts.html">
+                                <i class="bi bi-circle"></i><span>ECharts</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>-->
+                <!-- End Charts Nav -->
+                <!--<li class="nav-item">
+                    <a class="nav-link collapsed" data-bs-target="#icons-nav" data-bs-toggle="collapse" href="#">
+                        <i class="bi bi-gem"></i><span>Icons</span><i class="bi bi-chevron-down ms-auto"></i>
+                    </a>
+                    <ul id="icons-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+                        <li>
+                            <a href="icons-bootstrap.html">
+                                <i class="bi bi-circle"></i><span>Bootstrap Icons</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="icons-remix.html">
+                                <i class="bi bi-circle"></i><span>Remix Icons</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="icons-boxicons.html">
+                                <i class="bi bi-circle"></i><span>Boxicons</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>-->
+                <!-- End Icons Nav -->
+
+
+                <li class="nav-heading">Profile</li>
                 <li class="nav-item">
-                    <a class="nav-link @Html.IsSelected(controller: "ClientDashboard", action: "ViewUploadTestList")" href="../ClientDashboard/ViewUploadTestList">
-                        <i class="bi bi-files"></i>
-                        <span>View Test List</span>
+
+                    <a class="nav-link collapsed" href="javascript:document.getElementById('logoutForm').submit()">
+                        <i class="bi bi-box-arrow-right"></i>
+                        <span>Sign Out</span>
                     </a>
                 </li>
 
+                <!--<li class="nav-item">
+                    <a class="nav-link collapsed" href="users-profile.html">
+                        <i class="bi bi-person"></i>
+                        <span>Profile</span>
+                    </a>
+                </li>-->
+                <!-- End Profile Page Nav -->
+                <!--<li class="nav-item">
+                    <a class="nav-link collapsed" href="pages-faq.html">
+                        <i class="bi bi-question-circle"></i>
+                        <span>F.A.Q</span>
+                    </a>
+                </li>-->
+                <!-- End F.A.Q Page Nav -->
+                <!--<li class="nav-item">
+                    <a class="nav-link collapsed" href="pages-contact.html">
+                        <i class="bi bi-envelope"></i>
+                        <span>Contact</span>
+                    </a>
+                </li>-->
+                <!-- End Contact Page Nav -->
+                <!--<li class="nav-item">
+                    <a class="nav-link collapsed" href="pages-register.html">
+                        <i class="bi bi-card-list"></i>
+                        <span>Register</span>
+                    </a>
+                </li>-->
+                <!-- End Register Page Nav -->
+                <!--<li class="nav-item">
+                    <a class="nav-link collapsed" href="pages-login.html">
+                        <i class="bi bi-box-arrow-in-right"></i>
+                        <span>Login</span>
+                    </a>
+                </li>-->
+                <!-- End Login Page Nav -->
+                <!--<li class="nav-item">
+                    <a class="nav-link collapsed" href="pages-error-404.html">
+                        <i class="bi bi-dash-circle"></i>
+                        <span>Error 404</span>
+                    </a>
+                </li>-->
+                <!-- End Error 404 Page Nav -->
+                <!--<li class="nav-item">
+                    <a class="nav-link collapsed" href="pages-blank.html">
+                        <i class="bi bi-file-earmark"></i>
+                        <span>Blank</span>
+                    </a>
+                </li>-->
+                <!-- End Blank Page Nav -->
 
-            }
-            @if (Session["UserRole"].ToString().ToLower() == "superadmin")
+            </ul>
+
+        </aside><!-- End Sidebar-->
+        <main id="main" class="main">
+            @if (Session["UserRole"] == null)
             {
-                <li class="nav-item">
-                    <a class="nav-link @Html.IsSelected(controller: "SuperAdminDashboard", action: "Index")" href="../SuperAdminDashboard/Index">
-                        <i class="bi bi-grid"></i>
-                        <span>Dashboard</span>
-                    </a>
-                </li><!-- End Dashboard Nav -->
-                <li class="nav-item">
-                    <a class="nav-link" data-bs-target="#groups-nav" data-bs-toggle="collapse" href="#">
-                        <i class="bi bi-layout-text-window-reverse"></i><span>Organisation</span><i class="bi bi-chevron-down ms-auto"></i>
-                    </a>
-                    <ul id="groups-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-                        <li>
-                            <a href="../SuperAdminDashboard/CreateOrganisation" class="@Html.IsChildSelected(controller: "SuperAdminDashboard", action: "CreateOrganisation")">
-                                <i class="bi bi-circle"></i><span>Create Organisation</span>
-                            </a>
-                        </li>
-                    </ul>
-                    <ul id="groups-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-                        <li>
-                            <a href="../SuperAdminDashboard/ViewOrganisations" class="@Html.IsChildSelected(controller: "SuperAdminDashboard", action: "ViewOrganisations")">
-                                <i class="bi bi-circle"></i><span>View Organisations</span>
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-
-            }
-            @if (Session["UserRole"].ToString().ToLower() == "admin")
-            {
-                <li class="nav-item">
-                    <a class="nav-link @Html.IsSelected(controller: "Dashboard", action: "Index")" href="../Dashboard/Index">
-                        <i class="bi bi-grid"></i>
-                        <span>Dashboard</span>
-                    </a>
-                </li><!-- End Dashboard Nav -->
-                <li class="nav-item">
-                    <a class="nav-link" data-bs-target="#groups-nav" data-bs-toggle="collapse" href="#">
-                        <i class="bi bi-layout-text-window-reverse"></i><span>Groups</span><i class="bi bi-chevron-down ms-auto"></i>
-                    </a>
-                    <ul id="groups-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-                        <li>
-                            <a href="../GroupManagement/CreateGroup" class="@Html.IsChildSelected(controller: "GroupManagement", action: "CreateGroup")">
-                                <i class="bi bi-circle"></i><span>Create Group</span>
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-
-            }
-
-
-            <!--<li class="nav-item">
-                <a class="nav-link" data-bs-target="#components-nav" data-bs-toggle="collapse" href="#">
-                    <i class="bi bi-menu-button-wide"></i><span>Components</span><i class="bi bi-chevron-down ms-auto"></i>
-                </a>
-                <ul id="components-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-                    <li>
-                        <a href="components-alerts.html">
-                            <i class="bi bi-circle"></i><span>Alerts</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="components-accordion.html">
-                            <i class="bi bi-circle"></i><span>Accordion</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="components-badges.html">
-                            <i class="bi bi-circle"></i><span>Badges</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="components-breadcrumbs.html">
-                            <i class="bi bi-circle"></i><span>Breadcrumbs</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="components-buttons.html">
-                            <i class="bi bi-circle"></i><span>Buttons</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="components-cards.html">
-                            <i class="bi bi-circle"></i><span>Cards</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="components-carousel.html">
-                            <i class="bi bi-circle"></i><span>Carousel</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="components-list-group.html">
-                            <i class="bi bi-circle"></i><span>List group</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="components-modal.html">
-                            <i class="bi bi-circle"></i><span>Modal</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="components-tabs.html">
-                            <i class="bi bi-circle"></i><span>Tabs</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="components-pagination.html">
-                            <i class="bi bi-circle"></i><span>Pagination</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="components-progress.html">
-                            <i class="bi bi-circle"></i><span>Progress</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="components-spinners.html">
-                            <i class="bi bi-circle"></i><span>Spinners</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="components-tooltips.html">
-                            <i class="bi bi-circle"></i><span>Tooltips</span>
-                        </a>
-                    </li>
-                </ul>
-            </li>-->
-            <!-- End Components Nav -->
-            <!--<li class="nav-item">
-                <a class="nav-link collapsed" data-bs-target="#forms-nav" data-bs-toggle="collapse" href="#">
-                    <i class="bi bi-journal-text"></i><span>Forms</span><i class="bi bi-chevron-down ms-auto"></i>
-                </a>
-                <ul id="forms-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-                    <li>
-                        <a href="forms-elements.html">
-                            <i class="bi bi-circle"></i><span>Form Elements</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="forms-layouts.html">
-                            <i class="bi bi-circle"></i><span>Form Layouts</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="forms-editors.html">
-                            <i class="bi bi-circle"></i><span>Form Editors</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="forms-validation.html">
-                            <i class="bi bi-circle"></i><span>Form Validation</span>
-                        </a>
-                    </li>
-                </ul>
-            </li>-->
-            <!-- End Forms Nav -->
-            <!--<li class="nav-item">
-                <a class="nav-link collapsed" data-bs-target="#tables-nav" data-bs-toggle="collapse" href="#">
-                    <i class="bi bi-layout-text-window-reverse"></i><span>Tables</span><i class="bi bi-chevron-down ms-auto"></i>
-                </a>
-                <ul id="tables-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-                    <li>
-                        <a href="tables-general.html">
-                            <i class="bi bi-circle"></i><span>General Tables</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="tables-data.html">
-                            <i class="bi bi-circle"></i><span>Data Tables</span>
-                        </a>
-                    </li>
-                </ul>
-            </li>-->
-            <!-- End Tables Nav -->
-            <!--<li class="nav-item">
-                <a class="nav-link collapsed" data-bs-target="#charts-nav" data-bs-toggle="collapse" href="#">
-                    <i class="bi bi-bar-chart"></i><span>Charts</span><i class="bi bi-chevron-down ms-auto"></i>
-                </a>
-                <ul id="charts-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-                    <li>
-                        <a href="charts-chartjs.html">
-                            <i class="bi bi-circle"></i><span>Chart.js</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="charts-apexcharts.html">
-                            <i class="bi bi-circle"></i><span>ApexCharts</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="charts-echarts.html">
-                            <i class="bi bi-circle"></i><span>ECharts</span>
-                        </a>
-                    </li>
-                </ul>
-            </li>-->
-            <!-- End Charts Nav -->
-            <!--<li class="nav-item">
-                <a class="nav-link collapsed" data-bs-target="#icons-nav" data-bs-toggle="collapse" href="#">
-                    <i class="bi bi-gem"></i><span>Icons</span><i class="bi bi-chevron-down ms-auto"></i>
-                </a>
-                <ul id="icons-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-                    <li>
-                        <a href="icons-bootstrap.html">
-                            <i class="bi bi-circle"></i><span>Bootstrap Icons</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="icons-remix.html">
-                            <i class="bi bi-circle"></i><span>Remix Icons</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="icons-boxicons.html">
-                            <i class="bi bi-circle"></i><span>Boxicons</span>
-                        </a>
-                    </li>
-                </ul>
-            </li>-->
-            <!-- End Icons Nav -->
-
-
-            <li class="nav-heading">Profile</li>
-            <li class="nav-item">
-
-                <a class="nav-link collapsed" href="javascript:document.getElementById('logoutForm').submit()">
-                    <i class="bi bi-box-arrow-right"></i>
-                    <span>Sign Out</span>
-                </a>
-            </li>
-
-            <!--<li class="nav-item">
-                <a class="nav-link collapsed" href="users-profile.html">
-                    <i class="bi bi-person"></i>
-                    <span>Profile</span>
-                </a>
-            </li>-->
-            <!-- End Profile Page Nav -->
-            <!--<li class="nav-item">
-                <a class="nav-link collapsed" href="pages-faq.html">
-                    <i class="bi bi-question-circle"></i>
-                    <span>F.A.Q</span>
-                </a>
-            </li>-->
-            <!-- End F.A.Q Page Nav -->
-            <!--<li class="nav-item">
-                <a class="nav-link collapsed" href="pages-contact.html">
-                    <i class="bi bi-envelope"></i>
-                    <span>Contact</span>
-                </a>
-            </li>-->
-            <!-- End Contact Page Nav -->
-            <!--<li class="nav-item">
-                <a class="nav-link collapsed" href="pages-register.html">
-                    <i class="bi bi-card-list"></i>
-                    <span>Register</span>
-                </a>
-            </li>-->
-            <!-- End Register Page Nav -->
-            <!--<li class="nav-item">
-                <a class="nav-link collapsed" href="pages-login.html">
-                    <i class="bi bi-box-arrow-in-right"></i>
-                    <span>Login</span>
-                </a>
-            </li>-->
-            <!-- End Login Page Nav -->
-            <!--<li class="nav-item">
-                <a class="nav-link collapsed" href="pages-error-404.html">
-                    <i class="bi bi-dash-circle"></i>
-                    <span>Error 404</span>
-                </a>
-            </li>-->
-            <!-- End Error 404 Page Nav -->
-            <!--<li class="nav-item">
-                <a class="nav-link collapsed" href="pages-blank.html">
-                    <i class="bi bi-file-earmark"></i>
-                    <span>Blank</span>
-                </a>
-            </li>-->
-            <!-- End Blank Page Nav -->
-
-        </ul>
-
-    </aside><!-- End Sidebar-->
-    <main id="main" class="main">
-        @if (Session["UserRole"] == null)
-        {
-            <script type="text/javascript">
+                <script type="text/javascript">
                 window.location.href = '@Url.Action("Login", "Account")';
-            </script>
-        }
-        else
-        {
-            @RenderBody()
-        }
+                </script>
+            }
+            else
+            {
+                @RenderBody()
+            }
 
 
-        <!-- ======= Footer ======= -->
-        <footer id="footer" class="footer">
-            <div class="copyright">
-                @*&copy; Copyright <strong><span>EduFeedback mgmt.</span></strong>. All Rights Reserved*@
+            <!-- ======= Footer ======= -->
+            <footer id="footer" class="footer">
+                <div class="copyright">
+                    @*&copy; Copyright <strong><span>EduFeedback mgmt.</span></strong>. All Rights Reserved*@
+                </div>
+            </footer><!-- End Footer -->
+            <div class="credits">
+
             </div>
-        </footer><!-- End Footer -->
-        <div class="credits">
+            <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
 
-        </div>
-        <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+        </main>
+        @Scripts.Render("~/bundles/jquery")
+        @Scripts.Render("~/bundles/bootstrap")
 
-    </main>
-    @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/bootstrap")
+        <script src="~/Content/DataTables/datatables.min.js"></script>
 
-    <script src="~/Content/DataTables/datatables.min.js"></script>
+        <!-- Vendor JS Files -->
+        <script src="~/ndesign/assets/vendor/apexcharts/apexcharts.min.js"></script>
+        <script src="~/ndesign/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+        <script src="~/ndesign/assets/vendor/chart.js/chart.min.js"></script>
+        <script src="~/ndesign/assets/vendor/echarts/echarts.min.js"></script>
+        <script src="~/ndesign/assets/vendor/quill/quill.min.js"></script>
+        <script src="~/ndesign/assets/vendor/tinymce/tinymce.min.js"></script>
+        <script src="~/ndesign/assets/vendor/php-email-form/validate.js"></script>
 
-    <!-- Vendor JS Files -->
-    <script src="~/ndesign/assets/vendor/apexcharts/apexcharts.min.js"></script>
-    <script src="~/ndesign/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <script src="~/ndesign/assets/vendor/chart.js/chart.min.js"></script>
-    <script src="~/ndesign/assets/vendor/echarts/echarts.min.js"></script>
-    <script src="~/ndesign/assets/vendor/quill/quill.min.js"></script>
-    <script src="~/ndesign/assets/vendor/tinymce/tinymce.min.js"></script>
-    <script src="~/ndesign/assets/vendor/php-email-form/validate.js"></script>
+        <!-- Template Main JS File -->
+        <script src="~/ndesign/assets/js/main.js"></script>
+        @RenderSection("scripts", required: false)
 
-    <!-- Template Main JS File -->
-    <script src="~/ndesign/assets/js/main.js"></script>
-    @RenderSection("scripts", required: false)
+        <script type="text/javascript">
+            $(document).ready(function () {
+                //$(function () {
+                //    $.validator.methods.date = function (value, element) {
+                //        return this.optional(element) || moment(value, "DD-MM-YYYY", true).isValid();
+                //    }
+                //});
 
-    <script type="text/javascript">
-        $(document).ready(function () {
-            //$(function () {
-            //    $.validator.methods.date = function (value, element) {
-            //        return this.optional(element) || moment(value, "DD-MM-YYYY", true).isValid();
-            //    }
-            //});
+                PopulateOrganisationMeta();
+                PopulateOrganisationDropdown();
+                //PopulateServiceDropdown();
+                //$('#ddlRecordYear').change(function () {
+                //    ReLoadRecorYear();
+                //});
 
-            PopulateOrganisationMeta();
-            PopulateOrganisationDropdown();
-            //PopulateServiceDropdown();
-            //$('#ddlRecordYear').change(function () {
-            //    ReLoadRecorYear();
-            //});
+            });
+            function PopulateOrganisationMeta() {
 
-        });
-        function PopulateOrganisationMeta() {
-
-            $.ajax({
-                url: "/ClientDashboard/GetOrganisationDetail",
-                type: "GET",
-                dataType: "json",
-                sync: true,
-                success: function (Result) {
-                    if (Result.data != null) {
-                        $('#org-name-display').html(Result.data.OrganisationName);
-                    }
-                },
-            })
-        }
-        function PopulateOrganisationDropdown() {
+                $.ajax({
+                    url: "/ClientDashboard/GetOrganisationDetail",
+                    type: "GET",
+                    dataType: "json",
+                    sync: true,
+                    success: function (Result) {
+                        if (Result.data != null) {
+                            $('#org-name-display').html(Result.data.OrganisationName);
+                        }
+                    },
+                })
+            }
+            function PopulateOrganisationDropdown() {
 
 
 
-            $.ajax({
-                url: "/ClientDashboard/GetOrganisationList",
-                type: "GET",
-                dataType: "json",
-                success: function (Result) {
-                    if (Result.data != null) {
-                        var dropdown = $('#organisation-dropdown');
-                        dropdown.empty();
-                        /*dropdown.append('<option value="">Select Organisation</option>');*/
-                        $.each(Result.data, function (key, entry) {
-                            dropdown.append($('<option></option>').attr('value', entry.Organisation_ID).text(entry.OrganisationName));
-                        });
+                $.ajax({
+                    url: "/ClientDashboard/GetOrganisationList",
+                    type: "GET",
+                    dataType: "json",
+                    success: function (Result) {
+                        if (Result.data != null) {
+                            var dropdown = $('#organisation-dropdown');
+                            dropdown.empty();
+                            /*dropdown.append('<option value="">Select Organisation</option>');*/
+                            $.each(Result.data, function (key, entry) {
+                                dropdown.append($('<option></option>').attr('value', entry.Organisation_ID).text(entry.OrganisationName));
+                            });
 
-                        // Check if Session["OrgId"] is initialized
-                        $.ajax({
-                            url: "/ClientDashboard/GetCurrentOrganisationId",
-                            type: "GET",
-                            dataType: "json",
-                            success: function (orgIdResult) {
-                                if (orgIdResult.OrgId != null && orgIdResult.OrgId > 0) {
-                                    dropdown.val(orgIdResult.OrgId);
+                            // Check if Session["OrgId"] is initialized
+                            $.ajax({
+                                url: "/ClientDashboard/GetCurrentOrganisationId",
+                                type: "GET",
+                                dataType: "json",
+                                success: function (orgIdResult) {
+                                    if (orgIdResult.OrgId != null && orgIdResult.OrgId > 0) {
+                                        dropdown.val(orgIdResult.OrgId);
+                                    }
                                 }
+                            });
+                        }
+                    },
+                });
+            }
+            function onOrganisationChange() {
+                var selectedOrg = $('#organisation-dropdown').val();
+                // Handle the change event as needed
+                //alert(selectedOrg);
+
+                // Fetch studentNameMapping for the selected organization
+                $.ajax({
+                    url: "/ClientDashboard/GetStudentNameMapping",
+                    type: "GET",
+                    data: { orgId: selectedOrg },
+                    dataType: "json",
+                    success: function (result) {
+                        if (result.success && result.studentNameMapping !== undefined) {
+                            // Store studentNameMapping globally or trigger an event
+                            window.studentNameMapping = result.studentNameMapping;
+
+                            // Trigger a custom event to notify the content page
+                            $(document).trigger("studentNameMappingUpdated", [window.studentNameMapping]);
+                        } else {
+                            console.log("Failed to fetch studentNameMapping: " + result.message);
+                        }
+
+                        updateSessionValue("OrgId", selectedOrg);
+                    },
+                    error: function (xhr, status, error) {
+                        console.log("Error fetching studentNameMapping: " + error);
+                    }
+                });
+            }
+
+
+
+            function updateSessionValue(key, value) {
+                //alert("key: " + key + ", value: " + value);
+
+                $.ajax({
+                    url: "/ClientDashboard/UpdateSessionValue",
+                    type: "POST",
+                    data: { key: key, value: value },
+                    success: function (response) {
+                        if (response.success) {
+                            console.log("Session value updated successfully.");
+                            // Get the current page path (e.g., "/ClientDashboard/UploadAssignment")
+                            var currentPage = window.location.pathname.toLowerCase();
+
+                            // Check if the method is defined and call it
+                            if (typeof onServiceChange === "function" && key == "OrgId") {
+                                onServiceChange();
                             }
-                        });
-                    }
-                },
-            });
-        }
-        function onOrganisationChange() {
-            var selectedOrg = $('#organisation-dropdown').val();
-            // Handle the change event as needed
-            //alert(selectedOrg);
 
-            // Fetch studentNameMapping for the selected organization
-            $.ajax({
-                url: "/ClientDashboard/GetStudentNameMapping",
-                type: "GET",
-                data: { orgId: selectedOrg },
-                dataType: "json",
-                success: function (result) {
-                    if (result.success && result.studentNameMapping !== undefined) {
-                        // Store studentNameMapping globally or trigger an event
-                        window.studentNameMapping = result.studentNameMapping;
+                            // Check if the method is defined and call it
+                            if (typeof bindTestNameList === "function" && key == "OrgId") {
+                                //alert("Bind test Name -- 1");
+                                bindTestNameList();   // binding the courseTestName for page "UploadingAssignmentStatusList"
+                            }
+                            // Check if the method is defined and call it
+                            //if (typeof GetmaskedTestName === "function" && key == "OrgId") {
+                            //    //alert("Bind test Name -- 1");
+                            //    GetmaskedTestName();   // binding the courseTestName for page "UploadingAssignmentStatusList"
+                            //}
 
-                        // Trigger a custom event to notify the content page
-                        $(document).trigger("studentNameMappingUpdated", [window.studentNameMapping]);
-                    } else {
-                        console.log("Failed to fetch studentNameMapping: " + result.message);
-                    }
+                            // Check if the method is defined and call it
+                            //if (typeof UpdateTestNameList === "function" && key == "OrgId") {
+                            //    //alert("Bind test Name -- 1");
+                            //    UpdateTestNameList();   // binding the courseTestName for page "UploadingAssignment"
+                            //}
 
-                    updateSessionValue("OrgId", selectedOrg);
-                },
-                error: function (xhr, status, error) {
-                    console.log("Error fetching studentNameMapping: " + error);
-                }
-            });
-        }
+                            // Check if the method is defined and call it
+                            //if (typeof getFilesFromDrive === "function" && key == "OrgId") {
+                            if (currentPage.includes("uploadassignment") && key == "OrgId") {
+                                UpdateTestNameList();   // binding the courseTestName for page "UploadingAssignment"
+                                getFilesFromDrive();    // binding the Grid for page "UploadAssignment"
+                                GetmaskedTestName();   // binding the courseTestName for page "UploadingAssignment"
+                            }
 
-
-
-        function updateSessionValue(key, value) {
-            //alert("key: " + key + ", value: " + value);
-
-            $.ajax({
-                url: "/ClientDashboard/UpdateSessionValue",
-                type: "POST",
-                data: { key: key, value: value },
-                success: function (response) {
-                    if (response.success) {
-                        console.log("Session value updated successfully.");
-                        // Get the current page path (e.g., "/ClientDashboard/UploadAssignment")
-                        var currentPage = window.location.pathname.toLowerCase();
-
-                        // Check if the method is defined and call it
-                        if (typeof onServiceChange === "function" && key == "OrgId") {
-                            onServiceChange();
+                        } else {
+                            console.log("Failed to update session value.");
                         }
-
-                        // Check if the method is defined and call it
-                        if (typeof bindTestNameList === "function" && key == "OrgId") {
-                            //alert("Bind test Name -- 1");
-                            bindTestNameList();   // binding the courseTestName for page "UploadingAssignmentStatusList"
-                        }
-                        // Check if the method is defined and call it
-                        //if (typeof GetmaskedTestName === "function" && key == "OrgId") {
-                        //    //alert("Bind test Name -- 1");
-                        //    GetmaskedTestName();   // binding the courseTestName for page "UploadingAssignmentStatusList"
-                        //}
-
-                        // Check if the method is defined and call it
-                        //if (typeof UpdateTestNameList === "function" && key == "OrgId") {
-                        //    //alert("Bind test Name -- 1");
-                        //    UpdateTestNameList();   // binding the courseTestName for page "UploadingAssignment"
-                        //}
-
-                        // Check if the method is defined and call it
-                        //if (typeof getFilesFromDrive === "function" && key == "OrgId") {    
-                        if (currentPage.includes("uploadassignment") && key == "OrgId") {    
-                            UpdateTestNameList();   // binding the courseTestName for page "UploadingAssignment"
-                            getFilesFromDrive();    // binding the Grid for page "UploadAssignment"
-                            GetmaskedTestName();   // binding the courseTestName for page "UploadingAssignment"
-                        }
-
-                    } else {
-                        console.log("Failed to update session value.");
+                    },
+                    error: function (xhr, status, error) {
+                        console.log("Error updating session value: " + error);
                     }
-                },
-                error: function (xhr, status, error) {
-                    console.log("Error updating session value: " + error);
-                }
-            });
-        }
+                });
+            }
 
 
 
 
-        //function PopulateServiceDropdown() {
-        //    var dropdown = $('#service-dropdown');
-        //    dropdown.empty();
-        //    dropdown.append($('<option></option>').attr('value', 1).text("GCSE"));
-        //    dropdown.append($('<option></option>').attr('value', 2).text("L2W"));
-        //}
-        //function onServiceChange() {
-        //    var selectedOrg = $('#service-dropdown').val();
-        //    // Handle the change event as needed
-        //}
+            //function PopulateServiceDropdown() {
+            //    var dropdown = $('#service-dropdown');
+            //    dropdown.empty();
+            //    dropdown.append($('<option></option>').attr('value', 1).text("GCSE"));
+            //    dropdown.append($('<option></option>').attr('value', 2).text("L2W"));
+            //}
+            //function onServiceChange() {
+            //    var selectedOrg = $('#service-dropdown').val();
+            //    // Handle the change event as needed
+            //}
 
-    </script>
-</body>
+        </script>
+    </body>
 </html>
 

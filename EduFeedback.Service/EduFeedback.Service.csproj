@@ -99,26 +99,22 @@
     <Compile Include="Interfaces\ISuperAdminService.cs" />
     <Compile Include="Interfaces\IFeatureService.cs" />
     <Compile Include="Interfaces\IRegistrationService.cs" />
-    <Compile Include="Models\AssignmentUploadStatusModel.cs" />
-    <Compile Include="Models\Client_CourseTest_MapppingModel.cs" />
-
-    <Compile Include="Models\EmailModel.cs" />
-
-    <Compile Include="Models\CourseSubscriptionViewModel.cs" />
-
-    <Compile Include="Models\GDriveFilesModel.cs" />
-    <Compile Include="Models\AllocationModel.cs" />
-    <Compile Include="Models\BulkUploadRequest.cs" />
-    <Compile Include="Models\ClientRegistrationModel.cs" />
-    <Compile Include="Models\ExamDisplayListModel.cs" />
-    <Compile Include="Models\ExamListRequest.cs" />
-    <Compile Include="Models\FeatureModel.cs" />
-    <Compile Include="Models\OrganisationModel.cs" />
-    <Compile Include="Models\RegistrationModel.cs" />
-    <Compile Include="Models\SchoolYearModel.cs" />
-    <Compile Include="Models\SubjectModel.cs" />
-    <Compile Include="Models\TestAssignmentFilterModel.cs" />
-    <Compile Include="Models\UsersContext.cs" />
+    <Compile Include="ServiceModels\AssignmentUploadStatusModel.cs" />
+    <Compile Include="ServiceModels\Client_CourseTest_MapppingModel.cs" />
+    <Compile Include="ServiceModels\EmailModel.cs" />
+    <Compile Include="ServiceModels\GDriveFilesModel.cs" />
+    <Compile Include="ServiceModels\AllocationModel.cs" />
+    <Compile Include="ServiceModels\BulkUploadRequest.cs" />
+    <Compile Include="ServiceModels\ClientRegistrationModel.cs" />
+    <Compile Include="ServiceModels\ExamDisplayListModel.cs" />
+    <Compile Include="ServiceModels\ExamListRequest.cs" />
+    <Compile Include="ServiceModels\FeatureModel.cs" />
+    <Compile Include="ServiceModels\OrganisationModel.cs" />
+    <Compile Include="ServiceModels\RegistrationModel.cs" />
+    <Compile Include="ServiceModels\SchoolYearModel.cs" />
+    <Compile Include="ServiceModels\SubjectModel.cs" />
+    <Compile Include="ServiceModels\TestAssignmentFilterModel.cs" />
+    <Compile Include="ServiceModels\UsersContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\AssignmentService.cs" />
     <Compile Include="Services\EmailContent.cs" />

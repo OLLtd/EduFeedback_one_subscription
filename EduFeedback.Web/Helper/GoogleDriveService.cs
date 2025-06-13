@@ -1,4 +1,4 @@
-using EduFeedback.Service.Models;
+using EduFeedback.Service.ServiceModels;
 using EduFeedback.Web.Models;
 using Google.Apis.Auth.OAuth2;
 using Google.Apis.Auth.OAuth2.Flows;

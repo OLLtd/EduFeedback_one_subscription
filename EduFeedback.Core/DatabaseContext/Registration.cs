@@ -18,6 +18,8 @@ namespace EduFeedback.Core.DatabaseContext
         public Registration()
         {
             this.ROLE_USER_MAP = new HashSet<ROLE_USER_MAP>();
+            this.Multi_Purchase_Order = new HashSet<Multi_Purchase_Order>();
+            this.Course_Purchase = new HashSet<Course_Purchase>();
         }
     
         public int User_ID { get; set; }
@@ -35,9 +37,15 @@ namespace EduFeedback.Core.DatabaseContext
         public Nullable<int> OrgnKey { get; set; }
         public Nullable<System.DateTime> UpdatedDate { get; set; }
         public string ClientUser_ID { get; set; }
+        public Nullable<int> l2w_parent_id { get; set; }
+        public Nullable<int> gcse_parent_id { get; set; }
     
         public virtual SchoolYear SchoolYear { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ROLE_USER_MAP> ROLE_USER_MAP { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Multi_Purchase_Order> Multi_Purchase_Order { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Course_Purchase> Course_Purchase { get; set; }
     }
 }

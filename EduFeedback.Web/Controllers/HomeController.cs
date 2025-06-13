@@ -1,6 +1,10 @@
-﻿using EduFeedback.Service.Models;
+﻿using EduFeedback.Core.DatabaseContext;
+using EduFeedback.Models;
+using EduFeedback.Payment.StripePayment;
+using EduFeedback.Service.ServiceModels;
 using EduFeedback.Service.Services;
 using EduFeedback.Web.Filters;
+using EduFeedback.Web.Helper.Cart;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -79,5 +83,44 @@ namespace EduFeedback.Web.Controllers
 
             return View();
         }
+
+        public ActionResult Courses()
+        {
+            CourseModel courseModel = Course_Master.GetCourseDetail(1);
+            courseModel.Parent_ID = 11;
+           // courseModel.NumberOfAssignments = Course_Master.GetList(int.Parse(courseId));
+
+            //Subject subjectModel = Course_Master.SubjectDetail((int)courseModel.Subject_ID);
+           // courseModel.Subject = subjectModel.Subject_name;
+
+
+            return View(courseModel);
+        }
+
+        [HttpPost]
+        public ActionResult Courses_Detail(CourseModel model, string Name, string Email)
+        {
+            CoursePurchaseModel coursePayment = new CoursePurchaseModel();
+            try
+            {
+                CartHelper.AddProductToCart((int)model.Course_ID, (int)model.AssignmentPerWeek);
+
+
+                return RedirectToAction("Checkout", "Cart", new { Name = Name, Email = Email });
+
+        
+            }
+            catch (Exception ex)
+            {
+                String strLogMessage = "Home Management Controller > ServicesDetails ";
+                strLogMessage += " In Method (Post : ServicesDetails) , with message : " + ex.Message;
+                // myLogger.Error(strLogMessage + " " + ex.StackTrace);
+
+            }
+
+            coursePayment.Strip_PK_Key = StripeConstants.Security_PublishKey.ToString();
+            return View("Stripes", coursePayment);
+        }
+
     }
 }

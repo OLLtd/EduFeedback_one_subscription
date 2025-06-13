@@ -1,4 +1,4 @@
-﻿using EduFeedback.Service.Models;
+﻿using EduFeedback.Service.ServiceModels;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;

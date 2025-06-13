@@ -1,5 +1,5 @@
 ﻿using EduFeedback.Core.DatabaseContext;
-using EduFeedback.Service.Models;
+using EduFeedback.Service.ServiceModels;
 using System;
 using System.Collections;
 using System.Collections.Generic;

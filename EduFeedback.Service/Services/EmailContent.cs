@@ -4,7 +4,7 @@ using System.Configuration;
 using System.Linq;
 using System.Web;
 using System.Net.Mail;
-using EduFeedback.Service.Models;
+using EduFeedback.Service.ServiceModels;
 using log4net;
 using log4net.Config;
 using System.IO;
