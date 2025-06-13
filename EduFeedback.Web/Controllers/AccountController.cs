@@ -1,6 +1,6 @@
 ﻿using EduFeedback.Common;
 using EduFeedback.Core.DatabaseContext;
-using EduFeedback.Service.ServiceModels;
+using EduFeedback.Service.Models;
 using EduFeedback.Service.Services;
 using EduFeedback.Web.Filters;
 using EduFeedback.Web.Models;

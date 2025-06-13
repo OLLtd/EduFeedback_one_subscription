@@ -91,9 +91,6 @@
     <Reference Include="SimpleInjector.Integration.Web.Mvc, Version=5.0.0.0, Culture=neutral, PublicKeyToken=984cb50dea722e99, processorArchitecture=MSIL">
       <HintPath>packages\SimpleInjector.Integration.Web.Mvc.5.5.0\lib\net45\SimpleInjector.Integration.Web.Mvc.dll</HintPath>
     </Reference>
-    <Reference Include="Stripe.net, Version=40.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>packages\Stripe.net.40.0.0\lib\net461\Stripe.net.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.CodeDom, Version=7.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>packages\System.CodeDom.7.0.0\lib\net462\System.CodeDom.dll</HintPath>
@@ -227,12 +224,11 @@
     <Compile Include="Controllers\AdminDashboardController.cs" />
     <Compile Include="Controllers\AllocationModel.cs" />
     <Compile Include="Controllers\BaseController.cs" />
-    <Compile Include="Controllers\CartController.cs" />
     <Compile Include="Controllers\ClientDashboardController.cs" />
     <Compile Include="Controllers\GoogleDriveServiceAuthenticationController.cs" />
+    <Compile Include="Controllers\ServicesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
-    <Compile Include="Controllers\StripeController.cs" />
     <Compile Include="Controllers\StudentDashboardController.cs" />
     <Compile Include="Controllers\SuperAdminDashboardController.cs" />
     <Compile Include="Controllers\TeacherDashboardController.cs" />
@@ -243,7 +239,6 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Helper\Cart\CartHelper.cs" />
     <Compile Include="Helper\GoogleDriveService.cs" />
     <Compile Include="Helper\HMTLHelperExtensions.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -263,6 +258,7 @@
     <Content Include="Bundle\js\dropzone\dropzone.min.js" />
     <Content Include="Bundle\js\dropzone\images\spritemap%402x.png" />
     <Content Include="Bundle\js\dropzone\images\spritemap.png" />
+    <Content Include="Bundle\js\Module\Services-OneSubscription.js" />
     <Content Include="Bundle\js\Module\ClientDashboard-UploadTestList.js" />
     <Content Include="Bundle\js\Module\ClientDashboard-UploadAssignment_new.js" />
     <Content Include="Bundle\js\Module\ClientDashboard-UploadAssignment.js" />
@@ -384,6 +380,8 @@
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
+    <Content Include="ndesign\assets\css\servicesstyles.css" />
+    <Content Include="ndesign\assets\js\services.js" />
     <Content Include="ndesign\assets\css\style.css" />
     <Content Include="ndesign\assets\img\apple-touch-icon.png" />
     <Content Include="ndesign\assets\img\card.jpg" />
@@ -812,8 +810,12 @@
     <Content Include="Views\Shared\_Layout_SuperAdmin.cshtml" />
     <Content Include="Views\ClientDashboard\UploadingAssignmentStatusList.cshtml" />
     <Content Include="Views\ClientDashboard\UploadAssignment - Copy.cshtml" />
+
     <Content Include="Views\Home\Courses.cshtml" />
-    <Content Include="Views\Home\Stripes.cshtml" />
+
+    <Content Include="Views\Services\OneSubscription.cshtml" />
+    <Content Include="Views\Shared\_Layout_Services.cshtml" />
+
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -842,10 +844,6 @@
     <ProjectReference Include="..\EduFeedback.Core\EduFeedback.Core.csproj">
       <Project>{4C6A8E68-49C5-4C80-A70D-58A8E3145A67}</Project>
       <Name>EduFeedback.Core</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\EduFeedback.Payment\EduFeedback.Payment.csproj">
-      <Project>{1f0ae858-4470-4a0d-b053-ef35f468bc60}</Project>
-      <Name>EduFeedback.Payment</Name>
     </ProjectReference>
     <ProjectReference Include="..\EduFeedback.Service\EduFeedback.Service.csproj">
       <Project>{4816910B-D769-4F0F-AC6B-89CABF3B6100}</Project>

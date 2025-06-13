@@ -1,4 +1,4 @@
-﻿@model EduFeedback.Service.ServiceModels.OrganisationModel
+﻿@model EduFeedback.Service.Models.OrganisationModel
 @using System.Web.Optimization;
 @{
     ViewBag.Title = "Create School/Tution";
@@ -117,10 +117,10 @@
 
                                     <div class="col-md-6">
                                         <div class="col-sm-10">
-                                            @Html.RadioButtonFor(m => m.OrganisationType, EduFeedback.Service.ServiceModels.OrganisationModel.OrganisationTypeEnum.School, new { @id = "School" })
+                                            @Html.RadioButtonFor(m => m.OrganisationType, EduFeedback.Service.Models.OrganisationModel.OrganisationTypeEnum.School, new { @id = "School" })
                                             <label for="School">School</label>
                                             &nbsp;&nbsp;&nbsp;&nbsp;
-                                            @Html.RadioButtonFor(m => m.OrganisationType, EduFeedback.Service.ServiceModels.OrganisationModel.OrganisationTypeEnum.Tution, new { @id = "Tution" })
+                                            @Html.RadioButtonFor(m => m.OrganisationType, EduFeedback.Service.Models.OrganisationModel.OrganisationTypeEnum.Tution, new { @id = "Tution" })
                                             <label for="Tution">Tution</label>
                                         </div>
                                     </div>

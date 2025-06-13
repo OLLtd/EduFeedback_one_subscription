@@ -1,4 +1,4 @@
-﻿using EduFeedback.Service.ServiceModels;
+﻿using EduFeedback.Service.Models;
 using EduFeedback.Service.Services;
 using EduFeedback.Web.Filters;
 using Newtonsoft.Json;
