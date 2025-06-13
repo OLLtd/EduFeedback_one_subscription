@@ -58,6 +58,8 @@
         <AssociationConnector Association="EduFeedModel.FK_Course_Purchase_Registration" />
         <AssociationConnector Association="EduFeedModel.FK_Course_Purchase_SchoolYear" />
         <AssociationConnector Association="EduFeedModel.FK_Multi_Purchase_Order_Registration" />
+        <AssociationConnector Association="EduFeedModel.FK_TransactionLogs_Course_Master" />
+        <AssociationConnector Association="EduFeedModel.FK_TransactionLogs_Course_Purchase" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

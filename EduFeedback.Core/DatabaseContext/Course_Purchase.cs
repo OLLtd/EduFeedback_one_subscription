@@ -14,6 +14,12 @@ namespace EduFeedback.Core.DatabaseContext
     
     public partial class Course_Purchase
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Course_Purchase()
+        {
+            this.TransactionLogs = new HashSet<TransactionLogs>();
+        }
+    
         public int Log_ID { get; set; }
         public Nullable<int> Parent_ID { get; set; }
         public Nullable<int> Course_ID { get; set; }
@@ -36,5 +42,7 @@ namespace EduFeedback.Core.DatabaseContext
         public virtual Course_Master Course_Master { get; set; }
         public virtual Registration Registration { get; set; }
         public virtual SchoolYear SchoolYear { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<TransactionLogs> TransactionLogs { get; set; }
     }
 }

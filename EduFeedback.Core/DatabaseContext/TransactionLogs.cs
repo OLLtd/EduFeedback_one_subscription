@@ -35,5 +35,8 @@ namespace EduFeedback.Core.DatabaseContext
         public string TokenID { get; set; }
         public string CustomerID { get; set; }
         public string Description { get; set; }
+    
+        public virtual Course_Master Course_Master { get; set; }
+        public virtual Course_Purchase Course_Purchase { get; set; }
     }
 }

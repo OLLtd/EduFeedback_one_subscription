@@ -3,7 +3,6 @@ using EduFeedback.Core.DatabaseContext;
 using EduFeedback.Core.Models;
 using EduFeedback.Models;
 using EduFeedback.Payment.StripePayment;
-using EduFeedback.Service.ServiceModels;
 using EduFeedback.Service.Services;
 using EduFeedback.Web.Helper.Cart;
 using System;

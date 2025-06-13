@@ -18,6 +18,7 @@ namespace EduFeedback.Core.DatabaseContext
         public Course_Master()
         {
             this.Course_Purchase = new HashSet<Course_Purchase>();
+            this.TransactionLogs = new HashSet<TransactionLogs>();
         }
     
         public int Course_ID { get; set; }
@@ -39,5 +40,7 @@ namespace EduFeedback.Core.DatabaseContext
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Course_Purchase> Course_Purchase { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<TransactionLogs> TransactionLogs { get; set; }
     }
 }

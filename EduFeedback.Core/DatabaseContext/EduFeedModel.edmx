@@ -287,8 +287,6 @@
           <Property Name="Subject_name" Type="nvarchar" MaxLength="250" />
           <Property Name="IsActive" Type="bit" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'EduFeedback_Uat_OneSubscription.dbo.TransactionLogs' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="TransactionLogs">
           <Key>
             <PropertyRef Name="ID" />
@@ -659,6 +657,30 @@ warning 6002: The table/view 'EduFeedback_Uat_OneSubscription.dbo.TransactionLog
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_TransactionLogs_Course_Master">
+          <End Role="Course_Master" Type="Self.Course_Master" Multiplicity="0..1" />
+          <End Role="TransactionLogs" Type="Self.TransactionLogs" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Course_Master">
+              <PropertyRef Name="Course_ID" />
+            </Principal>
+            <Dependent Role="TransactionLogs">
+              <PropertyRef Name="Course_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TransactionLogs_Course_Purchase">
+          <End Role="Course_Purchase" Type="Self.Course_Purchase" Multiplicity="0..1" />
+          <End Role="TransactionLogs" Type="Self.TransactionLogs" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Course_Purchase">
+              <PropertyRef Name="Log_ID" />
+            </Principal>
+            <Dependent Role="TransactionLogs">
+              <PropertyRef Name="Log_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="fk_User_ID">
           <End Role="Registration" Type="Self.Registration" Multiplicity="1" />
           <End Role="ROLE_USER_MAP" Type="Self.ROLE_USER_MAP" Multiplicity="*" />
@@ -718,6 +740,7 @@ warning 6002: The table/view 'EduFeedback_Uat_OneSubscription.dbo.TransactionLog
           <EntitySet Name="SchoolYear" EntityType="Self.SchoolYear" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="StudentInfo" EntityType="Self.StudentInfo" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Subject" EntityType="Self.Subject" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TransactionLogs" EntityType="Self.TransactionLogs" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserProfile" EntityType="Self.UserProfile" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="webpages_Membership" EntityType="Self.webpages_Membership" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="webpages_OAuthMembership" EntityType="Self.webpages_OAuthMembership" Schema="dbo" store:Type="Tables" />
@@ -734,31 +757,6 @@ warning 6002: The table/view 'EduFeedback_Uat_OneSubscription.dbo.TransactionLog
           <EntitySet Name="Server" EntityType="Self.Server" Schema="HangFire" store:Type="Tables" />
           <EntitySet Name="Set" EntityType="Self.Set" Schema="HangFire" store:Type="Tables" />
           <EntitySet Name="State" EntityType="Self.State" Schema="HangFire" store:Type="Tables" />
-          <EntitySet Name="TransactionLogs" EntityType="Self.TransactionLogs" store:Type="Tables" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [TransactionLogs].[ID] AS [ID], 
-    [TransactionLogs].[Log_ID] AS [Log_ID], 
-    [TransactionLogs].[Parent_ID] AS [Parent_ID], 
-    [TransactionLogs].[Course_ID] AS [Course_ID], 
-    [TransactionLogs].[Name] AS [Name], 
-    [TransactionLogs].[PaymentStatus] AS [PaymentStatus], 
-    [TransactionLogs].[PayerEmail] AS [PayerEmail], 
-    [TransactionLogs].[TxnType] AS [TxnType], 
-    [TransactionLogs].[TxnId] AS [TxnId], 
-    [TransactionLogs].[mc_gross] AS [mc_gross], 
-    [TransactionLogs].[CreatedDate] AS [CreatedDate], 
-    [TransactionLogs].[CreatedBy] AS [CreatedBy], 
-    [TransactionLogs].[SubscriptionId] AS [SubscriptionId], 
-    [TransactionLogs].[CardName] AS [CardName], 
-    [TransactionLogs].[Quantity] AS [Quantity], 
-    [TransactionLogs].[Installments] AS [Installments], 
-    [TransactionLogs].[InvoiceId] AS [InvoiceId], 
-    [TransactionLogs].[InvoiceUrl] AS [InvoiceUrl], 
-    [TransactionLogs].[TokenID] AS [TokenID], 
-    [TransactionLogs].[CustomerID] AS [CustomerID], 
-    [TransactionLogs].[Description] AS [Description]
-    FROM [dbo].[TransactionLogs] AS [TransactionLogs]</DefiningQuery>
-          </EntitySet>
           <AssociationSet Name="FK_Course_Purchase_Courses" Association="Self.FK_Course_Purchase_Courses">
             <End Role="Course_Master" EntitySet="Course_Master" />
             <End Role="Course_Purchase" EntitySet="Course_Purchase" />
@@ -818,6 +816,14 @@ warning 6002: The table/view 'EduFeedback_Uat_OneSubscription.dbo.TransactionLog
           <AssociationSet Name="fk_RoleID2" Association="Self.fk_RoleID2">
             <End Role="Roles" EntitySet="Roles" />
             <End Role="Feature_ROLE_MAP" EntitySet="Feature_ROLE_MAP" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TransactionLogs_Course_Master" Association="Self.FK_TransactionLogs_Course_Master">
+            <End Role="Course_Master" EntitySet="Course_Master" />
+            <End Role="TransactionLogs" EntitySet="TransactionLogs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TransactionLogs_Course_Purchase" Association="Self.FK_TransactionLogs_Course_Purchase">
+            <End Role="Course_Purchase" EntitySet="Course_Purchase" />
+            <End Role="TransactionLogs" EntitySet="TransactionLogs" />
           </AssociationSet>
           <AssociationSet Name="fk_User_ID" Association="Self.fk_User_ID">
             <End Role="Registration" EntitySet="Registration" />
@@ -1030,6 +1036,14 @@ warning 6002: The table/view 'EduFeedback_Uat_OneSubscription.dbo.TransactionLog
           <AssociationSet Name="FK_Multi_Purchase_Order_Registration" Association="EduFeedModel.FK_Multi_Purchase_Order_Registration">
             <End Role="Registration" EntitySet="Registrations" />
             <End Role="Multi_Purchase_Order" EntitySet="Multi_Purchase_Order" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TransactionLogs_Course_Master" Association="EduFeedModel.FK_TransactionLogs_Course_Master">
+            <End Role="Course_Master" EntitySet="Course_Master" />
+            <End Role="TransactionLogs" EntitySet="TransactionLogs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TransactionLogs_Course_Purchase" Association="EduFeedModel.FK_TransactionLogs_Course_Purchase">
+            <End Role="Course_Purchase" EntitySet="Course_Purchase" />
+            <End Role="TransactionLogs" EntitySet="TransactionLogs" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="Feature">
@@ -1473,6 +1487,7 @@ warning 6002: The table/view 'EduFeedback_Uat_OneSubscription.dbo.TransactionLog
           <Property Name="Product_ID" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
           <Property Name="Organisation_ID" Type="Int32" />
           <NavigationProperty Name="Course_Purchase" Relationship="EduFeedModel.FK_Course_Purchase_Courses" FromRole="Course_Master" ToRole="Course_Purchase" />
+          <NavigationProperty Name="TransactionLogs" Relationship="EduFeedModel.FK_TransactionLogs_Course_Master" FromRole="Course_Master" ToRole="TransactionLogs" />
         </EntityType>
         <EntityType Name="Course_Purchase">
           <Key>
@@ -1499,6 +1514,7 @@ warning 6002: The table/view 'EduFeedback_Uat_OneSubscription.dbo.TransactionLog
           <NavigationProperty Name="Course_Master" Relationship="EduFeedModel.FK_Course_Purchase_Courses" FromRole="Course_Purchase" ToRole="Course_Master" />
           <NavigationProperty Name="Registration" Relationship="EduFeedModel.FK_Course_Purchase_Registration" FromRole="Course_Purchase" ToRole="Registration" />
           <NavigationProperty Name="SchoolYear" Relationship="EduFeedModel.FK_Course_Purchase_SchoolYear" FromRole="Course_Purchase" ToRole="SchoolYear" />
+          <NavigationProperty Name="TransactionLogs" Relationship="EduFeedModel.FK_TransactionLogs_Course_Purchase" FromRole="Course_Purchase" ToRole="TransactionLogs" />
         </EntityType>
         <EntityType Name="Multi_Purchase_Order">
           <Key>
@@ -1550,6 +1566,8 @@ warning 6002: The table/view 'EduFeedback_Uat_OneSubscription.dbo.TransactionLog
           <Property Name="TokenID" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="CustomerID" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Course_Master" Relationship="EduFeedModel.FK_TransactionLogs_Course_Master" FromRole="TransactionLogs" ToRole="Course_Master" />
+          <NavigationProperty Name="Course_Purchase" Relationship="EduFeedModel.FK_TransactionLogs_Course_Purchase" FromRole="TransactionLogs" ToRole="Course_Purchase" />
         </EntityType>
         <Association Name="FK_Course_Purchase_Courses">
           <End Type="EduFeedModel.Course_Master" Role="Course_Master" Multiplicity="0..1" />
@@ -1596,6 +1614,30 @@ warning 6002: The table/view 'EduFeedback_Uat_OneSubscription.dbo.TransactionLog
             </Principal>
             <Dependent Role="Multi_Purchase_Order">
               <PropertyRef Name="Parent_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TransactionLogs_Course_Master">
+          <End Type="EduFeedModel.Course_Master" Role="Course_Master" Multiplicity="0..1" />
+          <End Type="EduFeedModel.TransactionLogs" Role="TransactionLogs" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Course_Master">
+              <PropertyRef Name="Course_ID" />
+            </Principal>
+            <Dependent Role="TransactionLogs">
+              <PropertyRef Name="Course_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TransactionLogs_Course_Purchase">
+          <End Type="EduFeedModel.Course_Purchase" Role="Course_Purchase" Multiplicity="0..1" />
+          <End Type="EduFeedModel.TransactionLogs" Role="TransactionLogs" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Course_Purchase">
+              <PropertyRef Name="Log_ID" />
+            </Principal>
+            <Dependent Role="TransactionLogs">
+              <PropertyRef Name="Log_ID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
