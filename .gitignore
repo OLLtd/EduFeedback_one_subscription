@@ -2,11 +2,3 @@
 bin/
 obj/
 App_Data/
-
-# Others
-*.vsix
-*.swp
-*.tmp
-*.old
-*.sln.docstates
-*.userosscache

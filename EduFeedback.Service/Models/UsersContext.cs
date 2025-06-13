@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace EduFeedback.Service.ServiceModels
+namespace EduFeedback.Service.Models
 {
     public class UsersContext : DbContext
     {

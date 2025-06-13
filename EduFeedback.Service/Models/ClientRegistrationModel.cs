@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 
-namespace EduFeedback.Service.ServiceModels
+namespace EduFeedback.Service.Models
 {
     public class ClientRegistrationModel
     {

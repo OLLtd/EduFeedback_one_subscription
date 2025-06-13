@@ -1,6 +1,6 @@
 ﻿using EduFeedback.Core.DatabaseContext;
 using EduFeedback.Service.Interfaces;
-using EduFeedback.Service.ServiceModels;
+using EduFeedback.Service.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;

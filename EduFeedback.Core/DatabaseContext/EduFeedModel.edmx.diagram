@@ -49,14 +49,6 @@
         <EntityTypeShape EntityType="EduFeedModel.State" Width="1.5" PointX="17" PointY="9.625" />
         <AssociationConnector Association="EduFeedModel.FK_HangFire_JobParameter_Job" />
         <AssociationConnector Association="EduFeedModel.FK_HangFire_State_Job" />
-        <EntityTypeShape EntityType="EduFeedModel.Multi_Purchase_Order" Width="1.5" PointX="5.25" PointY="17.25" />
-        <AssociationConnector Association="EduFeedModel.FK_Multi_Purchase_Order_Registration" />
-        <EntityTypeShape EntityType="EduFeedModel.Course_Purchase" Width="1.5" PointX="8.25" PointY="19.25" />
-        <AssociationConnector Association="EduFeedModel.FK_Course_Purchase_Registration" />
-        <AssociationConnector Association="EduFeedModel.FK_Course_Purchase_SchoolYear" />
-        <EntityTypeShape EntityType="EduFeedModel.TransactionLogs" Width="1.5" PointX="17.375" PointY="0.75" />
-        <EntityTypeShape EntityType="EduFeedModel.Course_Master" Width="1.5" PointX="10.375" PointY="19" />
-        <AssociationConnector Association="EduFeedModel.FK_Course_Purchase_Courses1" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

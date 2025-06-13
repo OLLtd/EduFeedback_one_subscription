@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace EduFeedback.Service.ServiceModels
+namespace EduFeedback.Service.Models
 {
     public class EmailModel
     {

@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 
-namespace EduFeedback.Service.ServiceModels
+namespace EduFeedback.Service.Models
 {
     public  class AllocationModel
     {
