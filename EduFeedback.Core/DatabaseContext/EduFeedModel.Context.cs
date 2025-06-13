@@ -57,5 +57,10 @@ namespace EduFeedback.Core.DatabaseContext
         public virtual DbSet<Server> Servers { get; set; }
         public virtual DbSet<Set> Sets { get; set; }
         public virtual DbSet<State> States { get; set; }
+        public virtual DbSet<Course_Master> Course_Master { get; set; }
+        public virtual DbSet<Course_Purchase> Course_Purchase { get; set; }
+        public virtual DbSet<Multi_Purchase_Order> Multi_Purchase_Order { get; set; }
+        public virtual DbSet<Promo_Master> Promo_Master { get; set; }
+        public virtual DbSet<TransactionLogs> TransactionLogs { get; set; }
     }
 }

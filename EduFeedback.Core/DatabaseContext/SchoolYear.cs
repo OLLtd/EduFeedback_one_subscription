@@ -18,6 +18,7 @@ namespace EduFeedback.Core.DatabaseContext
         public SchoolYear()
         {
             this.Registrations = new HashSet<Registration>();
+            this.Course_Purchase = new HashSet<Course_Purchase>();
         }
     
         public int Year_ID { get; set; }
@@ -26,5 +27,7 @@ namespace EduFeedback.Core.DatabaseContext
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Registration> Registrations { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Course_Purchase> Course_Purchase { get; set; }
     }
 }

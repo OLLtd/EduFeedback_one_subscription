@@ -72,6 +72,12 @@
     <Compile Include="DatabaseContext\Counter.cs">
       <DependentUpon>EduFeedModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="DatabaseContext\Course_Master.cs">
+      <DependentUpon>EduFeedModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DatabaseContext\Course_Purchase.cs">
+      <DependentUpon>EduFeedModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="DatabaseContext\C__MigrationHistory.cs">
       <DependentUpon>EduFeedModel.tt</DependentUpon>
     </Compile>
@@ -114,7 +120,13 @@
     <Compile Include="DatabaseContext\List.cs">
       <DependentUpon>EduFeedModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="DatabaseContext\Multi_Purchase_Order.cs">
+      <DependentUpon>EduFeedModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="DatabaseContext\Organisation.cs">
+      <DependentUpon>EduFeedModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DatabaseContext\Promo_Master.cs">
       <DependentUpon>EduFeedModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DatabaseContext\RefreshToken.cs">
@@ -150,6 +162,9 @@
     <Compile Include="DatabaseContext\Subject.cs">
       <DependentUpon>EduFeedModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="DatabaseContext\TransactionLogs.cs">
+      <DependentUpon>EduFeedModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="DatabaseContext\UserProfile.cs">
       <DependentUpon>EduFeedModel.tt</DependentUpon>
     </Compile>
@@ -162,6 +177,20 @@
     <Compile Include="DatabaseContext\webpages_Roles.cs">
       <DependentUpon>EduFeedModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\CheckoutViewModel.cs" />
+    <Compile Include="Models\CourseModel.cs" />
+    <Compile Include="Models\CoursePurchaseModel.cs" />
+    <Compile Include="Models\EmailModel.cs" />
+    <Compile Include="Models\MultiPurchaseOrderModel.cs" />
+    <Compile Include="Models\PaymentIndentModel.cs" />
+    <Compile Include="Models\ProductViewModel.cs" />
+    <Compile Include="Models\RegistrationModel.cs" />
+    <Compile Include="Models\TransactionModel.cs" />
+    <Compile Include="Partial\Course_Master.cs" />
+    <Compile Include="Partial\Course_Purchase.cs" />
+    <Compile Include="Partial\Multi_Purchase_Order.cs" />
+    <Compile Include="Partial\Registration.cs" />
+    <Compile Include="Partial\TransactionLogs.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

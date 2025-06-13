@@ -33,8 +33,8 @@ namespace EduFeedback.Core.DatabaseContext
         public string UpdatedBy { get; set; }
         public Nullable<int> Mutli_Purchase_ID { get; set; }
     
+        public virtual Course_Master Course_Master { get; set; }
         public virtual Registration Registration { get; set; }
         public virtual SchoolYear SchoolYear { get; set; }
-        public virtual Course_Master Course_Master { get; set; }
     }
 }

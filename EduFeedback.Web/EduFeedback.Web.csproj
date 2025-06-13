@@ -810,12 +810,9 @@
     <Content Include="Views\Shared\_Layout_SuperAdmin.cshtml" />
     <Content Include="Views\ClientDashboard\UploadingAssignmentStatusList.cshtml" />
     <Content Include="Views\ClientDashboard\UploadAssignment - Copy.cshtml" />
-
     <Content Include="Views\Home\Courses.cshtml" />
-
     <Content Include="Views\Services\OneSubscription.cshtml" />
     <Content Include="Views\Shared\_Layout_Services.cshtml" />
-
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -825,6 +822,7 @@
     <Folder Include="Views\AuthCallback\" />
     <Folder Include="Views\Base\" />
     <Folder Include="Views\GoogleDriveServiceAuthentication\" />
+    <Folder Include="Views\Stripe\" />
     <Folder Include="Views\TeacherDashboard\" />
   </ItemGroup>
   <ItemGroup>
