@@ -26,6 +26,8 @@ namespace EduFeedback.Models
         public int ExamDateId { get; set; }
         public String ExamDateTime { get; set; }
 
+        public int Year_ID { get; set; }
+
         public string Strip_PK_Key { get; set; }
     }
 }

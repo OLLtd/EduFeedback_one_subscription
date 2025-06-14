@@ -11,10 +11,10 @@ namespace EduFeedback.Web.Helper.Cart
 {
     public class CartHelper
     {
-        public static void AddProductToCart(int courseId = 0, int assignmentPerWeek = 0, int examDateId = 0, string pExamDateTime = "")
+        public static void AddProductToCart(int courseId = 0, int assignmentPerWeek = 0,int year_ID=0, int examDateId = 0, string pExamDateTime = "")
         {
             var courseModel = Core.DatabaseContext.Course_Master.GetCourseDetail(courseId);
-            decimal? updatedPrice = (decimal)7.99;// Course_Master.GetCoursePriceAsPerAssignment(courseId, assignmentPerWeek);
+            decimal? updatedPrice = (decimal)courseModel.Course_Fee;// Course_Master.GetCoursePriceAsPerAssignment(courseId, assignmentPerWeek);
 
             ProductViewModel productViewModel = new ProductViewModel()
             {
@@ -28,7 +28,7 @@ namespace EduFeedback.Web.Helper.Cart
                 IsSubscription = false,
                 TotalAmount = updatedPrice ?? 0,
                 ExamDateId = examDateId,
-                ExamDateTime = pExamDateTime
+                Year_ID = year_ID
             };
             if (productViewModel.CourseType_ID == 2)
                 productViewModel.IsSubscription = true;

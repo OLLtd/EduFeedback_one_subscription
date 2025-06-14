@@ -8,12 +8,12 @@ $(document).ready(function () {
         e.stopPropagation();
 
         $("#Year_IDSpan").hide();
-        if ($('#Year').val() == "" || $('#Year').val() == null) {
+        if ($('#Year_ID').val() == "" || $('#Year_ID').val() == null) {
             flag = false;
             $("#Year_IDSpan").show();
         }
         $("#Subject_IDSpan").hide();
-        if ($('#Subject').val() == "" || $('#Subject').val() == null) {
+        if ($('#Subject_ID').val() == "" || $('#Subject_ID').val() == null) {
             flag = false;
             $("#Subject_IDSpan").show();
         }
@@ -27,52 +27,26 @@ $(document).ready(function () {
             flag = false;
             $("#EmailSpan").show();
         }
-        var response = grecaptcha.getResponse();
-        if (response.length == 0) {
-            flag = false;
-            $("#CaptchaSpan").show();
+        else {
+            var email = $('#Email').val();
+            const pattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+            const isValid = pattern.test(email);
+            if (isValid) {
+                flag = true;
+            }
+            else {
+                $('#email-error').html('Please enter valid email Id');
+                $('#email-error').show();
+                flag = false;
+            }
         }
+        //var response = grecaptcha.getResponse();
+        //if (response.length == 0) {
+        //    flag = false;
+        //    $("#CaptchaSpan").show();
+        //}
         if (flag == true) {
             $("#form").submit();
-
-            //var files = $("#fileInput")[0].files;
-
-
-            //var formData = new FormData();
-            //for (var i = 0; i < files.length; i++) {
-            //    formData.append("files", files[i]);
-            //}
-            //formData.append("Year_ID", $('#Year_ID').val());
-            //formData.append("Subject_ID", $('#Subject_ID').val());
-            //formData.append("ExamDate", $('#ExamDate').val());
-            //formData.append("TestName", $('#TestName').val());
-            //debugger
-            //$.ajax({
-            //    url: '/ClientDashboard/BulkUploadFilesNew',// @Url.Action("BulkUploadFilesNew", "ClientDashboard")',
-            //    type: 'POST',
-            //    data: formData,
-            //    contentType: false,
-            //    processData: false,
-            //    success: function (response) {
-            //        alert('Files upload started successfully!');
-            //    },
-            //    error: function (xhr, status, error) {
-
-            //        console.log("status" + status + "Error" + error);
-            //        alert('Error uploading files: ' + error);
-            //    },
-            //    xhr: function () {
-            //        var xhr = new window.XMLHttpRequest();
-            //        xhr.upload.addEventListener("progress", function (evt) {
-            //            if (evt.lengthComputable) {
-            //                var percentComplete = evt.loaded / evt.total * 100;
-            //                $("#progress-bar").css("width", percentComplete + "%");
-            //                $("#progress-bar").text(Math.round(percentComplete) + "%");
-            //            }
-            //        }, false);
-            //        return xhr;
-            //    }
-            //});
 
         }
         else {
@@ -82,7 +56,21 @@ $(document).ready(function () {
 
     });
 
+    function AssignmentPerWeekOnChange() {
+        var AssignmentPerWeek = $('#assignmentPerWeek').val();
+        var Course_ID = '1'; //$('#SchoolYear').val();
 
-   
+        $.ajax({
+            url: '/Home/GetCoursePriceAsPerAssignment',
+            type: "GET",
+            dataType: "JSON",
+            data: { CourseId: Course_ID, Packs: AssignmentPerWeek },
+            success: function (Result) {
+                $('#AssignmentPerWeek').val(AssignmentPerWeek);
+                $('#PackQuantity').val(AssignmentPerWeek);
+
+            }
+        });
+    }
 });
 

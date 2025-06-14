@@ -30,11 +30,11 @@ namespace EduFeedback.Web.Controllers
             {
                 CartHelper.ClearCart();
 
-                return RedirectToAction("Successful", "CourseManagement");
+                return RedirectToAction("Successful", "Services");
             }
             else
             {
-                return RedirectToAction("Failure", "CourseManagement");
+                return RedirectToAction("Failure", "Services");
             }
         }
 

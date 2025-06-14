@@ -38,7 +38,7 @@ namespace EduFeedback.Core.DatabaseContext
                 if (cpl == null)
                     return 0;
                 else
-                    return cpl.AssignmentPerWeek.Value;
+                    return (cpl.AssignmentPerWeek== null? 0: cpl.AssignmentPerWeek.Value);
             }
         }
 
@@ -75,7 +75,9 @@ namespace EduFeedback.Core.DatabaseContext
                     entity.UpdatedDate = DateTime.UtcNow;
                     entity.UpdatedBy = model.Name;
                     entity.Mutli_Purchase_ID = model.Mutli_Purchase_ID;
-                    
+                    entity.AssignmentPerWeek = model.AssignmentPerWeek;
+
+
                     context.Course_Purchase.Add(entity);
                     context.SaveChanges();
                 }
@@ -104,7 +106,7 @@ namespace EduFeedback.Core.DatabaseContext
                 //}
                 entity.UpdatedDate = DateTime.UtcNow;
                 entity.UpdatedBy = entity.CreatedBy;
-                context.SaveChangesAsync();
+                context.SaveChanges();
             }
             //using (var context = new EduFeedEntities())
             //{

@@ -78,13 +78,7 @@ namespace EduFeedback.Web.Controllers
                 checkoutVM.TotalPrice = FinalTotalPrice;
             }
             // FILL Registration data in model
-            var user = new Registration() {
-                User_ID=  1,
-                FirstName = Name,
-                LastName = "",
-                Email_ID= Email
-            };
-             //Registration.GetUserByUserName(Email);
+            var user = Registration.GetUserByUserName(Email);
 
             foreach (var item in productList)
             {
@@ -114,10 +108,10 @@ namespace EduFeedback.Web.Controllers
                    // coursePayment.PackQuantity = item.Quantity;
                     coursePayment.Course_ID = item.Course_ID;
                     coursePayment.Course_Name = product.Course_Name;
-                   // coursePayment.CourseTypeID = product.CourseTypeID ?? 0;
+                    // coursePayment.CourseTypeID = product.CourseTypeID ?? 0;
                     //CourseTypeID = coursePayment.CourseTypeID;
-                    //productId = coursePayment.Product_ID;
-                   // coursePayment.Year_ID = product.Year_ID;
+                    coursePayment.AssignmentPerWeek = item.AssignmentPerWeek;
+                    coursePayment.Year_ID = item.Year_ID;
                     multiCoursePayment.Add(coursePayment);
                 }
             }
@@ -126,7 +120,7 @@ namespace EduFeedback.Web.Controllers
 
             multiCoursePayment.ForEach(x =>
             {
-                x.MultiPurchase_ID = MultiPurchaseId;
+                x.Mutli_Purchase_ID = MultiPurchaseId;
                 var Log_ID = Course_Purchase.CreateLog(x);
                 checkoutVM.LogIds.Add(Log_ID);
             });

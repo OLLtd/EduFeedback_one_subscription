@@ -26,6 +26,6 @@ namespace EduFeedback.Models
         public int Year_ID { get; set; }
         public string TokenID { get; set; }
         public string Product_ID { get; set; }
-        public int MultiPurchase_ID { get; set; }
+        public int AssignmentPerWeek { get; set; }
     }
 }

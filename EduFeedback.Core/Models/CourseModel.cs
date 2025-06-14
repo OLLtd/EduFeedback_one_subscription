@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web.Mvc;
 
 namespace EduFeedback.Models
 {
@@ -15,7 +16,7 @@ namespace EduFeedback.Models
 
         public int? AssignmentPerWeek { get; set; }
 
-       // [Required(ErrorMessage = "Course name is required.")]
+        public string Captcha { get; set; }
         public string Course_Name { get; set; }
         public decimal? Course_Fee { get; set; }
         public string Short_Desc { get; set; }
@@ -25,8 +26,14 @@ namespace EduFeedback.Models
         public List<NumberModel> NumberOfAssignments { get; set; }
         public int CourseTypeID { get; set; }
         public int Subject_ID { get; set; }
+        public int Year_ID { get; set; }
         public string Product_ID { get; set; }
         public int Parent_ID { get; set; }
+        public string PromoCode { get; set; }
+
+        public IEnumerable<SelectListItem> SchoolYearList { get; set; }
+
+        public IEnumerable<SelectListItem> SubjectList { get; set; }
     }
     public class NumberModel
     {

@@ -1422,6 +1422,8 @@
     <Content Include="Views\Cart\Checkout.cshtml" />
     <Content Include="Views\Cart\Index.cshtml" />
     <Content Include="Views\Home\Stripes.cshtml" />
+    <Content Include="Views\Services\Successful.cshtml" />
+    <Content Include="Views\Services\Failure.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -1,6 +1,10 @@
-﻿using EduFeedback.Service.Models;
+﻿using EduFeedback.Core.DatabaseContext;
+using EduFeedback.Models;
+using EduFeedback.Payment.StripePayment;
+using EduFeedback.Service.Models;
 using EduFeedback.Service.Services;
 using EduFeedback.Web.Filters;
+using EduFeedback.Web.Helper.Cart;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -30,23 +34,65 @@ namespace EduFeedback.Web.Controllers
                 Text = c.SubjectName.ToString()
             });
 
-            var model = new CourseSubscriptionViewModel
-            {
-                
-                SubjectList = subjectList,
-                SchoolYearList = schoolYearList,
-               
-            };
+            //var model = new CourseSubscriptionViewModel
+            //{
+
+            //    SubjectList = subjectList,
+            //    SchoolYearList = schoolYearList,
+
+            //};
+            CourseModel model = Course_Master.GetCourseDetail(1);
+            model.SubjectList = subjectList;
+            model.SchoolYearList = schoolYearList;
+            model.Parent_ID = 11;
 
             return View(model);
         }
 
+        //[HttpPost]
+        //public ActionResult OneSubscription(CourseSubscriptionViewModel model)
+        //{
+
+        //    return View(model);
+
+        //}
+
         [HttpPost]
-        public ActionResult OneSubscription(CourseSubscriptionViewModel model)
+        public ActionResult OneSubscription(CourseModel model, string Name, string Email)
         {
+            CoursePurchaseModel coursePayment = new CoursePurchaseModel();
+            if (string.IsNullOrEmpty(Name) && string.IsNullOrEmpty(Email))
+                return RedirectToAction("OneSubscription");
+            try
+            {
+                CartHelper.AddProductToCart((int)model.Course_ID, (int)model.AssignmentPerWeek, model.Year_ID);
 
-            return View(model);
 
+                return RedirectToAction("Checkout", "Cart", new { Name = Name, Email = Email });
+
+
+            }
+            catch (Exception ex)
+            {
+                String strLogMessage = "Home Management Controller > ServicesDetails ";
+                strLogMessage += " In Method (Post : ServicesDetails) , with message : " + ex.Message;
+                // myLogger.Error(strLogMessage + " " + ex.StackTrace);
+
+            }
+
+            coursePayment.Strip_PK_Key = StripeConstants.Security_PublishKey.ToString();
+            return View("Stripes", coursePayment);
+        }
+
+        [AllowAnonymous]
+        public ActionResult Successful()
+        {
+            return View();
+        }
+        [AllowAnonymous]
+        public ActionResult Failure()
+        {
+            return View();
         }
     }
 }
